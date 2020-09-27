@@ -65,7 +65,7 @@ exactly what you planned out for your app.
 API:
 https://developer.edamam.com/food-database-api-docs
 
-Specific Functional Requirements
+## Specific Functional Requirements
 - Are all the inputs to the system specified, including their source, accuracy,
 range of values, and frequency?
   - req: adding component to diet, extra consumption,missing consumption,creating customized component(new board)
