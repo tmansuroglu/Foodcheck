@@ -1,8 +1,13 @@
 import React from "react";
 import { Menu } from 'antd';
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { SignOut } from "../redux/actions/AuthActions";
 
-const Navbar = () => {
+
+
+const Navbar = (props) => {
+    console.log(props.userData)
     return (
         <Menu mode="horizontal">
             <Menu.Item>
@@ -14,15 +19,41 @@ const Navbar = () => {
             <Menu.Item>
                 <NavLink to="/about">About</NavLink>
             </Menu.Item>
-            <Menu.Item>
-                <NavLink to="/login">Login</NavLink>
-            </Menu.Item>
-            <Menu.Item>
-                Logout
-            </Menu.Item>
+
+            {props.userData.uid ? <>
+                <Menu.Item>
+                    {props.profile.email}
+                </Menu.Item>
+                <Menu.Item onClick={props.SignOut}>
+                    Log Out
+                </Menu.Item>
+            </> : <>
+                    <Menu.Item>
+                        <NavLink to="/login">Login</NavLink>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <NavLink to="/register">Register</NavLink>
+                    </Menu.Item>
+                </>}
         </Menu>
     )
 
 }
 
-export default Navbar
+
+const mapStateToProps = (state) => {
+    return {
+        userData: state.firebase.auth,
+        profile: state.firebase.profile
+    }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        SignOut: () => dispatch(SignOut())
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

@@ -1,1 +1,0 @@
-//make whole main page a carousel when user click on get started etc carousel shifts left or right.

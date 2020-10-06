@@ -2,18 +2,66 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import store from "./redux/store"
-import { Provider } from "react-redux";
+
+import { applyMiddleware, createStore, compose } from "redux";
+
+import { Provider, useSelector } from "react-redux";
+
+import { getFirebase, ReactReduxFirebaseProvider, isLoaded } from "react-redux-firebase";
+
+import firebase from "firebase/app";
+
+import firebaseConfig from "./firebaseConfig"
+
+import { createFirestoreInstance } from "redux-firestore";
+
+import thunk from "redux-thunk";
+
+import allReducers from "./redux/reducers/CombinedReducer";
 
 
 
 
+
+const store = createStore(allReducers,
+  compose(
+    applyMiddleware(
+      thunk.withExtraArgument({ getFirebase })),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ));
+
+
+const profileSpecificProps = {
+  userProfile: 'users',
+  useFirestoreForProfile: true,
+  enableRedirectHandling: false,
+  resetBeforeLogin: false
+}
+
+const rrfProps = {
+  firebase,
+  config: firebaseConfig,
+  config: profileSpecificProps,
+  dispatch: store.dispatch,
+  createFirestoreInstance
+};
+
+// waiting for auth ready
+function AuthIsLoaded({ children }) {  // how tf this works?
+  const auth = useSelector(state => state.firebase.auth)
+  if (!isLoaded(auth)) return <div>Loading Screen...</div>
+  return children
+}
 
 ReactDOM.render(
 
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <AuthIsLoaded>
+          <App />
+        </AuthIsLoaded>
+      </ReactReduxFirebaseProvider>
     </Provider>
 
   </React.StrictMode>

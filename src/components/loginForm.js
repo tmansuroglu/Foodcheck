@@ -1,23 +1,12 @@
 import React from "react";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from "react-redux";
-import { logIn } from "../redux/actions/isLoggedInActions"
-
+import { SignIn } from "../redux/actions/AuthActions"
+//import { Redirect } from "react-router-dom";
 
 // should we move state management to parent and keep this one as presentational?
 
-const mapStateToProps = (state) => { //makes the state accessible as props(isLogged will be a props for the functional component above)
-    return {
-        isLogged: state.isLoggedIn
-    }
-}
 
-
-const mapDispatchToProps = (dispatch) => {  //allows you to change state
-    return {
-        logIn: () => dispatch(logIn()) // logIn refers to a type of action(check actions folder).   must be a function. dispatches action type, redux executes it accordingly
-    }
-}
 //before reading the explanation below, read all the comments within the code.
 //combined reducers are inside the store.
 //when user fills the form and clicks on log in line 44 gets invoked.
@@ -33,7 +22,6 @@ const mapDispatchToProps = (dispatch) => {  //allows you to change state
 
 function LoginForm(props) {
 
-    console.log(props)
 
     const layout = {
         labelCol: { span: 8 },
@@ -45,8 +33,10 @@ function LoginForm(props) {
 
     //this is like onSubmit for some reason ant Design uses onFinish
     const onFinish = values => {
+
         console.log('Success:', values);
-        props.logIn() // changes state . this was defined in line 18
+        props.auth(values) // changes state . this was defined in line 18
+
     };
 
 
@@ -54,6 +44,7 @@ function LoginForm(props) {
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
+
     return (
         <div>
             <Form
@@ -64,9 +55,18 @@ function LoginForm(props) {
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    name="email"
+                    label="E-mail"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: 'The input is not valid E-mail!',
+                        },
+                        {
+                            required: true,
+                            message: 'Please input your E-mail!',
+                        },
+                    ]}
                 >
                     <Input />
                 </Form.Item>
@@ -86,14 +86,29 @@ function LoginForm(props) {
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
                         Login
-            </Button>
-
+                </Button>
+                    <div>{props.authError ? props.authError : ""}</div>
                 </Form.Item>
+
             </Form>
         </div>
-    );
+    )
+
+}
+
+const mapStateToProps = (state) => { //makes the state accessible as props(isLogged will be a props for the functional component above)
+    console.log("state is", state)
+    console.log("auth uid is", state.firebase.auth.uid)
+    return {
+        authError: state.AuthReducer.authError
+    }
 }
 
 
+const mapDispatchToProps = (dispatch) => {  //allows you to change state
+    return {
+        auth: (user) => dispatch(SignIn(user)) // logIn refers to a type of action(check actions folder).   must be a function. dispatches action type, redux executes it accordingly
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm); //connects redux store to component. parameters allows you to see and change the state.
