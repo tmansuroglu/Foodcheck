@@ -1,12 +1,11 @@
 import React from "react";
-import { Menu, Dropdown, message } from 'antd';
+import { Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
 import { createMeal } from "../redux/actions/DietActions"
 import Meal from "./Meal"
 
 const CreateDiet = (props) => {
-    console.log("meals are", props.meals)
     const onClick = ({ key }) => {
         props.createMeal(key)
     };

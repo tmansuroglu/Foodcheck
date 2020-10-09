@@ -7,7 +7,6 @@ import { SignOut } from "../redux/actions/AuthActions";
 
 
 const Navbar = (props) => {
-    console.log(props.userData)
     return (
         <Menu mode="horizontal">
             <Menu.Item>

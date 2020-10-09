@@ -97,8 +97,8 @@ function LoginForm(props) {
 }
 
 const mapStateToProps = (state) => { //makes the state accessible as props(isLogged will be a props for the functional component above)
-    console.log("state is", state)
-    console.log("auth uid is", state.firebase.auth.uid)
+    // console.log("state is", state)
+    // console.log("auth uid is", state.firebase.auth.uid)
     return {
         authError: state.AuthReducer.authError
     }

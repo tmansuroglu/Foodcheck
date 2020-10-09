@@ -21,11 +21,11 @@ export const SignOut = () => {
         const firebase = getFirebase()
         firebase.auth().signOut().then(() => {
             dispatch({ type: "SIGNOUT_SUCCESS" })
-        })
+        }).catch(err=>{dispatch({type:"SIGNOUT_FAILED",err})})
     }
 }
 
-//dispatch is the action being passed to the reducer. it is the action being halted
+// on catch err value is not being passed to reducer. why?
 
 
 export const signUp = (newUser) => {
@@ -36,10 +36,23 @@ export const signUp = (newUser) => {
             newUser.email,
             newUser.password
         ).then((resp) => {
-            return firestore.collection("users").doc(resp.user.uid).set({
-                email: newUser.email,
+            return firestore.collection("users").doc(`${resp.user.uid}`).set({
+                id: resp.user.uid,
+                firstName: newUser.name,
+                surname:newUser.surname,
                 password: newUser.password,
-                diet: {}
+                email: newUser.email,
+                acctCreationDate: new Date(),
+                birthdate: newUser.birthdate._d,
+                gender: newUser.gender,
+                height: newUser.height,
+                weight: newUser.weight,
+                 diet: {
+                     breakfast: [],
+                     lunch: [],
+                     dinner: [],
+                     snacks: []
+                 }
             })
         }).then(() => {
             dispatch({ type: "SIGNUP_SUCCESS" })

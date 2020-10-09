@@ -2,13 +2,10 @@ export const CreateDiet = (diet) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirebase().firestore();
         const profile = getState().firebase.profile;
+        console.log("profile is", profile)
         const userID = getState().firebase.auth.uid;
-        firestore.collection("diets").add({
-            ...diet,
-            userID,
-            email: profile.email,
-            createdAt: new Date()
-        }).then(() => {
+        console.log("userID", userID, "tarkan")
+        firestore.collection("users").doc(userID).set().then(() => {
             dispatch({ type: "CREATE_DIET", diet })
         }).catch((err) => {
             dispatch({ type: "CREATE_DIET_FAILED", err })

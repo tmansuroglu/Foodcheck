@@ -1,4 +1,7 @@
 const AuthReducer = (state = {}, action) => {  // takes a description of action as action parameter for example LOG_IN(from actions folder), if there is a match changes the state 
+    
+    //err gets reseted why?
+    console.log(action.err?`error is: ${action.err}`:"")
     switch (action.type) {
         case "LOGIN_ERROR":
             console.log("LOGIN_ERROR")
@@ -25,7 +28,7 @@ const AuthReducer = (state = {}, action) => {  // takes a description of action 
             console.log("SIGNUP_FAILED")
             return {
                 ...state,
-                authError: "SIGNUP_FAILED"//state.AuthReducer.authError //? does this work
+                authError: "SIGNUP_FAILED"
             }
         default:
             return state
