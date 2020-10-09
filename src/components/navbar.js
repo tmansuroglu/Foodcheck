@@ -12,14 +12,15 @@ const Navbar = (props) => {
             <Menu.Item>
                 <NavLink to="/">Home</NavLink>
             </Menu.Item>
-            <Menu.Item>
-                <NavLink to="/diet">Diet</NavLink>
-            </Menu.Item>
+            
             <Menu.Item>
                 <NavLink to="/about">About</NavLink>
             </Menu.Item>
 
             {props.userData.uid ? <>
+                <Menu.Item>
+                <NavLink to="/diet">Diet</NavLink>
+            </Menu.Item>
                 <Menu.Item>
                     {props.profile.email}
                 </Menu.Item>

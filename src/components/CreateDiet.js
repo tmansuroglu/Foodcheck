@@ -4,6 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
 import { createMeal } from "../redux/actions/DietActions"
 import Meal from "./Meal"
+import { Redirect } from "react-router-dom";
 
 const CreateDiet = (props) => {
     const onClick = ({ key }) => {
@@ -18,24 +19,32 @@ const CreateDiet = (props) => {
             <Menu.Item key="snack">Snack</Menu.Item>
         </Menu>
     );
-
-    return (
-        <>
-            <Dropdown overlay={menu}>
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                    Add Meal <DownOutlined />
-                </a>
-            </Dropdown>
-            {props.meals.map(meal => {
-                return <Meal name={Object.keys(meal)[0]} />
-            })}
-        </>
-    )
+    if(props.autStatus){
+        return (
+            <>
+                <Dropdown overlay={menu}>
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                        Add Meal <DownOutlined />
+                    </a>
+                </Dropdown>
+                {props.meals.map(meal => {
+                    return <Meal name={Object.keys(meal)[0]} />
+                })}
+            </>
+        )
+    }
+    else{
+        return(
+        <Redirect to="/login" />
+        )
+    }
+    
 }
 
 const mapStateToProps = (state) => { //makes the state accessible as props(isLogged will be a props for the functional component above)
     return {
-        meals: state.DietReducer.meals
+        meals: state.DietReducer.meals,
+        autStatus: state.firebase.auth.uid
     }
 }
 

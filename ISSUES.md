@@ -1,8 +1,5 @@
-- after logging in, it is still possible to access /login. Route guarding  27th video 
 - error throwing problem on register
-- user profile data
-- Categorize component according to container
-- fix db mismatch
-- firebase sub collection?
 - ask louis about bad practices in the code, bug prone codes
-- diet is not being recorded
+- should logout be a component?
+- almost everything is being done inside components, not container. is it bad?
+- add profile button

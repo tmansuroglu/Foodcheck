@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { connect } from "react-redux";
 import { SignIn } from "../redux/actions/AuthActions"
+import { Redirect } from "react-router-dom";
 //import { Redirect } from "react-router-dom";
 
 // should we move state management to parent and keep this one as presentational?
@@ -44,55 +45,64 @@ function LoginForm(props) {
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
-
-    return (
-        <div>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    name="email"
-                    label="E-mail"
-                    rules={[
-                        {
-                            type: 'email',
-                            message: 'The input is not valid E-mail!',
-                        },
-                        {
-                            required: true,
-                            message: 'Please input your E-mail!',
-                        },
-                    ]}
+    if(props.authStatus){
+        return (
+            <Redirect to="/"/>
+        )
+        
+    }
+    else{
+        return (
+        
+            <div>
+                <Form
+                    {...layout}
+                    name="basic"
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
                 >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Login
-                </Button>
-                    <div>{props.authError ? props.authError : ""}</div>
-                </Form.Item>
-
-            </Form>
-        </div>
-    )
+                    <Form.Item
+                        name="email"
+                        label="E-mail"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            },
+                            {
+                                required: true,
+                                message: 'Please input your E-mail!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+    
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[{ required: true, message: 'Please input your password!' }]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+    
+                    <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+    
+                    <Form.Item {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                            Login
+                    </Button>
+                        <div>{props.authError ? props.authError : ""}</div>
+                    </Form.Item>
+    
+                </Form>
+            </div>
+        )
+    }
+    
 
 }
 
@@ -100,7 +110,8 @@ const mapStateToProps = (state) => { //makes the state accessible as props(isLog
     // console.log("state is", state)
     // console.log("auth uid is", state.firebase.auth.uid)
     return {
-        authError: state.AuthReducer.authError
+        authError: state.AuthReducer.authError,
+        authStatus:state.firebase.auth.uid
     }
 }
 
