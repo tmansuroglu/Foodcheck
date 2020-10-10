@@ -1,5 +1,9 @@
-- error throwing problem on register
-- ask louis about bad practices in the code, bug prone codes
-- should logout be a component?
-- almost everything is being done inside components, not container. is it bad?
-- add profile button
+-   error throwing problem on register
+-   ask louis about bad practices in the code, bug prone codes
+-   should logout be a component?
+-   almost everything is being done inside components, not container. is it bad?
+-   add profile button
+-   uid and docid are same. is it a problem?
+-   structure of diet data is inconvenient.
+-   there is memory leak.
+-   manage diet is too stacked, seperate it to components.

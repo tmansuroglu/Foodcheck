@@ -47,7 +47,7 @@ function LoginForm(props) {
     };
     if(props.authStatus){
         return (
-            <Redirect to="/"/>
+            <Redirect to="/diet"/>
         )
         
     }

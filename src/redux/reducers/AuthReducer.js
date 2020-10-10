@@ -1,6 +1,6 @@
 const AuthReducer = (state = {}, action) => {  // takes a description of action as action parameter for example LOG_IN(from actions folder), if there is a match changes the state 
     
-    //err gets reseted why?
+    //err gets reseted why? Do not delete
     console.log(action.err?`error is: ${action.err}`:"")
     switch (action.type) {
         case "LOGIN_ERROR":
