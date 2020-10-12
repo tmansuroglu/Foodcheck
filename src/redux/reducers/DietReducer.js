@@ -1,4 +1,8 @@
-const DietReducer = (state = [], action) => {
+const dietState = {
+    diet: { 0: [], 1: [], 2: [], 3: [] },
+};
+
+const DietReducer = (state = dietState, action) => {
     // console.log(action.err ? `error is: ${action.err}` : "");
     switch (action.type) {
         case "CREATE_MEAL":
@@ -24,9 +28,10 @@ const DietReducer = (state = [], action) => {
             return {
                 ...state,
                 diet: {
-                    ...state.meals,
+                    ...state.diet,
                     [action.mealOrder]: [
-                        ...state.diet[(action.mealOrder, action.food)],
+                        ...state.diet[action.mealOrder],
+                        action.food,
                     ],
                 },
                 dietError: null,

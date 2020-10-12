@@ -41,6 +41,7 @@ const ManageDiet = props => {
         );
         props.newMeal(mealNameInDropDown, mealOrder);
         setEffectTrigger(mealNameInDropDown);
+        console.log("propsdiet is", props.diet);
     };
 
     //stores meals locally and reflects on screen
@@ -77,7 +78,7 @@ const ManageDiet = props => {
             );
             props.addFood(mealName, food, mealOrder);
             setEffectTrigger(food);
-            //console.log("propsdiet is", props.diet);
+            console.log("propsdiet is", props.diet);
         };
         return (
             <Col xs={24} sm={24} md={6} lg={6} xl={4}>

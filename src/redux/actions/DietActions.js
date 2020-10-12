@@ -61,19 +61,19 @@ export const AddFood = (mealName, food, mealOrder) => {
                         [mealOrder]: [...userProfile.diet[mealOrder], food],
                     },
                 });
-                console.log(
-                    "user diet Profile is",
-                    userProfile.diet,
-                    "meal order is:",
-                    mealOrder,
-                    "food is: ",
-                    food,
-                    "meal name is",
-                    mealName
-                );
+                // console.log(
+                //     "user diet Profile is",
+                //     userProfile.diet,
+                //     "meal order is:",
+                //     mealOrder,
+                //     "food is: ",
+                //     food,
+                //     "meal name is",
+                //     mealName
+                // );
             })
             .then(() => {
-                dispatch({ type: "ADD_FOOD", mealName, food });
+                dispatch({ type: "ADD_FOOD", mealName, food, mealOrder });
             })
             .catch(err => {
                 dispatch({ type: "ADD_FOOD_FAILED", err: err.message });
