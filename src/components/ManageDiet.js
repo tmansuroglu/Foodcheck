@@ -10,16 +10,13 @@ const { Panel } = Collapse;
 const { Search } = Input;
 
 const ManageDiet = props => {
-    //meal dropdown
+    //meal dropdown menu on left
     const menu = (
         <Menu>
-            <Menu.Item
-                onClick={() => handleMealSelection("Breakfast", 0)}
-                id="0"
-            >
+            <Menu.Item onClick={() => handleMealSelection("Breakfast", 0)}>
                 Breakfast
             </Menu.Item>
-            <Menu.Item onClick={() => handleMealSelection("Lunch", 1)} id="1">
+            <Menu.Item onClick={() => handleMealSelection("Lunch", 1)}>
                 Lunch
             </Menu.Item>
             <Menu.Item onClick={() => handleMealSelection("Dinner", 2)}>
@@ -31,28 +28,57 @@ const ManageDiet = props => {
         </Menu>
     );
 
+    // this state is created only to trigger useeffect.
     const [effectTrigger, setEffectTrigger] = React.useState([]);
+
     // Allows user to create meals,
     const handleMealSelection = (mealNameInDropDown, mealOrder) => {
+        console.log(
+            "handleMealSelection=>",
+            mealNameInDropDown,
+            "was added with order of",
+            mealOrder
+        );
         props.newMeal(mealNameInDropDown, mealOrder);
         setEffectTrigger(mealNameInDropDown);
     };
+
+    //stores meals locally and reflects on screen
     const [meals, setMeals] = React.useState([]);
+
+    //this shouldn't be called if props.uid is false
     React.useEffect(() => {
-        db.collection("users")
-            .doc(props.uid)
-            .onSnapshot(function (doc) {
-                console.log(Object.entries(doc.data().diet));
-                setMeals(Object.entries(doc.data().diet)); //data is not ordered
-                //console.log("meals are", meals);
-            });
+        if (props.uid) {
+            db.collection("users")
+                .doc(props.uid)
+                .onSnapshot(function (doc) {
+                    const reFormattedMeals = Object.entries(doc.data().diet);
+                    // for ease of use meals obj turned into arr
+                    // each meal is an array made of 2 element,
+                    //First one is meal id,
+                    //second is array of food list
+                    setMeals(reFormattedMeals);
+                });
+        } else {
+            console.log("To acces diet section, you need to log in first");
+        }
     }, [effectTrigger]);
-    const handleAddFood = (mealName, food, mealOrder) => {
-        console.log(food, "was added to", mealName);
-        props.addFood(mealName, food, mealOrder);
-        setEffectTrigger(food);
-    };
+
+    // checks whether user is logged in
     if (props.uid) {
+        const handleAddFood = (mealName, food, mealOrder) => {
+            console.log(
+                "handleAddFood=>",
+                food,
+                "was added to",
+                mealName,
+                "with order of",
+                mealOrder
+            );
+            props.addFood(mealName, food, mealOrder);
+            setEffectTrigger(food);
+            //console.log("propsdiet is", props.diet);
+        };
         return (
             <Col xs={24} sm={24} md={6} lg={6} xl={4}>
                 <Dropdown overlay={menu}>
@@ -65,27 +91,38 @@ const ManageDiet = props => {
                 </Dropdown>
 
                 <Collapse>
-                    {meals.map((meal, id) => {
-                        const mealName = Object.keys(meal[1])[0];
-                        const foodArr = Object.values(meal[1])[0];
-                        const mealOrder = meal[0]; //necessary for displaying meals in same order
-                        console.log(foodArr);
+                    {meals.map(meal => {
+                        // console.log("meal", meal);
+                        // console.log("meals", meals);
+                        // console.log("meal is", meal);
+                        const mealNames = {
+                            0: "Breakfast",
+                            1: "Lunch",
+                            2: "Dinner",
+                            3: "Snack",
+                        };
+                        const mealId = meal[0];
+                        const foodList = meal[1];
+                        // console.log("foodlist is : ", foodList);
+                        const mealName = mealNames[mealId];
 
                         return (
-                            <Panel header={mealName} key={id}>
+                            <Panel header={mealName} key={mealId}>
                                 <Search
                                     reset
                                     placeholder="add food"
                                     enterButton={<PlusOutlined />}
                                     onSearch={food =>
-                                        handleAddFood(mealName, food, mealOrder)
+                                        handleAddFood(mealName, food, mealId)
                                     }
                                 />
-                                <ul>
-                                    {foodArr.map(food => (
-                                        <li>{food}</li>
-                                    ))}
-                                </ul>
+                                {
+                                    <ul>
+                                        {foodList.map((food, id) => (
+                                            <li key={id}>{food}</li>
+                                        ))}
+                                    </ul>
+                                }
                             </Panel>
                         );
                     })}
@@ -100,6 +137,7 @@ const ManageDiet = props => {
 const mapStateToProps = state => {
     return {
         uid: state.firebase.auth.uid,
+        diet: state.DietReducer,
     };
 };
 

@@ -1,23 +1,18 @@
-const DietReducer = (state = { meals: [] }, action) => {
-    console.log(action.err ? `error is: ${action.err}` : "");
+const DietReducer = (state = [], action) => {
+    // console.log(action.err ? `error is: ${action.err}` : "");
     switch (action.type) {
-        case "CREATE_DIET":
-            console.log("CREATE_DIET", action.mealName);
+        case "CREATE_MEAL":
+            console.log("CREATE_MEAL", action.mealName);
             return {
                 ...state,
+                diet: { ...state.meals, [action.mealOrder]: [] },
                 dietError: null,
             };
-        case "CREATE_DIET_FAILED":
-            console.log("CREATE_DIET_FAILED", action.err);
+        case "CREATE_MEAL_FAILED":
+            console.log("CREATE_MEAL_FAILED", action.err);
             return {
                 ...state,
                 dietError: action.err,
-            };
-        case "CREATE_MEAL":
-            console.log("CREATE_MEAL", action.mealName); //fix this
-            return {
-                ...state,
-                dietError: null,
             };
         case "ADD_FOOD":
             console.log(
@@ -28,10 +23,16 @@ const DietReducer = (state = { meals: [] }, action) => {
             );
             return {
                 ...state,
+                diet: {
+                    ...state.meals,
+                    [action.mealOrder]: [
+                        ...state.diet[(action.mealOrder, action.food)],
+                    ],
+                },
                 dietError: null,
             };
         case "ADD_FOOD_FAILED":
-            console.log("ADD_FOOD_FAILED");
+            console.log("ADD_FOOD_FAILED", action.err);
             return {
                 ...state,
                 dietError: action.err,

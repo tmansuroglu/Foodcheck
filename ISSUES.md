@@ -7,3 +7,4 @@
 -   structure of diet data is inconvenient.
 -   there is memory leak.
 -   manage diet is too stacked, seperate it to components.
+-   register redirect to login doesnt work

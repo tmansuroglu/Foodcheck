@@ -9,11 +9,13 @@ export const SignIn = user => {
             .auth()
             .signInWithEmailAndPassword(user.email, user.password)
             .then(() => {
+                console.log("dispatch");
                 dispatch({ type: "LOGIN_SUCCESS" });
             })
             .then(() => <Redirect to="/diet" />)
             .catch(err => {
-                dispatch({ type: "LOGIN_ERROR", err });
+                console.log(err);
+                dispatch({ type: "LOGIN_ERROR", err: err.message });
             });
     };
 };
@@ -25,10 +27,11 @@ export const SignOut = () => {
             .auth()
             .signOut()
             .then(() => {
+                console.log("dispatch");
                 dispatch({ type: "SIGNOUT_SUCCESS" });
             })
             .catch(err => {
-                dispatch({ type: "SIGNOUT_FAILED", err });
+                dispatch({ type: "SIGNOUT_FAILED", err: err.message });
             });
     };
 };
@@ -57,17 +60,18 @@ export const signUp = newUser => {
                         gender: newUser.gender,
                         heightCm: newUser.height,
                         weightKg: newUser.weight,
-                        diet: {
-                            breakfast: [],
-                            lunch: [],
-                            dinner: [],
-                            snacks: [],
-                            details: {
-                                kcal: "",
-                                protein: "",
-                                fat: "",
-                                carb: "",
-                            },
+                        dietIdDescriptions: {
+                            0: "breakfast",
+                            1: "lunch",
+                            2: "dinner",
+                            3: "snack",
+                        },
+                        diet: {},
+                        dietDetails: {
+                            kcal: "",
+                            protein: "",
+                            fat: "",
+                            carb: "",
                         },
                     });
             })
@@ -75,23 +79,7 @@ export const signUp = newUser => {
                 dispatch({ type: "SIGNUP_SUCCESS" });
             })
             .catch(err => {
-                dispatch({ type: "SIGNUP_FAILED", err });
+                dispatch({ type: "SIGNUP_FAILED", err: err.message });
             });
     };
 };
-
-/*
-diet: {
-                     breakfast: [],
-                     lunch: [],
-                     dinner: [],
-                     snacks: [],
-                     details:{
-                        kcal:"",
-                        protein:"",
-                        fat:"",
-                        carb:""
-                     }
-                 }
-
-*/
