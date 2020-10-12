@@ -33,15 +33,15 @@ const ManageDiet = props => {
 
     // Allows user to create meals,
     const handleMealSelection = (mealNameInDropDown, mealOrder) => {
-        console.log(
-            "handleMealSelection=>",
-            mealNameInDropDown,
-            "was added with order of",
-            mealOrder
-        );
+        // console.log(
+        //     "handleMealSelection=>",
+        //     mealNameInDropDown,
+        //     "was added with order of",
+        //     mealOrder
+        // );
         props.newMeal(mealNameInDropDown, mealOrder);
         setEffectTrigger(mealNameInDropDown);
-        console.log("propsdiet is", props.diet);
+        // console.log("propsdiet is", props.diet);
     };
 
     //stores meals locally and reflects on screen
@@ -68,17 +68,17 @@ const ManageDiet = props => {
     // checks whether user is logged in
     if (props.uid) {
         const handleAddFood = (mealName, food, mealOrder) => {
-            console.log(
-                "handleAddFood=>",
-                food,
-                "was added to",
-                mealName,
-                "with order of",
-                mealOrder
-            );
+            // console.log(
+            //     "handleAddFood=>",
+            //     food,
+            //     "was added to",
+            //     mealName,
+            //     "with order of",
+            //     mealOrder
+            // );
             props.addFood(mealName, food, mealOrder);
             setEffectTrigger(food);
-            console.log("propsdiet is", props.diet);
+            // console.log("propsdiet is", props.diet);
         };
         return (
             <Col xs={24} sm={24} md={6} lg={6} xl={4}>
@@ -138,7 +138,7 @@ const ManageDiet = props => {
 const mapStateToProps = state => {
     return {
         uid: state.firebase.auth.uid,
-        diet: state.DietReducer,
+        // diet: state.DietReducer,
     };
 };
 
