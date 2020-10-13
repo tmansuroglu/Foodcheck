@@ -60,19 +60,16 @@ export const signUp = newUser => {
                         gender: newUser.gender,
                         heightCm: newUser.height,
                         weightKg: newUser.weight,
-                        dietIdDescriptions: {
-                            0: "breakfast",
-                            1: "lunch",
-                            2: "dinner",
-                            3: "snack",
+                        diet: {
+                            preBreakfastSnack: {},
+                            breakfast: {},
+                            preLunchSnack: {},
+                            lunch: {},
+                            preDinnerSnack: {},
+                            dinner: {},
+                            preSleepSnack: {},
                         },
-                        diet: {},
-                        dietDetails: {
-                            kcal: "",
-                            protein: "",
-                            fat: "",
-                            carb: "",
-                        },
+                        dietStats: {},
                     });
             })
             .then(() => {

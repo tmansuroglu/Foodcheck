@@ -1,11 +1,9 @@
-export const CreateMeal = (mealName, mealOrder) => {
+export const CreateMeal = mealName => {
     console.log(
         "createMeal action is being executed with meal name:",
-        mealName,
-        "and meal order: ",
-        mealOrder
+        mealName
     );
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore();
         const userID = getState().firebase.auth.uid;
         const userDoc = firestore.collection("users").doc(userID);
@@ -15,28 +13,27 @@ export const CreateMeal = (mealName, mealOrder) => {
             .get()
             .then(resp => (userProfile = { ...resp.data() }))
             .then(() => {
-                console.log("userProfile is", userProfile);
-                console.log("meal order is ", mealOrder);
                 console.log("mealName is", mealName);
+                console.log(userProfile);
                 userDoc.set({
                     ...userProfile,
                     diet: {
                         ...userProfile.diet,
-                        [mealOrder]: [],
+                        [mealName]: {},
                     },
                 });
             })
             .then(() => {
-                dispatch({ type: "CREATE_MEAL", mealName, mealOrder });
+                dispatch({ type: "CREATE_MEAL", mealName });
             })
             .catch(err => {
                 dispatch({ type: "CREATE_MEAL_FAILED", err: err.message });
             });
     };
 };
-
-export const AddFood = (mealName, food, mealOrder) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
+//rework this
+export const AddFood = (mealName, food) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore();
         const userID = getState().firebase.auth.uid;
         const userDoc = firestore.collection("users").doc(userID);
@@ -47,36 +44,54 @@ export const AddFood = (mealName, food, mealOrder) => {
                 userProfile = { ...resp.data() };
             })
             .then(() => {
-                // console.log("data is", userProfile.diet);
-                // console.log("meal order is ", mealOrder);
-                // console.log("mealName is", mealName);
-
-                // userDoc.set({
-
-                // });
                 userDoc.set({
                     ...userProfile,
                     diet: {
-                        ...userProfile.diet,
-                        [mealOrder]: [...userProfile.diet[mealOrder], food],
+                        ...[userProfile.diet],
+                        [mealName]: food,
                     },
                 });
-                // console.log(
-                //     "user diet Profile is",
-                //     userProfile.diet,
-                //     "meal order is:",
-                //     mealOrder,
-                //     "food is: ",
-                //     food,
-                //     "meal name is",
-                //     mealName
-                // );
             })
             .then(() => {
-                dispatch({ type: "ADD_FOOD", mealName, food, mealOrder });
+                dispatch({ type: "ADD_FOOD", mealName, food });
             })
             .catch(err => {
                 dispatch({ type: "ADD_FOOD_FAILED", err: err.message });
+            });
+    };
+};
+
+//rework this
+export const ActiveMeal = (mealName, mealContent) => ({
+    type: "MEAL_SELECTED",
+    mealName,
+    mealContent,
+});
+
+export const SetDiet = dietData => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firestore = getFirebase().firestore();
+        const userID = getState().firebase.auth.uid;
+        const userDoc = firestore.collection("users").doc(userID);
+        let userProfile = "";
+        userDoc
+            .get()
+            .then(resp => {
+                userProfile = { ...resp.data() };
+            })
+            .then(() => {
+                userDoc.set({
+                    ...userProfile,
+                    diet: {
+                        ...dietData,
+                    },
+                });
+            })
+            .then(() => {
+                dispatch({ type: "DIET_SET", dietData });
+            })
+            .catch(err => {
+                dispatch({ type: "DIET_SET_FAILED", err: err.message });
             });
     };
 };

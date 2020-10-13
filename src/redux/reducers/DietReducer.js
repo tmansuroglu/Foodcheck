@@ -1,15 +1,11 @@
-const dietState = {
-    diet: { 0: [], 1: [], 2: [], 3: [] },
-};
-
-const DietReducer = (state = dietState, action) => {
+const DietReducer = (state = {}, action) => {
     // console.log(action.err ? `error is: ${action.err}` : "");
     switch (action.type) {
         case "CREATE_MEAL":
             console.log("CREATE_MEAL", action.mealName);
             return {
                 ...state,
-                diet: { ...state.meals, [action.mealOrder]: [] },
+                diet: { ...state.diet, [action.mealName]: [] },
                 dietError: null,
             };
         case "CREATE_MEAL_FAILED":
@@ -29,8 +25,8 @@ const DietReducer = (state = dietState, action) => {
                 ...state,
                 diet: {
                     ...state.diet,
-                    [action.mealOrder]: [
-                        ...state.diet[action.mealOrder],
+                    [action.mealName]: [
+                        ...state.diet[action.mealName],
                         action.food,
                     ],
                 },
@@ -42,6 +38,22 @@ const DietReducer = (state = dietState, action) => {
                 ...state,
                 dietError: action.err,
             };
+        case "MEAL_SELECTED":
+            console.log("MEAL SELECTED", action.mealName, action.mealContent);
+            return {
+                ...state,
+                activeMeal: { [action.mealName]: action.mealContent },
+            };
+        case "DIET_SET":
+            console.log("DIET_SET", action.dietData);
+            return state;
+        case "DIET_SET_FAILED":
+            console.log("DIET_SET_FAILED");
+            return {
+                ...state,
+                dietError: action.err,
+            };
+
         default:
             return state;
     }
