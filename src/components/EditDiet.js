@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Col, Card, Row, AutoComplete } from "antd";
 import { querySearch } from "../NutritionixAPI";
+import { connect } from "react-redux";
 
 const EditDiet = props => {
-    const [options, setOptions] = useState([
-        { value: "" },
-        { value: "" },
-        { value: "" },
-        { value: "" },
-        { value: "" },
-    ]);
+    const [options, setOptions] = useState([]);
 
     const [query, setQuery] = useState("");
+
+    const NUM_DESIRED_RESULTS = 5;
 
     useEffect(() => {
         querySearch(query)
             .then(data => {
                 if (data) {
                     setOptions([]);
-                    Object.values(data).map((foodObj, index) => {
-                        if (index < 5) {
-                            setOptions([
-                                ...options,
-                                { value: foodObj.food_name },
-                            ]);
+                    const results = [];
+                    const datas = Object.values(data);
+                    for (let i = 0; i < data.length; i++) {
+                        if (i < NUM_DESIRED_RESULTS) {
+                            results.push({ value: datas[i].food_name });
                         }
-                    });
+                    }
+                    setOptions(results);
                 }
             })
             .catch(err => alert(err));
@@ -63,4 +60,13 @@ const EditDiet = props => {
     );
 };
 
+// const mapStateToProps = (state)=>{
+//     return(
+
+//     )
+// }
+
+// const mapDispatchToProps= dispatch =>{
+//     return ()
+// }
 export default EditDiet;
