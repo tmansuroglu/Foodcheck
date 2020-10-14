@@ -70,6 +70,7 @@ export const ActiveMeal = (mealName, mealContent) => ({
     mealContent,
 });
 
+// this is for deleting fix the name
 export const SetDiet = dietData => {
     return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore();
@@ -94,6 +95,35 @@ export const SetDiet = dietData => {
             })
             .catch(err => {
                 dispatch({ type: "DIET_SET_FAILED", err: err.message });
+            });
+    };
+};
+
+export const SetMeal = (mealName, mealData) => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firestore = getFirebase().firestore();
+        const userID = getState().firebase.auth.uid;
+        const userDoc = firestore.collection("users").doc(userID);
+        let userProfile = "";
+        userDoc
+            .get()
+            .then(resp => {
+                userProfile = { ...resp.data() };
+            })
+            .then(() => {
+                userDoc.set({
+                    ...userProfile,
+                    diet: {
+                        ...userProfile.diet,
+                        [mealName]: [...mealData],
+                    },
+                });
+            })
+            .then(() => {
+                dispatch({ type: "MEAL_SET", mealData });
+            })
+            .catch(err => {
+                dispatch({ type: "MEAL_SET_FAILED", err: err.message });
             });
     };
 };

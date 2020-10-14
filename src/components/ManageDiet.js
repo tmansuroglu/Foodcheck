@@ -140,6 +140,7 @@ const ManageDiet = props => {
         //console.log("newState is", newState);
         props.setDiet(newState);
         setModalVisibility(false);
+        props.activeMeal("");
     };
     function handleMealSelection(mealName, mealContent) {
         console.log("active meal has changed");

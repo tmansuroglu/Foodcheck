@@ -9,12 +9,17 @@ import {
     Button,
     List,
     Avatar,
+    Typography,
+    Modal,
 } from "antd";
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
 import { AddFood } from "../redux/actions/DietActions";
 import { PlusOutlined } from "@ant-design/icons";
 import db from "../firebaseConfig";
+import { SetMeal } from "../redux/actions/DietActions";
+
+const { Title, Text } = Typography;
 
 const EditDiet = props => {
     //stores auto complete data
@@ -115,19 +120,12 @@ const EditDiet = props => {
 
     //this must be on snapshot  //if this works dont pass meal content with active meal
     useEffect(() => {
-        console.log("selected meal is", props.SelectedMeal);
-
-        // if (props.SelectedMeal) {
-        //     db.collection("users")
-        //         .doc(props.uid)
-        //         .onSnapshot(function (doc) {
-        //             const dietData = doc.data().diet;
-        //        });
-        if (props.SelectedMeal) {
-            setActiveMealContent(Object.values(props.SelectedMeal)[0]);
-            setActiveMealName(Object.keys(props.SelectedMeal)[0]);
+        console.log("selected meal is", props.selectedMeal);
+        if (props.selectedMeal) {
+            setActiveMealContent(Object.values(props.selectedMeal)[0]);
+            setActiveMealName(Object.keys(props.selectedMeal)[0]);
         }
-    }, [props.SelectedMeal]);
+    }, [props.selectedMeal]);
 
     // make quantity input disabled or not disabled
 
@@ -237,7 +235,7 @@ const EditDiet = props => {
         }
         copyOfFoodDetails.nutrientsPerGram = nutrientsNamesAndValuesPerGram;
 
-        //nutrientNames.forEach(nutrient => delete copyOfFoodDetails[nutrient]);
+        // deletes nutrientNames arr elemets. "nf" section is not included but for some reason it works ?
         for (let i = 0; i < nutrientNames.length; i++) {
             delete copyOfFoodDetails[nutrientNames[i]];
         }
@@ -262,6 +260,36 @@ const EditDiet = props => {
         setActiveMealContent([...activeMealContent, copyOfFoodDetails]);
     };
 
+    const [modalVisibility, setModalVisibility] = useState(false);
+
+    const [deletionTarget, setDeletionTarget] = useState();
+    const handleDelete = food => {
+        setModalVisibility(true);
+        setDeletionTarget(food);
+    };
+
+    const handleFoodDeletion = () => {
+        console.log("deletionTarget", deletionTarget);
+        console.log("active meal name is", activeMealName);
+        console.log("active meal content is", activeMealContent);
+        const targetFood = activeMealContent.find(
+            food => food.food_name === deletionTarget.food_name
+        );
+
+        console.log("targetFood", targetFood);
+
+        const reducer = (acc, cur) => {
+            if (cur.food_name !== targetFood.food_name) {
+                acc.push(cur);
+            }
+            return acc;
+        };
+        const fixedMealContent = activeMealContent.reduce(reducer, []);
+        console.log("fixedMealContent", fixedMealContent);
+        props.setMeal(activeMealName, fixedMealContent);
+        setActiveMealContent(fixedMealContent);
+        setModalVisibility(false);
+    };
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={16}>
             <Row justify="center">
@@ -269,10 +297,17 @@ const EditDiet = props => {
                     <Card
                         title={
                             <>
+                                <Title
+                                    style={{ textAlign: "center" }}
+                                    level={3}
+                                >
+                                    {activeMealName}
+                                </Title>
+
                                 <AutoComplete
                                     style={{ width: 190 }}
                                     options={options}
-                                    placeholder="Search food here..."
+                                    placeholder="Add food here..."
                                     onSearch={handleSearch}
                                     onSelect={foodName =>
                                         handleSelectSearchResult(foodName)
@@ -308,17 +343,37 @@ const EditDiet = props => {
                             </>
                         }
                     >
-                        {activeMealContent.map(meal => {
+                        <Modal
+                            title="Are you sure?"
+                            style={{ top: 20 }}
+                            visible={modalVisibility}
+                            onOk={e => handleFoodDeletion()}
+                            onCancel={() => setModalVisibility(false)}
+                        >
+                            <p>Deleted meals can't be recovered!</p>
+                        </Modal>
+                        {activeMealContent.map(food => {
                             return (
                                 <List itemLayout="horizontal">
-                                    <List.Item>
+                                    <List.Item
+                                        actions={[
+                                            <a>edit</a>,
+                                            <a
+                                                onClick={e =>
+                                                    handleDelete(food)
+                                                }
+                                            >
+                                                delete
+                                            </a>,
+                                        ]}
+                                    >
                                         <List.Item.Meta
                                             avatar={
                                                 <Avatar
-                                                    src={meal.photo.thumb}
+                                                    src={food.photo.thumb}
                                                 />
                                             }
-                                            title={<p>{meal.food_name}</p>}
+                                            title={<p>{food.food_name}</p>}
                                         />
                                     </List.Item>
                                 </List>
@@ -335,7 +390,7 @@ const EditDiet = props => {
 
 const mapStateToProps = state => {
     return {
-        SelectedMeal: state.DietReducer.activeMeal,
+        selectedMeal: state.DietReducer.activeMeal,
         uid: state.firebase.auth.uid,
     };
 };
@@ -344,6 +399,7 @@ const mapDispatchToProps = dispatch => {
     return {
         addFood: (mealName, mealContent) =>
             dispatch(AddFood(mealName, mealContent)),
+        setMeal: (mealName, mealData) => dispatch(SetMeal(mealName, mealData)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EditDiet);
