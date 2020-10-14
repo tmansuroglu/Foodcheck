@@ -11,6 +11,7 @@ import {
     Avatar,
     Typography,
     Modal,
+    Collapse,
 } from "antd";
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
@@ -20,6 +21,8 @@ import db from "../firebaseConfig";
 import { SetMeal } from "../redux/actions/DietActions";
 
 const { Title, Text } = Typography;
+
+const { Panel } = Collapse;
 
 const EditDiet = props => {
     //stores auto complete data
@@ -164,14 +167,7 @@ const EditDiet = props => {
         );
 
         //  finds gram weight per selected serving size
-        console.log(
-            "selectedFoodMeasureDetails.serving_weight",
-            selectedFoodMeasureDetails.serving_weight
-        );
-        console.log(
-            "selectedFoodMeasureDetails.qty",
-            selectedFoodMeasureDetails.qty
-        );
+
         const selectedFoodMeasureInGrams =
             selectedFoodMeasureDetails.serving_weight /
             selectedFoodMeasureDetails.qty;
@@ -350,7 +346,7 @@ const EditDiet = props => {
                             onOk={e => handleFoodDeletion()}
                             onCancel={() => setModalVisibility(false)}
                         >
-                            <p>Deleted meals can't be recovered!</p>
+                            <p>Deleted foods can't be recovered!</p>
                         </Modal>
                         {activeMealContent.map(food => {
                             return (
@@ -373,7 +369,138 @@ const EditDiet = props => {
                                                     src={food.photo.thumb}
                                                 />
                                             }
-                                            title={<p>{food.food_name}</p>}
+                                            title={
+                                                <p>
+                                                    {
+                                                        food.nutrientsConsumed
+                                                            .serving_amount
+                                                    }{" "}
+                                                    {
+                                                        food.nutrientsConsumed
+                                                            .serving_size
+                                                    }{" "}
+                                                    {food.food_name}
+                                                </p>
+                                            }
+                                            description={
+                                                <Collapse ghost>
+                                                    <Panel
+                                                        header={
+                                                            <a>
+                                                                Click here to
+                                                                see details
+                                                            </a>
+                                                        }
+                                                    >
+                                                        <List>
+                                                            <List.Item>
+                                                                Serving size :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .serving_amount
+                                                                }{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .serving_size
+                                                                }{" "}
+                                                                (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .consumption_in_grams
+                                                                }{" "}
+                                                                gr)
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Calories:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .calories
+                                                                }{" "}
+                                                                kcal
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Protein:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .protein
+                                                                }
+                                                                gr
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Total
+                                                                Carbohydrate :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .total_carbohydrate
+                                                                }
+                                                                gr (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .sugars
+                                                                }
+                                                                gr sugar and{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .cholesterol
+                                                                }
+                                                                mg cholesterol)
+                                                            </List.Item>
+
+                                                            <List.Item>
+                                                                Total Fat:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .total_fat
+                                                                }
+                                                                gr (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .saturated_fat
+                                                                }
+                                                                gr saturated
+                                                                fat)
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Sodium :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .sodium
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Potassium :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .potassium
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Fibers :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .fibers
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                        </List>
+                                                    </Panel>
+                                                </Collapse>
+                                            }
                                         />
                                     </List.Item>
                                 </List>
