@@ -11,10 +11,12 @@ const DietPage = () => {
     return (
         <Row>
             <ManageDiet />
-            {/* <EditDiet /> */}
+            <EditDiet />
             <DietDetails />
         </Row>
     );
 };
 
 export default DietPage;
+
+// test

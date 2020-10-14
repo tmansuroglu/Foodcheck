@@ -15,12 +15,6 @@ const DietReducer = (state = {}, action) => {
                 dietError: action.err,
             };
         case "ADD_FOOD":
-            console.log(
-                "ADD_FOOD EXECUTED. ",
-                action.mealName,
-                "=>",
-                action.food
-            );
             return {
                 ...state,
                 diet: {

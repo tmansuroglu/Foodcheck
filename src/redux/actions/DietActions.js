@@ -19,7 +19,7 @@ export const CreateMeal = mealName => {
                     ...userProfile,
                     diet: {
                         ...userProfile.diet,
-                        [mealName]: {},
+                        [mealName]: [],
                     },
                 });
             })
@@ -32,7 +32,7 @@ export const CreateMeal = mealName => {
     };
 };
 //rework this
-export const AddFood = (mealName, food) => {
+export const AddFood = (mealName, mealObj) => {
     return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore();
         const userID = getState().firebase.auth.uid;
@@ -47,13 +47,16 @@ export const AddFood = (mealName, food) => {
                 userDoc.set({
                     ...userProfile,
                     diet: {
-                        ...[userProfile.diet],
-                        [mealName]: food,
+                        ...userProfile.diet,
+                        [mealName]: [
+                            ...userProfile.diet[mealName],
+                            { ...mealObj },
+                        ],
                     },
                 });
             })
             .then(() => {
-                dispatch({ type: "ADD_FOOD", mealName, food });
+                dispatch({ type: "ADD_FOOD", mealName, mealObj });
             })
             .catch(err => {
                 dispatch({ type: "ADD_FOOD_FAILED", err: err.message });
@@ -61,7 +64,6 @@ export const AddFood = (mealName, food) => {
     };
 };
 
-//rework this
 export const ActiveMeal = (mealName, mealContent) => ({
     type: "MEAL_SELECTED",
     mealName,

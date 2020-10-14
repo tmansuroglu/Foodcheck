@@ -1,14 +1,19 @@
 import React from "react";
-import "./ManageDiet.css";
-import { Col, Menu, Dropdown, Typography, Modal, Collapse } from "antd";
+
+import {
+    Col,
+    Menu,
+    Dropdown,
+    Typography,
+    Modal,
+    Collapse,
+    Button,
+    List,
+    Avatar,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
-import {
-    CreateMeal,
-    AddFood,
-    ActiveMeal,
-    SetDiet,
-} from "../redux/actions/DietActions";
+import { CreateMeal, ActiveMeal, SetDiet } from "../redux/actions/DietActions";
 import db from "../firebaseConfig";
 import { Redirect } from "react-router-dom";
 
@@ -59,8 +64,12 @@ const ManageDiet = props => {
 
     // Allows user to create meals,
     const handleMealCreation = mealName => {
-        props.newMeal(mealName);
-        setEffectTrigger(mealName);
+        if (props.userData.diet[mealName]) {
+            alert(`You already created ${mealName}`);
+        } else {
+            props.createMeal(mealName);
+            setEffectTrigger(mealName);
+        }
     };
 
     //stores meals locally and reflects on screen
@@ -124,6 +133,7 @@ const ManageDiet = props => {
         fixedMeals.forEach(meal => {
             const key = Object.keys(meal)[0];
             const value = Object.values(meal)[0];
+            console.log(key, value);
             newState[key] = value;
         });
         //console.log("oldState is", meals);
@@ -131,7 +141,7 @@ const ManageDiet = props => {
         props.setDiet(newState);
         setModalVisibility(false);
     };
-    function handleMouseOver(mealName, mealContent) {
+    function handleMealSelection(mealName, mealContent) {
         console.log("active meal has changed");
         props.activeMeal(mealName, mealContent);
         console.log(props.findActiveMeal);
@@ -150,19 +160,18 @@ const ManageDiet = props => {
                     <p>Deleted meals can't be recovered!</p>
                 </Modal>
                 <Dropdown overlay={menu}>
-                    <a
+                    <Button
                         className="ant-dropdown-link"
                         onClick={e => e.preventDefault()}
                     >
                         <PlusOutlined /> Add Meal
-                    </a>
+                    </Button>
                 </Dropdown>
                 {
                     <Collapse>
                         {meals.map((meal, id) => {
                             const mealName = Object.keys(meal)[0];
                             const mealContent = Object.values(meal)[0];
-                            //console.log(mealName, mealContent);
                             return (
                                 <Panel
                                     onClick={e => console.log(e)}
@@ -170,8 +179,8 @@ const ManageDiet = props => {
                                     header={
                                         <>
                                             <div
-                                                onMouseOver={e =>
-                                                    handleMouseOver(
+                                                onClick={e =>
+                                                    handleMealSelection(
                                                         mealName,
                                                         mealContent
                                                     )
@@ -197,7 +206,29 @@ const ManageDiet = props => {
                                             </Text>
                                         </>
                                     }
-                                ></Panel>
+                                >
+                                    {
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={mealContent}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        avatar={
+                                                            <Avatar
+                                                                src={
+                                                                    item.photo
+                                                                        .thumb
+                                                                }
+                                                            />
+                                                        }
+                                                        title={item.food_name}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                    }
+                                </Panel>
                             );
                         })}
                     </Collapse>
@@ -214,13 +245,13 @@ const mapStateToProps = state => {
     return {
         uid: state.firebase.auth.uid,
         findActiveMeal: state.DietReducer.activeMeal,
-        dietData: state.DietReducer.diet,
+        userData: state.firebase.profile,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        newMeal: mealName => dispatch(CreateMeal(mealName)),
+        createMeal: mealName => dispatch(CreateMeal(mealName)),
         activeMeal: (mealName, foodContent) =>
             dispatch(ActiveMeal(mealName, foodContent)),
         setDiet: dietData => dispatch(SetDiet(dietData)),
