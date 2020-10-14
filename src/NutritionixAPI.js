@@ -1,6 +1,8 @@
-const APP_ID = "850e6676";
-const APP_KEY = "f6e0e48a8808d3019c4f14524ba3c23f";
+const APP_ID = "df9d1aa1";
+const APP_KEY = "0f3c465f6a6ce5a0ef1f34be21932da5";
 
+// const APP_ID = "850e6676";
+// const APP_KEY = "f6e0e48a8808d3019c4f14524ba3c23f";
 export const querySearch = async food => {
     // const url = BASE_URL + string;
     const queryUrl = `https://trackapi.nutritionix.com/v2/search/instant?query=${food}&self=false&branded=false&detailed=true`;
@@ -44,6 +46,7 @@ export const getDetails = async food => {
             //console.log("resp is",resp)
             const data = await resp.json();
             //console.log("data is", data)
+
             console.log(data.foods[0]);
             return data.foods[0];
         }

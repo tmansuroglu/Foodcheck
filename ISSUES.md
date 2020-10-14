@@ -14,3 +14,5 @@
 -   in manageDiet, meals state store same meal 2 times
 -   what if user doesnt select food from autocomplete search and clicks on add?
 -   search form doesnt reset after searching
+-   file names are bad. decide on naming convention
+-   git doesnt recognize capital letter changes
