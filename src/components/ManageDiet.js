@@ -150,7 +150,7 @@ const ManageDiet = props => {
     // checks whether user is logged in
     if (props.uid) {
         return (
-            <Col xs={24} sm={24} md={6} lg={6} xl={4}>
+            <Col xs={24} sm={24} md={6} lg={4} xl={4} xxl={4}>
                 <Modal
                     title="Are you sure?"
                     style={{ top: 20 }}

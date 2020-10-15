@@ -467,7 +467,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
     }, [sortType]);
 
     return (
-        <Col xs={24} sm={24} md={12} lg={12} xl={16}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
             <Space>
                 View:{" "}
                 <Switch
@@ -484,7 +484,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                             style={{ width: "95%" }}
                             hoverable="true"
                             title={
-                                <>
+                                <div align="center">
                                     <Title
                                         style={{ textAlign: "center" }}
                                         level={3}
@@ -546,7 +546,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                     >
                                         {sortOptions}
                                     </Select>
-                                </>
+                                </div>
                             }
                         >
                             <Modal
@@ -568,6 +568,11 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                             lg={24}
                                             xl={listLayout ? 24 : 12}
                                             xxl={listLayout ? 24 : 8}
+                                            style={{
+                                                border: `1.5px solid rgb(144,238,144)`,
+                                                borderRadius: "5px",
+                                                padding: "1%",
+                                            }}
                                         >
                                             <List itemLayout="horizontal">
                                                 <List.Item

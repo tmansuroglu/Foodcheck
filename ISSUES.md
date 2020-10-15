@@ -18,5 +18,3 @@
 -   after edit food order changes
 
 *   **Completed tasks.** Completed tasks should not be shown on the main boards. When a task is marked completed, you may decide how it will be shown, but it should be separated. For example, you could have a special board for completed tasks, or you could make a completely separate page that loads all the completed tasks.
-
-    **Toggle display type**: There should be a button that allows users to toggle between "list" and "board" views of all the boards. Hint: keep a state variable on the container that contains two possible values. Here is an example of what we mean by [board](./board-example.png) and [list](./list-example.png). List-view only has to be read-only
