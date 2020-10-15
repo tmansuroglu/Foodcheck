@@ -371,22 +371,27 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
         const copyOfActiveMealContent = [...activeMealContent];
         const weightPerServing =
             newServingSizeObj.serving_weight / newServingSizeObj.qty;
+        console.log("newServingSizeObj", newServingSizeObj.measure);
         const newNutrientsConsumed = {
             serving_size: newServingSizeObj.measure,
             serving_amount: newAmount,
             consumption_in_grams: weightPerServing * newAmount,
         };
+        console.log(
+            "newNutrientsConsumed.serving_size",
+            newNutrientsConsumed.serving_size
+        );
         Object.entries(editTarget.nutrientsPerGram).forEach(
             (nutrientName, index) => {
                 console.log(nutrientName);
-
-                newNutrientsConsumed[nutrientName[0]] =
-                    nutrientName[1] * weightPerServing * newAmount;
+                if (nutrientName[0] !== "serving_size")
+                    newNutrientsConsumed[nutrientName[0]] =
+                        nutrientName[1] * weightPerServing * newAmount;
             }
         );
         const modifiedTarget = { ...editTarget };
         modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
-        let mealWithoutTargetFood = copyOfActiveMealContent.find(
+        let mealWithoutTargetFood = copyOfActiveMealContent.filter(
             meal => meal.id !== modifiedTarget.id
         );
         mealWithoutTargetFood = mealWithoutTargetFood
@@ -612,8 +617,247 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                         >
                             <p>Deleted foods can't be recovered!</p>
                         </Modal>
+<<<<<<< HEAD
 
                         {content}
+=======
+                        {activeMealContent.map(food => {
+                            return (
+                                <List itemLayout="horizontal">
+                                    <List.Item
+                                        actions={[
+                                            <a onClick={e => handleEdit(food)}>
+                                                edit
+                                            </a>,
+                                            <a
+                                                onClick={e =>
+                                                    handleDelete(food)
+                                                }
+                                            >
+                                                delete
+                                            </a>,
+                                        ]}
+                                    >
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Avatar
+                                                    src={food.photo.thumb}
+                                                />
+                                            }
+                                            title={
+                                                isEditing ? (
+                                                    <Space>
+                                                        {food.food_name}
+
+                                                        <Select
+                                                            style={{
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
+                                                                width: "10vw",
+                                                            }}
+                                                            placeholder="serving size"
+                                                            onChange={
+                                                                handleServingSizeEdit
+                                                            }
+                                                        >
+                                                            {newOptionsArr
+                                                                ? newOptionsArr
+                                                                : ""}
+                                                        </Select>
+                                                        <InputNumber
+                                                            min={1}
+                                                            max={999999}
+                                                            disabled={
+                                                                isEditInputDisabled
+                                                            }
+                                                            defaultValue={1}
+                                                            onChange={
+                                                                handleEditAmount
+                                                            }
+                                                            style={{
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
+                                                                width: "4vw",
+                                                            }}
+                                                        />
+                                                        <Button
+                                                            style={{
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
+                                                                width: "5vw",
+                                                            }}
+                                                            disabled={
+                                                                isEditInputDisabled
+                                                            }
+                                                            onClick={
+                                                                handleApplyButton
+                                                            }
+                                                        >
+                                                            Apply
+                                                        </Button>
+                                                    </Space>
+                                                ) : (
+                                                    <p>
+                                                        {
+                                                            food
+                                                                .nutrientsConsumed
+                                                                .serving_amount
+                                                        }{" "}
+                                                        {
+                                                            food
+                                                                .nutrientsConsumed
+                                                                .serving_size
+                                                        }{" "}
+                                                        {food.food_name}
+                                                    </p>
+                                                )
+                                            }
+                                            description={
+                                                <Collapse ghost>
+                                                    <Panel
+                                                        header={
+                                                            <a>
+                                                                Click here to
+                                                                see details
+                                                            </a>
+                                                        }
+                                                    >
+                                                        <List>
+                                                            <List.Item>
+                                                                Serving size :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .serving_amount
+                                                                }{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .serving_size
+                                                                }{" "}
+                                                                (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .consumption_in_grams
+                                                                }{" "}
+                                                                gr)
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Calories:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .calories
+                                                                }{" "}
+                                                                kcal
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Protein:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .protein
+                                                                }
+                                                                gr
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Total
+                                                                Carbohydrate :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .total_carbohydrate
+                                                                }
+                                                                gr (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .sugars
+                                                                }
+                                                                gr sugar and{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .cholesterol
+                                                                }
+                                                                mg cholesterol)
+                                                            </List.Item>
+
+                                                            <List.Item>
+                                                                Total Fat:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .total_fat
+                                                                }
+                                                                gr (
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .saturated_fat
+                                                                }
+                                                                gr saturated
+                                                                fat)
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Sodium :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .sodium
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Potassium :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .potassium
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Fibers :{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .fibers
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Phosphorus:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .p
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                        </List>
+                                                    </Panel>
+                                                </Collapse>
+                                            }
+                                        />
+                                    </List.Item>
+                                </List>
+                            );
+                        })}
+>>>>>>> 4b5cf31
                     </Card>
                 ) : (
                     ""
