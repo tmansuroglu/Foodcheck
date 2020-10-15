@@ -56,6 +56,14 @@ const DietReducer = (state = {}, action) => {
                 ...state,
                 dietError: action.err,
             };
+        case "STATS_SET":
+            console.log("STATS SET");
+            return state;
+        case "STATS_SET_FAILED":
+            return {
+                ...state,
+                dietError: action.err,
+            };
 
         default:
             return state;

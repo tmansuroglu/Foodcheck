@@ -127,3 +127,32 @@ export const SetMeal = (mealName, mealData) => {
             });
     };
 };
+
+export const setStats = (dailyMacroObj, mealsMacrosObj) => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firestore = getFirebase().firestore();
+        const userID = getState().firebase.auth.uid;
+        const userDoc = firestore.collection("users").doc(userID);
+        let userProfile = "";
+        userDoc
+            .get()
+            .then(resp => {
+                userProfile = { ...resp.data() };
+            })
+            .then(() => {
+                userDoc.set({
+                    ...userProfile,
+                    dietStats: {
+                        dailyStats: dailyMacroObj,
+                        mealsStats: mealsMacrosObj,
+                    },
+                });
+            })
+            .then(() => {
+                dispatch({ type: "STATS_SET", dailyMacroObj, mealsMacrosObj });
+            })
+            .catch(err => {
+                dispatch({ type: "STATS_SET_FAILED", err: err.message });
+            });
+    };
+};
