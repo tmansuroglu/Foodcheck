@@ -12,6 +12,7 @@ import {
     Typography,
     Modal,
     Space,
+    Collapse,
 } from "antd";
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
@@ -32,6 +33,7 @@ import {
     descProtein,
 } from "../EditDietFunctions/sortFunctions";
 import sortFunc from "../EditDietFunctions/sortOptions";
+const { Panel } = Collapse;
 //import handleAddFood from "../EditDietFunctions/handleAddFood";
 
 const { Title } = Typography;
@@ -90,7 +92,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
     //this is for disabled status of edit button and edit input
     const [isEditInputDisabled, setIsEditInputDisabled] = useState(true);
 
-    const [newAmount, setNewAmount] = useState(1);
+    const [newAmount, setNewAmount] = useState();
 
     const [newServingSizeObj, setNewServingSizeObj] = useState({});
 
@@ -362,48 +364,55 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
     }, [editTarget]);
 
     const handleApplyButton = () => {
-        console.log("apply button clicked");
-        console.log("new amount is", newAmount);
-        console.log("new serving is", newServingSizeObj);
-        console.log("edit target is", editTarget);
-        console.log("active meal content is", activeMealContent);
-        console.log("active meal name is", activeMealName);
-        const copyOfActiveMealContent = [...activeMealContent];
-        const weightPerServing =
-            newServingSizeObj.serving_weight / newServingSizeObj.qty;
-        console.log("newServingSizeObj", newServingSizeObj.measure);
-        const newNutrientsConsumed = {
-            serving_size: newServingSizeObj.measure,
-            serving_amount: newAmount,
-            consumption_in_grams: weightPerServing * newAmount,
-        };
-        console.log(
-            "newNutrientsConsumed.serving_size",
-            newNutrientsConsumed.serving_size
-        );
-        Object.entries(editTarget.nutrientsPerGram).forEach(
-            (nutrientName, index) => {
-                console.log(nutrientName);
-                if (nutrientName[0] !== "serving_size")
-                    newNutrientsConsumed[nutrientName[0]] =
-                        nutrientName[1] * weightPerServing * newAmount;
-            }
-        );
-        const modifiedTarget = { ...editTarget };
-        modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
-        let mealWithoutTargetFood = copyOfActiveMealContent.filter(
-            meal => meal.id !== modifiedTarget.id
-        );
-        mealWithoutTargetFood = mealWithoutTargetFood
-            ? mealWithoutTargetFood
-            : [];
-        console.log("meal without target is", mealWithoutTargetFood);
-        const modifiedMealContent = [...mealWithoutTargetFood, modifiedTarget];
-        console.log("meal with modified target", modifiedMealContent);
-        setMeal(activeMealName, modifiedMealContent);
-        setActiveMealContent(modifiedMealContent);
-        setIsEditing(false);
-        setIsEditInputDisabled(true);
+        if (newAmount) {
+            console.log("apply button clicked");
+            console.log("new amount is", newAmount);
+            console.log("new serving is", newServingSizeObj);
+            console.log("edit target is", editTarget);
+            console.log("active meal content is", activeMealContent);
+            console.log("active meal name is", activeMealName);
+            const copyOfActiveMealContent = [...activeMealContent];
+            const weightPerServing =
+                newServingSizeObj.serving_weight / newServingSizeObj.qty;
+            console.log("newServingSizeObj", newServingSizeObj.measure);
+            const newNutrientsConsumed = {
+                serving_size: newServingSizeObj.measure,
+                serving_amount: newAmount,
+                consumption_in_grams: weightPerServing * newAmount,
+            };
+            console.log(
+                "newNutrientsConsumed.serving_size",
+                newNutrientsConsumed.serving_size
+            );
+            Object.entries(editTarget.nutrientsPerGram).forEach(
+                (nutrientName, index) => {
+                    console.log(nutrientName);
+                    if (nutrientName[0] !== "serving_size")
+                        newNutrientsConsumed[nutrientName[0]] =
+                            nutrientName[1] * weightPerServing * newAmount;
+                }
+            );
+            const modifiedTarget = { ...editTarget };
+            modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
+            let mealWithoutTargetFood = copyOfActiveMealContent.filter(
+                meal => meal.id !== modifiedTarget.id
+            );
+            mealWithoutTargetFood = mealWithoutTargetFood
+                ? mealWithoutTargetFood
+                : [];
+            console.log("meal without target is", mealWithoutTargetFood);
+            const modifiedMealContent = [
+                ...mealWithoutTargetFood,
+                modifiedTarget,
+            ];
+            console.log("meal with modified target", modifiedMealContent);
+            setMeal(activeMealName, modifiedMealContent);
+            setActiveMealContent(modifiedMealContent);
+            setIsEditing(false);
+            setIsEditInputDisabled(true);
+        } else {
+            alert("You need to make an input!");
+        }
     };
 
     const handleEditAmount = e => {
@@ -460,7 +469,6 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                                 min={1}
                                                 max={999999}
                                                 disabled={isEditInputDisabled}
-                                                defaultValue={1}
                                                 onChange={handleEditAmount}
                                                 style={{
                                                     display: `${editFoodVisibility}`,
@@ -617,10 +625,6 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                         >
                             <p>Deleted foods can't be recovered!</p>
                         </Modal>
-<<<<<<< HEAD
-
-                        {content}
-=======
                         {activeMealContent.map(food => {
                             return (
                                 <List itemLayout="horizontal">
@@ -857,7 +861,6 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                 </List>
                             );
                         })}
->>>>>>> 4b5cf31
                     </Card>
                 ) : (
                     ""
