@@ -334,22 +334,27 @@ const EditDiet = props => {
         const copyOfActiveMealContent = [...activeMealContent];
         const weightPerServing =
             newServingSizeObj.serving_weight / newServingSizeObj.qty;
+        console.log("newServingSizeObj", newServingSizeObj.measure);
         const newNutrientsConsumed = {
             serving_size: newServingSizeObj.measure,
             serving_amount: newAmount,
             consumption_in_grams: weightPerServing * newAmount,
         };
+        console.log(
+            "newNutrientsConsumed.serving_size",
+            newNutrientsConsumed.serving_size
+        );
         Object.entries(editTarget.nutrientsPerGram).forEach(
             (nutrientName, index) => {
                 console.log(nutrientName);
-
-                newNutrientsConsumed[nutrientName[0]] =
-                    nutrientName[1] * weightPerServing * newAmount;
+                if (nutrientName[0] !== "serving_size")
+                    newNutrientsConsumed[nutrientName[0]] =
+                        nutrientName[1] * weightPerServing * newAmount;
             }
         );
         const modifiedTarget = { ...editTarget };
         modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
-        let mealWithoutTargetFood = copyOfActiveMealContent.find(
+        let mealWithoutTargetFood = copyOfActiveMealContent.filter(
             meal => meal.id !== modifiedTarget.id
         );
         mealWithoutTargetFood = mealWithoutTargetFood
@@ -475,7 +480,12 @@ const EditDiet = props => {
 
                                                         <Select
                                                             style={{
-                                                                display: `${editFoodVisibility}`,
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
                                                                 width: "10vw",
                                                             }}
                                                             placeholder="serving size"
@@ -498,13 +508,23 @@ const EditDiet = props => {
                                                                 handleEditAmount
                                                             }
                                                             style={{
-                                                                display: `${editFoodVisibility}`,
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
                                                                 width: "4vw",
                                                             }}
                                                         />
                                                         <Button
                                                             style={{
-                                                                display: `${editFoodVisibility}`,
+                                                                display: `${
+                                                                    editTarget.id ===
+                                                                    food.id
+                                                                        ? "inline-block"
+                                                                        : "none"
+                                                                }`,
                                                                 width: "5vw",
                                                             }}
                                                             disabled={
