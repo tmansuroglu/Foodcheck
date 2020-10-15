@@ -11,33 +11,92 @@ import {
     Avatar,
     Typography,
     Modal,
-    Collapse,
     Space,
 } from "antd";
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
 import { AddFood } from "../redux/actions/DietActions";
 import { PlusOutlined } from "@ant-design/icons";
-import db from "../firebaseConfig";
 import { SetMeal } from "../redux/actions/DietActions";
+import description from "../EditDietFunctions/description";
+import {
+    ascCalories,
+    descCalories,
+    ascFat,
+    descFat,
+    ascCarbo,
+    descCarbo,
+    ascName,
+    descName,
+    ascProtein,
+    descProtein,
+} from "../EditDietFunctions/sortFunctions";
+import sortFunc from "../EditDietFunctions/sortOptions";
+//import handleAddFood from "../EditDietFunctions/handleAddFood";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
+const { Option } = Select;
 
-const { Panel } = Collapse;
-
-const EditDiet = props => {
+const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
+    const NUM_DESIRED_RESULTS = 5;
     //stores auto complete data
     const [options, setOptions] = useState([]);
 
+    const [sortOptions, setSortOptions] = useState([]);
+
+    useEffect(() => {
+        setSortOptions(sortFunc);
+    }, [sortFunc]);
     //stores the words user wants to search
     const [query, setQuery] = useState("");
 
     //stores selected food from search bar
     const [selectedFoodName, setSelectedFoodName] = useState("");
 
-    const NUM_DESIRED_RESULTS = 5;
+    //stores selected measure
+    const [selectedFoodMeasure, setSelectedFoodMeasure] = useState({});
 
-    const { Option } = Select;
+    //toogles availability of input
+    const [inputToggle, setInputToggle] = useState(true);
+
+    //stores food details
+    const [foodDetails, setFoodDetails] = useState();
+
+    //stores selected amount
+    const [amount, setAmount] = useState(1);
+
+    const [activeMealContent, setActiveMealContent] = useState();
+
+    const [activeMealName, setActiveMealName] = useState("");
+
+    //serving options for select element
+    const [servingOptions, setServingOptions] = useState();
+
+    const [modalVisibility, setModalVisibility] = useState(false);
+
+    const [deletionTarget, setDeletionTarget] = useState();
+
+    //for input fields' style={{display: "none"}} appearing after clicking edit
+    const [editFoodVisibility, setEditFoodVisibility] = useState("none");
+
+    const [editTarget, setEditTarget] = useState();
+
+    // for options in editing
+    const [newOptionsArr, setNewOptionsArr] = useState();
+
+    //this is for to check is editing active
+    const [isEditing, setIsEditing] = useState(false);
+
+    //this is for disabled status of edit button and edit input
+    const [isEditInputDisabled, setIsEditInputDisabled] = useState(true);
+
+    const [newAmount, setNewAmount] = useState(1);
+
+    const [newServingSizeObj, setNewServingSizeObj] = useState({});
+
+    const [sortType, setSortType] = useState();
+
+    const [sorted, setSorted] = useState(false);
 
     useEffect(() => {
         querySearch(query)
@@ -59,24 +118,6 @@ const EditDiet = props => {
         console.log("onSelect", input);
         setQuery(input);
     };
-
-    //stores selected measure
-    const [selectedFoodMeasure, setSelectedFoodMeasure] = useState({});
-
-    //toogles availability of input
-    const [inputToggle, setInputToggle] = useState(true);
-
-    //stores food details
-    const [foodDetails, setFoodDetails] = useState();
-
-    //stores selected amount
-    const [amount, setAmount] = useState(1);
-
-    const [activeMealContent, setActiveMealContent] = useState();
-    const [activeMealName, setActiveMealName] = useState("");
-
-    //serving options for select element
-    const [servingOptions, setServingOptions] = useState();
 
     function onMeasureChange(value) {
         console.log(`measure changed to ${value}`);
@@ -124,12 +165,12 @@ const EditDiet = props => {
 
     //this must be on snapshot  //if this works dont pass meal content with active meal
     useEffect(() => {
-        console.log("selected meal is", props.selectedMeal);
-        if (props.selectedMeal) {
-            setActiveMealContent(Object.values(props.selectedMeal)[0]);
-            setActiveMealName(Object.keys(props.selectedMeal)[0]);
+        console.log("selected meal is", selectedMeal);
+        if (selectedMeal) {
+            setActiveMealContent(Object.values(selectedMeal)[0]);
+            setActiveMealName(Object.keys(selectedMeal)[0]);
         }
-    }, [props.selectedMeal]);
+    }, [selectedMeal]);
 
     // make quantity input disabled or not disabled
 
@@ -138,6 +179,15 @@ const EditDiet = props => {
         setAmount(value);
     };
 
+    // handleAddFood(
+    //     foodDetails,
+    //     selectedFoodMeasure,
+    //     amount,
+    //     activeMealName,
+    //     setActiveMealContent,
+    //     activeMealContent,
+    //     addFood
+    // );
     const handleAddFood = () => {
         const copyOfFoodDetails = { ...foodDetails };
 
@@ -256,14 +306,11 @@ const EditDiet = props => {
         delete copyOfFoodDetails.serving_unit;
         delete copyOfFoodDetails.serving_weight_grams;
 
-        props.addFood(activeMealName, copyOfFoodDetails);
+        addFood(activeMealName, copyOfFoodDetails);
 
         setActiveMealContent([...activeMealContent, copyOfFoodDetails]);
     };
 
-    const [modalVisibility, setModalVisibility] = useState(false);
-
-    const [deletionTarget, setDeletionTarget] = useState();
     const handleDelete = food => {
         setModalVisibility(true);
         setDeletionTarget(food);
@@ -287,14 +334,11 @@ const EditDiet = props => {
         };
         const fixedMealContent = activeMealContent.reduce(reducer, []);
         console.log("fixedMealContent", fixedMealContent);
-        props.setMeal(activeMealName, fixedMealContent);
+        setMeal(activeMealName, fixedMealContent);
         setActiveMealContent(fixedMealContent);
         setModalVisibility(false);
     };
 
-    const [editFoodVisibility, setEditFoodVisibility] = useState("none");
-
-    const [editTarget, setEditTarget] = useState();
     const handleEdit = food => {
         console.log("clicked on edit");
         setEditFoodVisibility("inline-block");
@@ -302,8 +346,7 @@ const EditDiet = props => {
         setEditTarget(food);
         console.log("food is", food);
     };
-    // for options in editing
-    const [newOptionsArr, setNewOptionsArr] = useState();
+
     useEffect(() => {
         if (editTarget) {
             const newOptions = editTarget.alt_measures.map(type => {
@@ -317,12 +360,6 @@ const EditDiet = props => {
             setNewOptionsArr(newOptions);
         }
     }, [editTarget]);
-
-    //this is for creating select and input field for food title
-    const [isEditing, setIsEditing] = useState(false);
-
-    //this is for disabled status of edit button and edit input
-    const [isEditInputDisabled, setIsEditInputDisabled] = useState(true);
 
     const handleApplyButton = () => {
         console.log("apply button clicked");
@@ -358,19 +395,16 @@ const EditDiet = props => {
         console.log("meal without target is", mealWithoutTargetFood);
         const modifiedMealContent = [...mealWithoutTargetFood, modifiedTarget];
         console.log("meal with modified target", modifiedMealContent);
-        props.setMeal(activeMealName, modifiedMealContent);
+        setMeal(activeMealName, modifiedMealContent);
         setActiveMealContent(modifiedMealContent);
         setIsEditing(false);
         setIsEditInputDisabled(true);
     };
 
-    const [newAmount, setNewAmount] = useState(1);
     const handleEditAmount = e => {
         console.log("edit amount changed", e);
         setNewAmount(e);
     };
-
-    const [newServingSizeObj, setNewServingSizeObj] = useState({});
 
     const handleServingSizeEdit = e => {
         console.log("handleServingSizeEdit");
@@ -382,11 +416,134 @@ const EditDiet = props => {
         console.log("new serving obj", newServingObj);
         setNewServingSizeObj(newServingObj);
     };
+
+    const [content, setContent] = useState();
+    useEffect(() => {
+        if (activeMealContent) {
+            //console.log("activeMealContent", activeMealContent);
+            console.log("activeMealContent", activeMealContent);
+
+            const newContent = activeMealContent.map(food => {
+                return (
+                    <List itemLayout="horizontal">
+                        <List.Item
+                            actions={[
+                                <a onClick={e => handleEdit(food)}>edit</a>,
+                                <a onClick={e => handleDelete(food)}>delete</a>,
+                            ]}
+                        >
+                            <List.Item.Meta
+                                avatar={<Avatar src={food.photo.thumb} />}
+                                title={
+                                    isEditing ? (
+                                        <Space>
+                                            {food.food_name}
+
+                                            <Select
+                                                style={{
+                                                    display: `${editFoodVisibility}`,
+                                                    width: "10vw",
+                                                }}
+                                                placeholder="serving size"
+                                                onChange={handleServingSizeEdit}
+                                            >
+                                                {newOptionsArr
+                                                    ? newOptionsArr
+                                                    : ""}
+                                            </Select>
+                                            <InputNumber
+                                                min={1}
+                                                max={999999}
+                                                disabled={isEditInputDisabled}
+                                                defaultValue={1}
+                                                onChange={handleEditAmount}
+                                                style={{
+                                                    display: `${editFoodVisibility}`,
+                                                    width: "4vw",
+                                                }}
+                                            />
+                                            <Button
+                                                style={{
+                                                    display: `${editFoodVisibility}`,
+                                                    width: "5vw",
+                                                }}
+                                                disabled={isEditInputDisabled}
+                                                onClick={handleApplyButton}
+                                            >
+                                                Apply
+                                            </Button>
+                                        </Space>
+                                    ) : (
+                                        <p>
+                                            {
+                                                food.nutrientsConsumed
+                                                    .serving_amount
+                                            }{" "}
+                                            {
+                                                food.nutrientsConsumed
+                                                    .serving_size
+                                            }{" "}
+                                            {food.food_name}
+                                        </p>
+                                    )
+                                }
+                                description={description(food)}
+                            />
+                        </List.Item>
+                    </List>
+                );
+            });
+            setContent(newContent);
+        }
+    }, [activeMealContent, sorted]);
+
+    useEffect(() => {
+        let newContent = "";
+        switch (sortType) {
+            case "ascCalories":
+                newContent = activeMealContent.sort(ascCalories);
+                break;
+            case "descCalories":
+                newContent = activeMealContent.sort(descCalories);
+                break;
+            case "ascProtein":
+                newContent = activeMealContent.sort(ascProtein);
+                break;
+            case "descProtein":
+                newContent = activeMealContent.sort(descProtein);
+                break;
+            case "ascFat":
+                newContent = activeMealContent.sort(ascFat);
+                break;
+            case "descFat":
+                newContent = activeMealContent.sort(descFat);
+                break;
+            case "ascCarbo":
+                newContent = activeMealContent.sort(ascCarbo);
+                break;
+            case "descCarbo":
+                newContent = activeMealContent.sort(descCarbo);
+                break;
+            case "ascName":
+                newContent = activeMealContent.sort(ascName);
+                break;
+            case "descName":
+                newContent = activeMealContent.sort(descName);
+                break;
+            default:
+                break;
+        }
+
+        setActiveMealContent(newContent);
+        setSorted(!sorted);
+    }, [sortType]);
+
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={16}>
             <Row justify="center">
                 {activeMealName ? (
                     <Card
+                        hoverable="true"
                         title={
                             <>
                                 <Title
@@ -433,6 +590,16 @@ const EditDiet = props => {
                                         <PlusOutlined />
                                     </Button>
                                 </Space>
+                                <br />
+                                <br />
+
+                                <Select
+                                    style={{ width: 120, float: "right" }}
+                                    onChange={e => setSortType(e)}
+                                    defaultValue="Sort By"
+                                >
+                                    {sortOptions}
+                                </Select>
                             </>
                         }
                     >
@@ -445,227 +612,8 @@ const EditDiet = props => {
                         >
                             <p>Deleted foods can't be recovered!</p>
                         </Modal>
-                        {activeMealContent.map(food => {
-                            return (
-                                <List itemLayout="horizontal">
-                                    <List.Item
-                                        actions={[
-                                            <a onClick={e => handleEdit(food)}>
-                                                edit
-                                            </a>,
-                                            <a
-                                                onClick={e =>
-                                                    handleDelete(food)
-                                                }
-                                            >
-                                                delete
-                                            </a>,
-                                        ]}
-                                    >
-                                        <List.Item.Meta
-                                            avatar={
-                                                <Avatar
-                                                    src={food.photo.thumb}
-                                                />
-                                            }
-                                            title={
-                                                isEditing ? (
-                                                    <Space>
-                                                        {food.food_name}
 
-                                                        <Select
-                                                            style={{
-                                                                display: `${editFoodVisibility}`,
-                                                                width: "10vw",
-                                                            }}
-                                                            placeholder="serving size"
-                                                            onChange={
-                                                                handleServingSizeEdit
-                                                            }
-                                                        >
-                                                            {newOptionsArr
-                                                                ? newOptionsArr
-                                                                : ""}
-                                                        </Select>
-                                                        <InputNumber
-                                                            min={1}
-                                                            max={999999}
-                                                            disabled={
-                                                                isEditInputDisabled
-                                                            }
-                                                            defaultValue={1}
-                                                            onChange={
-                                                                handleEditAmount
-                                                            }
-                                                            style={{
-                                                                display: `${editFoodVisibility}`,
-                                                                width: "4vw",
-                                                            }}
-                                                        />
-                                                        <Button
-                                                            style={{
-                                                                display: `${editFoodVisibility}`,
-                                                                width: "5vw",
-                                                            }}
-                                                            disabled={
-                                                                isEditInputDisabled
-                                                            }
-                                                            onClick={
-                                                                handleApplyButton
-                                                            }
-                                                        >
-                                                            Apply
-                                                        </Button>
-                                                    </Space>
-                                                ) : (
-                                                    <p>
-                                                        {
-                                                            food
-                                                                .nutrientsConsumed
-                                                                .serving_amount
-                                                        }{" "}
-                                                        {
-                                                            food
-                                                                .nutrientsConsumed
-                                                                .serving_size
-                                                        }{" "}
-                                                        {food.food_name}
-                                                    </p>
-                                                )
-                                            }
-                                            description={
-                                                <Collapse ghost>
-                                                    <Panel
-                                                        header={
-                                                            <a>
-                                                                Click here to
-                                                                see details
-                                                            </a>
-                                                        }
-                                                    >
-                                                        <List>
-                                                            <List.Item>
-                                                                Serving size :{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .serving_amount
-                                                                }{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .serving_size
-                                                                }{" "}
-                                                                (
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .consumption_in_grams
-                                                                }{" "}
-                                                                gr)
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Calories:{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .calories
-                                                                }{" "}
-                                                                kcal
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Protein:{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .protein
-                                                                }
-                                                                gr
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Total
-                                                                Carbohydrate :{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .total_carbohydrate
-                                                                }
-                                                                gr (
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .sugars
-                                                                }
-                                                                gr sugar and{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .cholesterol
-                                                                }
-                                                                mg cholesterol)
-                                                            </List.Item>
-
-                                                            <List.Item>
-                                                                Total Fat:{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .total_fat
-                                                                }
-                                                                gr (
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .saturated_fat
-                                                                }
-                                                                gr saturated
-                                                                fat)
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Sodium :{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .sodium
-                                                                }
-                                                                mg
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Potassium :{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .potassium
-                                                                }
-                                                                mg
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Fibers :{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .fibers
-                                                                }
-                                                                mg
-                                                            </List.Item>
-                                                            <List.Item>
-                                                                Phosphorus:{" "}
-                                                                {
-                                                                    food
-                                                                        .nutrientsConsumed
-                                                                        .p
-                                                                }
-                                                                mg
-                                                            </List.Item>
-                                                        </List>
-                                                    </Panel>
-                                                </Collapse>
-                                            }
-                                        />
-                                    </List.Item>
-                                </List>
-                            );
-                        })}
+                        {content}
                     </Card>
                 ) : (
                     ""
