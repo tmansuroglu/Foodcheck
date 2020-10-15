@@ -18,7 +18,7 @@ import {
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
 import { AddFood } from "../redux/actions/DietActions";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, CaretRightOutlined } from "@ant-design/icons";
 import { SetMeal } from "../redux/actions/DietActions";
 import description from "../EditDietFunctions/description";
 import {
@@ -34,6 +34,7 @@ import {
     descProtein,
 } from "../EditDietFunctions/sortFunctions";
 import sortFunc from "../EditDietFunctions/sortOptions";
+
 const { Panel } = Collapse;
 //import handleAddFood from "../EditDietFunctions/handleAddFood";
 
@@ -269,7 +270,8 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
         };
         //matches consumed nutrient values and names and puts them into nutrients consumed obj
         for (let i = 0; i < consumedNutrientValues.length; i++) {
-            nutrientsConsumed[nutrientNames[i]] = consumedNutrientValues[i];
+            nutrientsConsumed[nutrientNames[i]] =
+                Math.round(consumedNutrientValues[i] * 100) / 100;
         }
         copyOfFoodDetails.nutrientsConsumed = nutrientsConsumed;
 
@@ -468,85 +470,89 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
 
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
-            <Space>
-                View:{" "}
-                <Switch
-                    checkedChildren="List"
-                    unCheckedChildren="Grid"
-                    defaultChecked
-                    onChange={e => setListLayout(!listLayout)}
-                />
-            </Space>
             <Row justify="center">
-                {activeMealName ? (
+                {activeMealName && activeMealContent ? (
                     <>
                         <Card
-                            style={{ width: "95%" }}
+                            style={{ width: "95%", marginTop: "3.3vh" }}
                             hoverable="true"
                             title={
-                                <div align="center">
-                                    <Title
-                                        style={{ textAlign: "center" }}
-                                        level={3}
-                                    >
-                                        {activeMealName}
-                                    </Title>
-                                    <Space>
-                                        <AutoComplete
-                                            style={{ width: 190 }}
-                                            options={options}
-                                            placeholder="Add food here..."
-                                            onSearch={handleSearch}
-                                            onSelect={foodName =>
-                                                handleSelectSearchResult(
-                                                    foodName
-                                                )
-                                            }
-                                            filterOption={(
-                                                inputValue,
-                                                option
-                                            ) =>
-                                                option.value
-                                                    .toUpperCase()
-                                                    .indexOf(
-                                                        inputValue.toUpperCase()
-                                                    ) !== -1
-                                            }
-                                        />
-                                        <Select
-                                            style={{ width: 140 }}
-                                            placeholder="serving size"
-                                            onChange={onMeasureChange}
+                                <>
+                                    <Switch
+                                        checkedChildren="List"
+                                        unCheckedChildren="Grid"
+                                        defaultChecked
+                                        onChange={e =>
+                                            setListLayout(!listLayout)
+                                        }
+                                    />
+                                    <div align="center">
+                                        <Title
+                                            style={{ textAlign: "center" }}
+                                            level={3}
                                         >
-                                            {servingOptions
-                                                ? servingOptions
-                                                : ""}
-                                        </Select>
-                                        <InputNumber
-                                            min={1}
-                                            max={999999}
-                                            disabled={inputToggle}
-                                            defaultValue={1}
-                                            onChange={handleAmount}
-                                        />
-                                        <Button
-                                            disabled={inputToggle}
-                                            onClick={handleAddFood}
-                                        >
-                                            <PlusOutlined />
-                                        </Button>
-                                    </Space>
-                                    <br />
-                                    <br />
+                                            {activeMealName}
+                                        </Title>
+                                        <Space>
+                                            <AutoComplete
+                                                style={{ width: 190 }}
+                                                options={options}
+                                                placeholder="Add food here..."
+                                                onSearch={handleSearch}
+                                                onSelect={foodName =>
+                                                    handleSelectSearchResult(
+                                                        foodName
+                                                    )
+                                                }
+                                                filterOption={(
+                                                    inputValue,
+                                                    option
+                                                ) =>
+                                                    option.value
+                                                        .toUpperCase()
+                                                        .indexOf(
+                                                            inputValue.toUpperCase()
+                                                        ) !== -1
+                                                }
+                                            />
+                                            <Select
+                                                style={{ width: 140 }}
+                                                placeholder="serving size"
+                                                onChange={onMeasureChange}
+                                            >
+                                                {servingOptions
+                                                    ? servingOptions
+                                                    : ""}
+                                            </Select>
+                                            <InputNumber
+                                                min={0.001}
+                                                max={999999}
+                                                disabled={inputToggle}
+                                                defaultValue={1}
+                                                onChange={handleAmount}
+                                            />
+                                            <Button
+                                                disabled={inputToggle}
+                                                onClick={handleAddFood}
+                                            >
+                                                <PlusOutlined />
+                                            </Button>
+                                        </Space>
+                                        <br />
+                                        <br />
 
-                                    <Select
-                                        style={{ width: 120, float: "right" }}
-                                        onChange={e => setSortType(e)}
-                                        defaultValue="Sort By"
-                                    >
-                                        {sortOptions}
-                                    </Select>
-                                </div>
+                                        <Select
+                                            style={{
+                                                width: 120,
+                                                float: "right",
+                                            }}
+                                            onChange={e => setSortType(e)}
+                                            defaultValue="Sort By"
+                                        >
+                                            {sortOptions}
+                                        </Select>
+                                    </div>
+                                </>
                             }
                         >
                             <Modal
@@ -569,8 +575,6 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                             xl={listLayout ? 24 : 12}
                                             xxl={listLayout ? 24 : 8}
                                             style={{
-                                                border: `1.5px solid rgb(144,238,144)`,
-                                                borderRadius: "5px",
                                                 padding: "1%",
                                             }}
                                         >
@@ -632,7 +636,9 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                                                             : ""}
                                                                     </Select>
                                                                     <InputNumber
-                                                                        min={1}
+                                                                        min={
+                                                                            0.001
+                                                                        }
                                                                         max={
                                                                             999999
                                                                         }
@@ -675,7 +681,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                                                     </Button>
                                                                 </Space>
                                                             ) : (
-                                                                <p>
+                                                                <>
                                                                     {
                                                                         food
                                                                             .nutrientsConsumed
@@ -688,8 +694,15 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
                                                                     }{" "}
                                                                     {
                                                                         food.food_name
-                                                                    }
-                                                                </p>
+                                                                    }{" "}
+                                                                    <CaretRightOutlined />{" "}
+                                                                    {
+                                                                        food
+                                                                            .nutrientsConsumed
+                                                                            .calories
+                                                                    }{" "}
+                                                                    kcal
+                                                                </>
                                                             )
                                                         }
                                                         description={description(

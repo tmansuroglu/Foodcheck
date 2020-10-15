@@ -4,12 +4,21 @@ import React from "react";
 import EditDiet from "../../components/EditDiet";
 import DietDetails from "../../components/DietDetails";
 import ManageDiet from "../../components/ManageDiet";
-
+import DietPageBackground from "../../images/DietPageBackground.jpg";
 import { Row } from "antd";
 
+const editPageStyle = {
+    backgroundImage: `linear-gradient(0deg, rgba(2,0,36,0.3) 0%, rgba(9,9,121,0.3) 0%, rgba(240,241,239,0.3) 0%),url(${DietPageBackground})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    width: "100%",
+    height: "100vh",
+    margin: "0",
+};
 const DietPage = () => {
     return (
-        <Row>
+        <Row style={editPageStyle}>
             <ManageDiet />
             <EditDiet />
             <DietDetails />

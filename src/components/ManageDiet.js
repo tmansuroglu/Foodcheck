@@ -171,8 +171,10 @@ const ManageDiet = props => {
                 {
                     <Collapse>
                         {meals.map((meal, id) => {
+                            console.log("meal", meal);
                             const mealName = Object.keys(meal)[0];
                             const mealContent = Object.values(meal)[0];
+                            console.log("mealContent", mealContent);
                             return (
                                 <Panel
                                     onClick={e => console.log(e)}
@@ -223,7 +225,43 @@ const ManageDiet = props => {
                                                                 }
                                                             />
                                                         }
-                                                        title={item.food_name}
+                                                        title={
+                                                            <>
+                                                                <span
+                                                                    style={{
+                                                                        float:
+                                                                            "left",
+                                                                    }}
+                                                                >
+                                                                    {
+                                                                        item
+                                                                            .nutrientsConsumed
+                                                                            .serving_amount
+                                                                    }{" "}
+                                                                    {
+                                                                        item
+                                                                            .nutrientsConsumed
+                                                                            .serving_size
+                                                                    }{" "}
+                                                                    {
+                                                                        item.food_name
+                                                                    }
+                                                                </span>
+                                                                <span
+                                                                    style={{
+                                                                        float:
+                                                                            "right",
+                                                                    }}
+                                                                >
+                                                                    {
+                                                                        item
+                                                                            .nutrientsConsumed
+                                                                            .calories
+                                                                    }{" "}
+                                                                    kcal
+                                                                </span>
+                                                            </>
+                                                        }
                                                     />
                                                 </List.Item>
                                             )}

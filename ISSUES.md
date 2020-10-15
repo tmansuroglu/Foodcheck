@@ -14,7 +14,7 @@
 -   search form doesnt reset after searching
 -   file names are bad. decide on naming convention
 -   git doesnt recognize capital letter changes
--   round nutrient numbers
 -   after edit food order changes
+-   if there are similar food in list delete button deletes all same food
 
 *   **Completed tasks.** Completed tasks should not be shown on the main boards. When a task is marked completed, you may decide how it will be shown, but it should be separated. For example, you could have a special board for completed tasks, or you could make a completely separate page that loads all the completed tasks.
