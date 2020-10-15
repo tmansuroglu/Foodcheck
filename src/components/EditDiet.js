@@ -12,6 +12,7 @@ import {
     Typography,
     Modal,
     Collapse,
+    Space,
 } from "antd";
 import { querySearch, getDetails } from "../NutritionixAPI";
 import { connect } from "react-redux";
@@ -217,7 +218,9 @@ const EditDiet = props => {
             serving_amount: amount,
         };
 
-        const nutrientsNamesAndValuesPerGram = {};
+        const nutrientsNamesAndValuesPerGram = {
+            serving_size: "g",
+        };
         //matches consumed nutrient values and names and puts them into nutrients consumed obj
         for (let i = 0; i < consumedNutrientValues.length; i++) {
             nutrientsConsumed[nutrientNames[i]] = consumedNutrientValues[i];
@@ -230,6 +233,8 @@ const EditDiet = props => {
                 nutrientsPerGramArr[i];
         }
         copyOfFoodDetails.nutrientsPerGram = nutrientsNamesAndValuesPerGram;
+        const randomID = Math.random().toString(36).substr(2, 9);
+        copyOfFoodDetails.id = randomID;
 
         // deletes nutrientNames arr elemets. "nf" section is not included but for some reason it works ?
         for (let i = 0; i < nutrientNames.length; i++) {
@@ -263,13 +268,13 @@ const EditDiet = props => {
         setModalVisibility(true);
         setDeletionTarget(food);
     };
-
+    //if there are same name food, it is problem
     const handleFoodDeletion = () => {
         console.log("deletionTarget", deletionTarget);
         console.log("active meal name is", activeMealName);
         console.log("active meal content is", activeMealContent);
         const targetFood = activeMealContent.find(
-            food => food.food_name === deletionTarget.food_name
+            food => food.id === deletionTarget.id
         );
 
         console.log("targetFood", targetFood);
@@ -286,6 +291,97 @@ const EditDiet = props => {
         setActiveMealContent(fixedMealContent);
         setModalVisibility(false);
     };
+
+    const [editFoodVisibility, setEditFoodVisibility] = useState("none");
+
+    const [editTarget, setEditTarget] = useState();
+    const handleEdit = food => {
+        console.log("clicked on edit");
+        setEditFoodVisibility("inline-block");
+        setIsEditing(!isEditing);
+        setEditTarget(food);
+        console.log("food is", food);
+    };
+    // for options in editing
+    const [newOptionsArr, setNewOptionsArr] = useState();
+    useEffect(() => {
+        if (editTarget) {
+            const newOptions = editTarget.alt_measures.map(type => {
+                return (
+                    <Option value={type.measure} data={type}>
+                        {type.measure}
+                    </Option>
+                );
+            });
+            console.log("new options", newOptions);
+            setNewOptionsArr(newOptions);
+        }
+    }, [editTarget]);
+
+    //this is for creating select and input field for food title
+    const [isEditing, setIsEditing] = useState(false);
+
+    //this is for disabled status of edit button and edit input
+    const [isEditInputDisabled, setIsEditInputDisabled] = useState(true);
+
+    const handleApplyButton = () => {
+        console.log("apply button clicked");
+        console.log("new amount is", newAmount);
+        console.log("new serving is", newServingSizeObj);
+        console.log("edit target is", editTarget);
+        console.log("active meal content is", activeMealContent);
+        console.log("active meal name is", activeMealName);
+        const copyOfActiveMealContent = [...activeMealContent];
+        const weightPerServing =
+            newServingSizeObj.serving_weight / newServingSizeObj.qty;
+        const newNutrientsConsumed = {
+            serving_size: newServingSizeObj.measure,
+            serving_amount: newAmount,
+            consumption_in_grams: weightPerServing * newAmount,
+        };
+        Object.entries(editTarget.nutrientsPerGram).forEach(
+            (nutrientName, index) => {
+                console.log(nutrientName);
+
+                newNutrientsConsumed[nutrientName[0]] =
+                    nutrientName[1] * weightPerServing * newAmount;
+            }
+        );
+        const modifiedTarget = { ...editTarget };
+        modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
+        let mealWithoutTargetFood = copyOfActiveMealContent.find(
+            meal => meal.id !== modifiedTarget.id
+        );
+        mealWithoutTargetFood = mealWithoutTargetFood
+            ? mealWithoutTargetFood
+            : [];
+        console.log("meal without target is", mealWithoutTargetFood);
+        const modifiedMealContent = [...mealWithoutTargetFood, modifiedTarget];
+        console.log("meal with modified target", modifiedMealContent);
+        props.setMeal(activeMealName, modifiedMealContent);
+        setActiveMealContent(modifiedMealContent);
+        setIsEditing(false);
+        setIsEditInputDisabled(true);
+    };
+
+    const [newAmount, setNewAmount] = useState(1);
+    const handleEditAmount = e => {
+        console.log("edit amount changed", e);
+        setNewAmount(e);
+    };
+
+    const [newServingSizeObj, setNewServingSizeObj] = useState({});
+
+    const handleServingSizeEdit = e => {
+        console.log("handleServingSizeEdit");
+        console.log("new serving size is", e);
+        setIsEditInputDisabled(false);
+        const newServingObj = editTarget.alt_measures.find(
+            type => type.measure === e
+        );
+        console.log("new serving obj", newServingObj);
+        setNewServingSizeObj(newServingObj);
+    };
     return (
         <Col xs={24} sm={24} md={12} lg={12} xl={16}>
             <Row justify="center">
@@ -299,43 +395,44 @@ const EditDiet = props => {
                                 >
                                     {activeMealName}
                                 </Title>
-
-                                <AutoComplete
-                                    style={{ width: 190 }}
-                                    options={options}
-                                    placeholder="Add food here..."
-                                    onSearch={handleSearch}
-                                    onSelect={foodName =>
-                                        handleSelectSearchResult(foodName)
-                                    }
-                                    filterOption={(inputValue, option) =>
-                                        option.value
-                                            .toUpperCase()
-                                            .indexOf(
-                                                inputValue.toUpperCase()
-                                            ) !== -1
-                                    }
-                                />
-                                <Select
-                                    style={{ width: 140 }}
-                                    placeholder="serving size"
-                                    onChange={onMeasureChange}
-                                >
-                                    {servingOptions ? servingOptions : ""}
-                                </Select>
-                                <InputNumber
-                                    min={1}
-                                    max={999999}
-                                    disabled={inputToggle}
-                                    defaultValue={1}
-                                    onChange={handleAmount}
-                                />
-                                <Button
-                                    disabled={inputToggle}
-                                    onClick={handleAddFood}
-                                >
-                                    <PlusOutlined />
-                                </Button>
+                                <Space>
+                                    <AutoComplete
+                                        style={{ width: 190 }}
+                                        options={options}
+                                        placeholder="Add food here..."
+                                        onSearch={handleSearch}
+                                        onSelect={foodName =>
+                                            handleSelectSearchResult(foodName)
+                                        }
+                                        filterOption={(inputValue, option) =>
+                                            option.value
+                                                .toUpperCase()
+                                                .indexOf(
+                                                    inputValue.toUpperCase()
+                                                ) !== -1
+                                        }
+                                    />
+                                    <Select
+                                        style={{ width: 140 }}
+                                        placeholder="serving size"
+                                        onChange={onMeasureChange}
+                                    >
+                                        {servingOptions ? servingOptions : ""}
+                                    </Select>
+                                    <InputNumber
+                                        min={1}
+                                        max={999999}
+                                        disabled={inputToggle}
+                                        defaultValue={1}
+                                        onChange={handleAmount}
+                                    />
+                                    <Button
+                                        disabled={inputToggle}
+                                        onClick={handleAddFood}
+                                    >
+                                        <PlusOutlined />
+                                    </Button>
+                                </Space>
                             </>
                         }
                     >
@@ -353,7 +450,9 @@ const EditDiet = props => {
                                 <List itemLayout="horizontal">
                                     <List.Item
                                         actions={[
-                                            <a>edit</a>,
+                                            <a onClick={e => handleEdit(food)}>
+                                                edit
+                                            </a>,
                                             <a
                                                 onClick={e =>
                                                     handleDelete(food)
@@ -370,17 +469,69 @@ const EditDiet = props => {
                                                 />
                                             }
                                             title={
-                                                <p>
-                                                    {
-                                                        food.nutrientsConsumed
-                                                            .serving_amount
-                                                    }{" "}
-                                                    {
-                                                        food.nutrientsConsumed
-                                                            .serving_size
-                                                    }{" "}
-                                                    {food.food_name}
-                                                </p>
+                                                isEditing ? (
+                                                    <Space>
+                                                        {food.food_name}
+
+                                                        <Select
+                                                            style={{
+                                                                display: `${editFoodVisibility}`,
+                                                                width: "10vw",
+                                                            }}
+                                                            placeholder="serving size"
+                                                            onChange={
+                                                                handleServingSizeEdit
+                                                            }
+                                                        >
+                                                            {newOptionsArr
+                                                                ? newOptionsArr
+                                                                : ""}
+                                                        </Select>
+                                                        <InputNumber
+                                                            min={1}
+                                                            max={999999}
+                                                            disabled={
+                                                                isEditInputDisabled
+                                                            }
+                                                            defaultValue={1}
+                                                            onChange={
+                                                                handleEditAmount
+                                                            }
+                                                            style={{
+                                                                display: `${editFoodVisibility}`,
+                                                                width: "4vw",
+                                                            }}
+                                                        />
+                                                        <Button
+                                                            style={{
+                                                                display: `${editFoodVisibility}`,
+                                                                width: "5vw",
+                                                            }}
+                                                            disabled={
+                                                                isEditInputDisabled
+                                                            }
+                                                            onClick={
+                                                                handleApplyButton
+                                                            }
+                                                        >
+                                                            Apply
+                                                        </Button>
+                                                    </Space>
+                                                ) : (
+                                                    <p>
+                                                        {
+                                                            food
+                                                                .nutrientsConsumed
+                                                                .serving_amount
+                                                        }{" "}
+                                                        {
+                                                            food
+                                                                .nutrientsConsumed
+                                                                .serving_size
+                                                        }{" "}
+                                                        {food.food_name}
+                                                    </p>
+                                                )
                                             }
                                             description={
                                                 <Collapse ghost>
@@ -494,6 +645,15 @@ const EditDiet = props => {
                                                                     food
                                                                         .nutrientsConsumed
                                                                         .fibers
+                                                                }
+                                                                mg
+                                                            </List.Item>
+                                                            <List.Item>
+                                                                Phosphorus:{" "}
+                                                                {
+                                                                    food
+                                                                        .nutrientsConsumed
+                                                                        .p
                                                                 }
                                                                 mg
                                                             </List.Item>
