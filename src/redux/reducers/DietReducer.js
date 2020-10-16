@@ -58,7 +58,13 @@ const DietReducer = (state = {}, action) => {
             };
         case "STATS_SET":
             console.log("STATS SET");
-            return state;
+            return {
+                ...state,
+                dietStats: {
+                    dailyStats: action.dailyMacroObj,
+                    mealsStats: action.mealsMacrosObj,
+                },
+            };
         case "STATS_SET_FAILED":
             return {
                 ...state,

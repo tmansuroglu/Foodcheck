@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
     Col,
@@ -21,7 +21,9 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ManageDiet = props => {
+    console.log(props.stats);
     //meal dropdown menu on left
+
     const menu = (
         <Menu>
             <Menu.Item
@@ -83,8 +85,6 @@ const ManageDiet = props => {
                     const dietData = doc.data().diet;
                     const orderedDietData = [];
                     for (const meal in dietData) {
-                        if (meal) {
-                        }
                         //console.log(meal);
                         const index = order[meal];
 
@@ -92,6 +92,7 @@ const ManageDiet = props => {
                         orderedDietData[index] = {
                             [meal]: dietData[meal],
                         };
+                        // to put kcal on screen temporarily
                     }
                     //console.log(orderedDietData);
                     setMeals(orderedDietData);
@@ -173,7 +174,6 @@ const ManageDiet = props => {
                         {meals.map((meal, id) => {
                             const mealName = Object.keys(meal)[0];
                             const mealContent = Object.values(meal)[0];
-
                             return (
                                 <Panel
                                     onClick={e => console.log(e)}
@@ -190,6 +190,13 @@ const ManageDiet = props => {
                                                 style={{ float: "left" }}
                                             >
                                                 {mealName}
+                                                {/* {mealName}{" "}
+                                                {props.stats
+                                                    ? props.stats.mealsStats[
+                                                          mealName
+                                                      ].calories
+                                                    : ""}{" "}
+                                                kcal */}
                                             </div>
                                             <Text
                                                 style={{
@@ -284,6 +291,7 @@ const mapStateToProps = state => {
         uid: state.firebase.auth.uid,
         findActiveMeal: state.DietReducer.activeMeal,
         userData: state.firebase.profile,
+        stats: state.DietReducer.dietStats,
     };
 };
 
