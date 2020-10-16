@@ -6,9 +6,6 @@
     height: 40vmin;
     pointer-events: none;
 }
-body {
-    background: "./images/homePageBackground.jpg";
-}
 
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
