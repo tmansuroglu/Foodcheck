@@ -17,11 +17,10 @@ const DietReducer = (state = {}, action) => {
         case "ADD_FOOD":
             return {
                 ...state,
-                diet: {
-                    ...state.diet,
+                activeMeal: {
                     [action.mealName]: [
-                        ...state.diet[action.mealName],
-                        action.food,
+                        ...state.activeMeal[action.mealName],
+                        action.mealObj,
                     ],
                 },
                 dietError: null,
@@ -49,7 +48,12 @@ const DietReducer = (state = {}, action) => {
             };
         case "MEAL_SET":
             console.log("MEAL_SET");
-            return state;
+            return {
+                ...state,
+                activeMeal: {
+                    [action.mealName]: action.mealData,
+                },
+            };
         case "MEAL_SET_FAILED":
             console.log("MEAL_SET_FAILED");
             return {

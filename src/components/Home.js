@@ -46,12 +46,11 @@ const Home = () => {
                         What is it?
                     </Title>
                     <p style={{ textAlign: "center", fontSize: "1.3rem" }}>
-                        FOODCHECK is a diet tracking app!{<br />} It allows
-                        users to create a meal plan and track nutrient consumed
-                        per day ,per meal and per food. FOODCHECK displays all
-                        the data with graphs and lists.
-                        <br />
-                        FOODCHECK is completely FREE!
+                        FOODCHECK is a diet tracking app! It allows users to
+                        create a meal plan and track nutrient consumed per day
+                        ,per meal and per food. Also, FOODCHECK displays all the
+                        data with graphs and lists. Also, FOODCHECK is
+                        completely FREE!
                     </p>
                 </Col>
             </Row>

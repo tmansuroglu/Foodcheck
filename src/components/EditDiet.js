@@ -42,6 +42,9 @@ const { Title } = Typography;
 const { Option } = Select;
 
 const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
+    useEffect(() => {
+        console.log("selectedMeal is", selectedMeal);
+    }, [selectedMeal]);
     const NUM_DESIRED_RESULTS = 5;
     //stores auto complete data
     const [options, setOptions] = useState([]);
@@ -307,6 +310,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
         addFood(activeMealName, copyOfFoodDetails);
 
         setActiveMealContent([...activeMealContent, copyOfFoodDetails]);
+        //setMeal(activeMealName, activeMealContent);
     };
 
     const handleDelete = food => {

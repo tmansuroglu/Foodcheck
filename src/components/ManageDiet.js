@@ -21,7 +21,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ManageDiet = props => {
-    console.log(props.stats);
+    //console.log(props.stats);
     //meal dropdown menu on left
 
     const menu = (

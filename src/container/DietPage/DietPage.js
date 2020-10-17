@@ -6,6 +6,7 @@ import DietDetails from "../../components/DietDetails";
 import ManageDiet from "../../components/ManageDiet";
 import DietPageBackground from "../../images/DietPageBackground.jpg";
 import { Row } from "antd";
+import Chart from "../../components/Chart";
 
 const editPageStyle = {
     backgroundImage: `linear-gradient(0deg, rgba(2,0,36,0.3) 0%, rgba(9,9,121,0.3) 0%, rgba(240,241,239,0.3) 0%),url(${DietPageBackground})`,
@@ -21,7 +22,7 @@ const DietPage = () => {
         <Row style={editPageStyle}>
             <ManageDiet />
             <EditDiet />
-            <DietDetails />
+            <Chart />
         </Row>
     );
 };

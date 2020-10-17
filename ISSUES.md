@@ -16,5 +16,5 @@
 -   git doesnt recognize capital letter changes
 -   after edit food order changes
 -   if there are similar food in list delete button deletes all same food
-
+-   meal deletion doesn't work
 -   footer, about, profile page ,logo, profile initials, mainpage placeholders

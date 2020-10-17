@@ -120,7 +120,7 @@ export const SetMeal = (mealName, mealData) => {
                 });
             })
             .then(() => {
-                dispatch({ type: "MEAL_SET", mealData });
+                dispatch({ type: "MEAL_SET", mealData, mealName });
             })
             .catch(err => {
                 dispatch({ type: "MEAL_SET_FAILED", err: err.message });
