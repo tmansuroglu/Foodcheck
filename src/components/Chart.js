@@ -3,7 +3,7 @@ import { Pie } from "react-chartjs-2";
 import { connect } from "react-redux";
 
 const Chart = selectedMeal => {
-    console.log(selectedMeal);
+    //console.log(selectedMeal);
     const [chartData, setChartData] = useState();
     const [selectedMealArr, setSelectedMealArr] = useState([]);
     const [calories, setCalories] = useState([]);
@@ -22,17 +22,21 @@ const Chart = selectedMeal => {
     }, [selectedMeal.mealsChartContent]);
 
     useEffect(() => {
-        setCalories(selectedMealArr.map(el => el.nutrientsConsumed.calories));
-        console.log(
-            "set calories",
-            selectedMealArr.map(el => el.nutrientsConsumed.calories)
+        setCalories(
+            selectedMealArr.map(el =>
+                el ? Math.round(el.nutrientsConsumed.calories) : ""
+            )
         );
+        //console.log(
+        //    "set calories",
+        //    selectedMealArr.map(el => el.nutrientsConsumed.calories)
+        //);
 
-        setMealNames(selectedMealArr.map(el => el.food_name));
-        console.log(
-            "selected meal arr",
-            selectedMealArr.map(el => el.food_name)
-        );
+        setMealNames(selectedMealArr.map(el => (el ? el.food_name : "")));
+        // console.log(
+        //     "selected meal arr",
+        //     selectedMealArr.map(el => el.food_name)
+        // );
     }, [selectedMealArr]);
 
     useEffect(() => {
@@ -60,37 +64,40 @@ const Chart = selectedMeal => {
             ],
         });
     }, [mealNames]);
-
-    return (
-        <div>
-            <div style={{ height: "400px" }}>
-                <Pie
-                    style={{ height: "100%" }}
-                    hover={true}
-                    data={chartData}
-                    options={{
-                        maintainAspectRatio: false,
-                        cutoutPercentage: 70,
-                        tooltips: {
-                            enabled: true,
-                        },
-                        responsive: true,
-                        title: { display: true, text: "Diet Details " },
-                        legend: {
-                            display: true,
-                            position: "bottom",
-                        },
-                    }}
-                />
+    if (selectedMeal.mealsChartContent)
+        return (
+            <div>
+                <div style={{ height: "400px" }}>
+                    <Pie
+                        style={{ height: "100%" }}
+                        hover={true}
+                        data={chartData}
+                        options={{
+                            maintainAspectRatio: false,
+                            cutoutPercentage: 70,
+                            tooltips: {
+                                enabled: true,
+                            },
+                            responsive: true,
+                            title: { display: true, text: "Diet Details " },
+                            legend: {
+                                display: true,
+                                position: "bottom",
+                            },
+                        }}
+                    />
+                </div>
+                <h2 style={{ textAlign: "center", marginTop: "-225px" }}>
+                    Calories:{" "}
+                    {calories.length > 0
+                        ? calories.reduce((acc, curr) => acc + curr)
+                        : ""}
+                </h2>
             </div>
-            <h2 style={{ textAlign: "center", marginTop: "-225px" }}>
-                Calories:{" "}
-                {calories.length > 0
-                    ? calories.reduce((acc, curr) => acc + curr)
-                    : ""}
-            </h2>
-        </div>
-    );
+        );
+    else {
+        return <div></div>;
+    }
 };
 
 const mapStateToProps = state => {
