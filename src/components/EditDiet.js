@@ -476,7 +476,7 @@ const EditDiet = ({ selectedMeal, setMeal, addFood }) => {
     }, [sortType]);
 
     return (
-        <Col xs={24} sm={24} md={12} lg={12} xl={14} xxl={14}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
             <Row justify="center">
                 {activeMealName && activeMealContent ? (
                     <>

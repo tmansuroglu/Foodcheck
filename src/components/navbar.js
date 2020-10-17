@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { SignOut } from "../redux/actions/AuthActions";
 
-// test
-
 const Navbar = props => {
     const isLoggedNavbar = (
         <Menu>
