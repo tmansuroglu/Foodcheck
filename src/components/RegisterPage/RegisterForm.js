@@ -1,18 +1,8 @@
 import React from "react";
-import {
-    Form,
-    Input,
-    Button,
-    InputNumber,
-    Select,
-    DatePicker,
-    Checkbox,
-    Row,
-    Col,
-} from "antd";
+import { Form, Input, Button, Checkbox, Row, Col } from "antd";
 
 import { connect } from "react-redux";
-import { signUp } from "../redux/actions/AuthActions";
+import { signUp } from "../../redux/actions/AuthActions";
 import { Redirect } from "react-router-dom";
 
 const formItemLayout = {
@@ -123,94 +113,6 @@ const RegisterForm = props => {
                         >
                             <Input.Password />
                         </Form.Item>
-
-                        <Form.Item
-                            name="name"
-                            label="First Name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your first name!",
-                                    whitespace: true,
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="surname"
-                            label="Last Name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your last name!",
-                                    whitespace: true,
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Birthdate"
-                            name="birthdate"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your birthdate!",
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <DatePicker />
-                        </Form.Item>
-                        <Form.Item
-                            label="Gender"
-                            name="gender"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please choose your gender!",
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <Select>
-                                <Select.Option value="Female">
-                                    Female
-                                </Select.Option>
-                                <Select.Option value="Male">Male</Select.Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="weight"
-                            label="Weight (kg)"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your weight!",
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <InputNumber type="number" min={1} max={600} />
-                        </Form.Item>
-                        <Form.Item
-                            name="height"
-                            label="Height (cm)"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please input your height!",
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <InputNumber type="number" min={1} max={300} />
-                        </Form.Item>
-
                         <Form.Item
                             name="agreement"
                             valuePropName="checked"
@@ -243,7 +145,6 @@ const RegisterForm = props => {
 };
 
 const mapStateToProps = state => {
-    //makes the state accessible as props(isLogged will be a props for the functional component above)
     return {
         userData: state.firebase.auth,
         authError: state.AuthReducer.authError,
@@ -251,7 +152,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    //allows you to change state
     return {
         signUp: newUser => dispatch(signUp(newUser)),
     };

@@ -51,24 +51,9 @@ export const signUp = newUser => {
                     .doc(`${resp.user.uid}`)
                     .set({
                         id: resp.user.uid,
-                        firstName: newUser.name,
-                        surname: newUser.surname,
                         password: newUser.password,
                         email: newUser.email,
-                        acctCreationDate: new Date(),
-                        birthdate: newUser.birthdate._d,
-                        gender: newUser.gender,
-                        heightCm: newUser.height,
-                        weightKg: newUser.weight,
-                        diet: {
-                            // preBreakfastSnack: {},
-                            // breakfast: {},
-                            // preLunchSnack: {},
-                            // lunch: {},
-                            // preDinnerSnack: {},
-                            // dinner: {},
-                            // preSleepSnack: {},
-                        },
+                        diet: {},
                         dietStats: {},
                     });
             })

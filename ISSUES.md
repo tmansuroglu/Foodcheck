@@ -10,9 +10,7 @@
 
 -   to put meal data inside edit meal component you have to click on the name of meal, not on the component that holds the name. panel doesnt have an on click event
 
--   searchbar, edit food,home,dietOverview,register form too long
-
--   needs comments on type of obj, expected output type etc,
+-   needs comments on type of input, expected output type etc,
 
 -   editfood and fooddetails stay visible after deleting a meal
 
@@ -20,6 +18,8 @@
 
 -   autocomplete flicker
 
--   rounding doesnt work
+-   rounding doesnt work all the time
 
 -   Image doesnt cover whole background
+
+-   No account confirmation email

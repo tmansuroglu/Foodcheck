@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Col, Collapse, List, Avatar } from "antd";
+import { Col, Collapse, List } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import db from "../../../firebaseConfig";
 import order from "./Order";
 import DeleteMeal from "./DeleteMeal";
 import MealCreator from "./MealCreator";
+import ListItem from "./ListItem";
 import { ActiveMeal } from "../../../redux/actions/DietActions";
 
 const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
-    const [localDietData, setLocalDietData] = useState([]);
-
     const { Panel } = Collapse;
+
+    const [localDietData, setLocalDietData] = useState([]);
 
     function handleMealSelection(name, content) {
         setActiveMeal(name, content);
@@ -70,55 +71,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                                             itemLayout="horizontal"
                                             dataSource={mealContent}
                                             renderItem={item => (
-                                                <List.Item>
-                                                    <List.Item.Meta
-                                                        avatar={
-                                                            <Avatar
-                                                                src={
-                                                                    item.photo
-                                                                        .thumb
-                                                                }
-                                                            />
-                                                        }
-                                                        title={
-                                                            <>
-                                                                <span
-                                                                    style={{
-                                                                        float:
-                                                                            "left",
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        item
-                                                                            .nutrientsConsumed
-                                                                            .serving_amount
-                                                                    }{" "}
-                                                                    {
-                                                                        item
-                                                                            .nutrientsConsumed
-                                                                            .serving_size
-                                                                    }{" "}
-                                                                    {
-                                                                        item.food_name
-                                                                    }
-                                                                </span>
-                                                                <span
-                                                                    style={{
-                                                                        float:
-                                                                            "right",
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        item
-                                                                            .nutrientsConsumed
-                                                                            .calories
-                                                                    }{" "}
-                                                                    kcal
-                                                                </span>
-                                                            </>
-                                                        }
-                                                    />
-                                                </List.Item>
+                                                <ListItem item={item} />
                                             )}
                                         />
                                     </Panel>
