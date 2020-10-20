@@ -1,9 +1,8 @@
 import React from "react";
 import { Select } from "antd";
+const SortOptions = () => {
+    const { Option } = Select;
 
-const { Option } = Select;
-
-const sortOptions = () => {
     return [
         <Option value="ascName">Asc. Name</Option>,
         <Option value="descName">Desc. Name</Option>,
@@ -18,4 +17,4 @@ const sortOptions = () => {
     ];
 };
 
-export default sortOptions;
+export default SortOptions;

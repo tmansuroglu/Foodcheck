@@ -74,6 +74,11 @@ const DietReducer = (state = {}, action) => {
                 ...state,
                 dietError: action.err,
             };
+        case "SET_FOOD_DETAILS":
+            return {
+                ...state,
+                foodDetails: action.foodDetails,
+            };
 
         default:
             return state;

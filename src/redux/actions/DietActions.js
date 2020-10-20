@@ -44,6 +44,8 @@ export const AddFood = (mealName, mealObj) => {
                 userProfile = { ...resp.data() };
             })
             .then(() => {
+                console.log("mealName is ", mealName);
+                //console.log("userProfile.diet[mealName] is", userProfile.diet);
                 userDoc.set({
                     ...userProfile,
                     diet: {
@@ -156,3 +158,8 @@ export const setStats = (dailyMacroObj, mealsMacrosObj) => {
             });
     };
 };
+
+export const setFoodDetails = foodDetails => ({
+    type: "SET_FOOD_DETAILS",
+    foodDetails,
+});

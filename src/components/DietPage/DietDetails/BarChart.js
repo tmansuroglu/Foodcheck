@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { HorizontalBar } from "react-chartjs-2";
-import db from "../firebaseConfig";
+import db from "../../../firebaseConfig";
 import { connect } from "react-redux";
 
-const BarChart = ({ mealName, uid, mealsChartContent }) => {
+const BarChart = ({ uid }) => {
     const [chartData, setChartData] = useState();
     const [selectedMealArr, setSelecetedMealArr] = useState([]);
     const [labels, setLabels] = useState([]);
@@ -15,17 +15,23 @@ const BarChart = ({ mealName, uid, mealsChartContent }) => {
             .onSnapshot(function (doc) {
                 const dailyStats = doc.data().dietStats.dailyStats;
                 console.log(dailyStats);
-                Object.entries(dailyStats).forEach(each => {
-                    if (
-                        each[0] === "protein" ||
-                        each[0] === "total_fat" ||
-                        each[0] === "total_carbohydrate"
-                    ) {
-                        if (labels.length < 3) setLabels([...labels, each[0]]);
-                        if (dataSet.length < 3)
-                            setDataSet([...dataSet, each[1]]);
-                    }
-                });
+                if (dailyStats) {
+                    const nutrientsArrs = Object.entries(dailyStats);
+                    nutrientsArrs.forEach(nutrientArr => {
+                        const nutrientName = nutrientArr[0];
+                        const nutrientValue = nutrientArr[1];
+                        if (
+                            nutrientName[0] === "protein" ||
+                            nutrientName[0] === "total_fat" ||
+                            nutrientName[0] === "total_carbohydrate"
+                        ) {
+                            if (labels.length < 3)
+                                setLabels([...labels, nutrientName]);
+                            if (dataSet.length < 3)
+                                setDataSet([...dataSet, nutrientValue]);
+                        }
+                    });
+                }
             });
     }, [chartData]);
     useEffect(() => {
@@ -66,7 +72,7 @@ const BarChart = ({ mealName, uid, mealsChartContent }) => {
                     enabled: true,
                 },
                 responsive: true,
-                title: { display: true, text: "Diet Details " },
+                title: { display: true, text: "Nutrient Distribution" },
                 legend: {
                     display: true,
                     position: "bottom",
@@ -79,11 +85,8 @@ const BarChart = ({ mealName, uid, mealsChartContent }) => {
 const mapStateToProps = state => {
     return {
         uid: state.firebase.auth.uid,
-        mealsChartContent: state.DietReducer.activeMeal,
+        activeMealContent: state.DietReducer.activeMeal,
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {};
-};
-export default connect(mapStateToProps, mapDispatchToProps)(BarChart);
+export default connect(mapStateToProps)(BarChart);

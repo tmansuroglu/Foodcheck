@@ -1,12 +1,12 @@
 import React from "react";
-import { List, Collapse } from "antd";
+import { List, Collapse, Button } from "antd";
 
 const { Panel } = Collapse;
 
-const description = food => {
+const Description = ({ food }) => {
     return (
         <Collapse ghost>
-            <Panel header={<a>Click here to see details</a>}>
+            <Panel header={<Button>Click here to see details</Button>}>
                 <List>
                     <List.Item>
                         Serving size : {food.nutrientsConsumed.serving_amount}{" "}
@@ -55,4 +55,4 @@ const description = food => {
     );
 };
 
-export default description;
+export default Description;
