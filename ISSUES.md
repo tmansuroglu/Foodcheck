@@ -23,3 +23,5 @@
 -   Image doesnt cover whole background
 
 -   No account confirmation email
+
+-   while fixing casing some components changed. logout button is gone.

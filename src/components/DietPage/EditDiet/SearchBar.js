@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import {
     Typography,
     Space,
@@ -7,13 +7,13 @@ import {
     Select,
     InputNumber,
     Button,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { querySearch, getDetails } from "../../../NutritionixAPI";
-import foodAdder from "./SearchBarAddFood";
-import { AddFood, setFoodDetails } from "../../../redux/actions/DietActions";
+} from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { querySearch, getDetails } from '../../../nutritionixAPI';
+import foodAdder from './SearchBarAddFood';
+import { AddFood, setFoodDetails } from '../../../redux/actions/DietActions';
 
-import { SetMeal } from "../../../redux/actions/DietActions";
+import { SetMeal } from '../../../redux/actions/DietActions';
 
 const SearchBar = ({
     setFoodDetails,
@@ -32,7 +32,7 @@ const SearchBar = ({
     const [inputToggle, setInputToggle] = useState(true);
     const [searchBarServingOptions, setSearchBarServingOptions] = useState();
     const [searchBarServingSize, setSearchBarServingSize] = useState();
-    const [searchBarFoodAmount, setSearchBarFoodAmount] = useState("1");
+    const [searchBarFoodAmount, setSearchBarFoodAmount] = useState('1');
 
     //
     // AUTOCOMPLETE SEARCH HANDLING STARTS HERE
@@ -70,7 +70,7 @@ const SearchBar = ({
     function onMeasureChange(value) {
         setSearchBarServingSize(value);
         setInputToggle(false);
-        console.log("meas");
+        console.log('meas');
     }
 
     useEffect(() => {
@@ -113,15 +113,15 @@ const SearchBar = ({
     };
 
     return (
-        <div align="center">
-            <Title style={{ textAlign: "center" }} level={3}>
+        <div align='center'>
+            <Title style={{ textAlign: 'center' }} level={3}>
                 {activeMealName}
             </Title>
             <Space>
                 <AutoComplete
                     style={{ width: 190 }}
                     options={queryResults}
-                    placeholder="Add food here..."
+                    placeholder='Add food here...'
                     onSearch={handleSearch}
                     onSelect={foodName =>
                         handleSelectAutoCompleteResult(foodName)
@@ -134,10 +134,10 @@ const SearchBar = ({
                 />
                 <Select
                     style={{ width: 140 }}
-                    placeholder="serving size"
+                    placeholder='serving size'
                     onChange={onMeasureChange}
                 >
-                    {searchBarServingOptions ? searchBarServingOptions : ""}
+                    {searchBarServingOptions ? searchBarServingOptions : ''}
                 </Select>
                 <InputNumber
                     min={0.001}
