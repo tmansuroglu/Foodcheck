@@ -11,7 +11,6 @@ import {
     isLoaded,
 } from 'react-redux-firebase';
 import firebase from 'firebase/app';
-import firebaseConfig from './firebaseConfig';
 import { createFirestoreInstance } from 'redux-firestore';
 import thunk from 'redux-thunk';
 import allReducers from './redux/reducers/CombinedReducers';
@@ -34,7 +33,6 @@ const profileSpecificProps = {
 
 const rrfProps = {
     firebase,
-    // config: firebaseConfig,
     config: profileSpecificProps,
     dispatch: store.dispatch,
     createFirestoreInstance,

@@ -1,25 +1,11 @@
 import React from 'react';
-import { Menu, Avatar, Dropdown } from 'antd';
+import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SignOut } from '../redux/actions/AuthActions';
 import { Redirect } from 'react-router-dom';
 
 const Navbar = props => {
-    const isLoggedNavbar = (
-        <Menu>
-            <Menu.Item>Profile</Menu.Item>
-            <Menu.Item
-                onClick={e => {
-                    props.SignOut();
-
-                    return <Redirect to='/' />;
-                }}
-            >
-                Log Out
-            </Menu.Item>
-        </Menu>
-    );
     return (
         <Menu mode='horizontal'>
             <Menu.Item>
