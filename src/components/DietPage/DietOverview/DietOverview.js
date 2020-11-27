@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Col, Collapse, List } from "antd";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import db from "../../../firebaseConfig";
-import order from "./Order";
-import DeleteMeal from "./DeleteMeal";
-import MealCreator from "./MealCreator";
-import ListItem from "./ListItem";
-import { ActiveMeal } from "../../../redux/actions/DietActions";
+import React, { useState, useEffect } from 'react';
+import { Col, Collapse, List } from 'antd';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import db from '../../../firebaseConfig';
+import order from './Order';
+import DeleteMeal from './DeleteMeal';
+import MealCreator from './MealCreator';
+import ListItem from './ListItem';
+import { ActiveMeal } from '../../../redux/actions/DietActions';
 
 const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
     const { Panel } = Collapse;
@@ -21,7 +21,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
     useEffect(() => {
         if (uid) {
             const orderedDietData = [];
-            db.collection("users")
+            db.collection('users')
                 .doc(uid)
                 .onSnapshot(function (doc) {
                     const dietData = doc.data().diet;
@@ -35,7 +35,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                     setLocalDietData(orderedDietData);
                 });
         }
-    }, [activeMeal, meals]);
+    }, [activeMeal, meals, uid]);
     if (uid) {
         return (
             <Col xs={24} sm={24} md={6} lg={4} xl={4} xxl={4}>
@@ -48,7 +48,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                                 const mealContent = Object.values(meal)[0];
                                 return (
                                     <Panel
-                                        style={{ width: "100%" }}
+                                        style={{ width: '100%' }}
                                         header={
                                             <div
                                                 onClick={e =>
@@ -62,13 +62,13 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
 
                                                 <DeleteMeal
                                                     meals={localDietData}
-                                                    style={{ float: "right" }}
+                                                    style={{ float: 'right' }}
                                                 />
                                             </div>
                                         }
                                     >
                                         <List
-                                            itemLayout="horizontal"
+                                            itemLayout='horizontal'
                                             dataSource={mealContent}
                                             renderItem={item => (
                                                 <ListItem item={item} />
@@ -83,7 +83,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
             </Col>
         );
     } else {
-        return <Redirect to="/login" />;
+        return <Redirect to='/login' />;
     }
 };
 const mapStateToProps = state => {

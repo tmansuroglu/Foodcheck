@@ -33,7 +33,7 @@ const BarChart = ({ uid }) => {
                     });
                 }
             });
-    }, [chartData]);
+    }, [chartData, dataSet, labels, uid]);
     useEffect(() => {
         if (dataSet)
             setChartData({
@@ -59,7 +59,7 @@ const BarChart = ({ uid }) => {
                     },
                 ],
             });
-    }, [dataSet]);
+    }, [dataSet, labels]);
 
     return (
         <HorizontalBar

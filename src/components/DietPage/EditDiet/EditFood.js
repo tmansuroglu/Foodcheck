@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Select, Button, InputNumber, Space } from "antd";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { Select, Button, InputNumber, Space } from 'antd';
+import { connect } from 'react-redux';
 
-import { SetMeal } from "../../../redux/actions/DietActions";
+import { SetMeal } from '../../../redux/actions/DietActions';
 
-import applyChanges from "./EditFoodApplyChanges";
+import applyChanges from './EditFoodApplyChanges';
 
 const EditFood = ({
     setMeal,
@@ -27,7 +27,7 @@ const EditFood = ({
 
     useEffect(() => {
         setNewServingOptionsArr(servingOptions(food));
-    }, [editTarget]);
+    }, [editTarget, food]);
 
     const servingOptions = food => {
         const newOptions = food.alt_measures.map((type, index) => {
@@ -68,7 +68,7 @@ const EditFood = ({
             setIsEditing(false);
             setIsEditInputDisabled(true);
         } else {
-            alert("You need to make an input!");
+            alert('You need to make an input!');
         }
     };
     return (
@@ -79,14 +79,14 @@ const EditFood = ({
                 <Select
                     style={{
                         display: `${
-                            editTarget.id === food.id ? "inline-block" : "none"
+                            editTarget.id === food.id ? 'inline-block' : 'none'
                         }`,
-                        width: "10vw",
+                        width: '10vw',
                     }}
-                    placeholder="serving size"
+                    placeholder='serving size'
                     onChange={handleServingSize}
                 >
-                    {newServingOptionsArr ? newServingOptionsArr : ""}
+                    {newServingOptionsArr ? newServingOptionsArr : ''}
                 </Select>
                 <InputNumber
                     min={0.001}
@@ -95,17 +95,17 @@ const EditFood = ({
                     onChange={handleAmount}
                     style={{
                         display: `${
-                            editTarget.id === food.id ? "inline-block" : "none"
+                            editTarget.id === food.id ? 'inline-block' : 'none'
                         }`,
-                        width: "4vw",
+                        width: '4vw',
                     }}
                 />
                 <Button
                     style={{
                         display: `${
-                            editTarget.id === food.id ? "inline-block" : "none"
+                            editTarget.id === food.id ? 'inline-block' : 'none'
                         }`,
-                        width: "5vw",
+                        width: '5vw',
                     }}
                     disabled={isEditInputDisabled}
                     onClick={handleApplyButton}

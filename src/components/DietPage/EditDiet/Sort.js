@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Select } from "antd";
-import { connect } from "react-redux";
-import { SetMeal } from "../../../redux/actions/DietActions";
-import sorter from "./SortConditions";
-import SortOptions from "./SortOptions";
+import React, { useState, useEffect } from 'react';
+import { Select } from 'antd';
+import { connect } from 'react-redux';
+import { SetMeal } from '../../../redux/actions/DietActions';
+import sorter from './SortConditions';
+import SortOptions from './SortOptions';
 
 const Sort = ({ activeMealContent, activeMealName, setMeal }) => {
     const [sortType, setSortType] = useState();
@@ -13,16 +13,16 @@ const Sort = ({ activeMealContent, activeMealName, setMeal }) => {
         if (sortedContent) {
             setMeal(activeMealName, sortedContent);
         }
-    }, [sortType]);
+    }, [sortType, activeMealContent, activeMealName, setMeal]);
 
     return (
         <Select
             style={{
                 width: 120,
-                float: "right",
+                float: 'right',
             }}
             onChange={e => setSortType(e)}
-            defaultValue="Sort By"
+            defaultValue='Sort By'
         >
             {SortOptions()}
         </Select>
