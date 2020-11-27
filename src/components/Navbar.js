@@ -1,9 +1,9 @@
-import React from "react";
-import { Menu, Avatar, Dropdown } from "antd";
-import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
-import { SignOut } from "../redux/actions/AuthActions";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import { Menu, Avatar, Dropdown } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { SignOut } from '../redux/actions/AuthActions';
+import { Redirect } from 'react-router-dom';
 
 const Navbar = props => {
     const isLoggedNavbar = (
@@ -13,7 +13,7 @@ const Navbar = props => {
                 onClick={e => {
                     props.SignOut();
 
-                    return <Redirect to="/" />;
+                    return <Redirect to='/' />;
                 }}
             >
                 Log Out
@@ -21,58 +21,37 @@ const Navbar = props => {
         </Menu>
     );
     return (
-        <Menu mode="horizontal">
+        <Menu mode='horizontal'>
             <Menu.Item>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to='/'>Home</NavLink>
             </Menu.Item>
 
             <Menu.Item>
-                <NavLink to="/about">About</NavLink>
+                <NavLink to='/about'>About</NavLink>
             </Menu.Item>
 
             {props.userData.uid ? (
                 <>
                     <Menu.Item>
-                        <NavLink to="/diet">Diet</NavLink>
+                        <NavLink to='/diet'>Diet</NavLink>
                     </Menu.Item>
-                    {console.log(props.profile)}
-                    <Menu.Item style={{ float: "right", marginRight: "5vw" }}>
-                        {props.profile.firstName ? (
-                            <Dropdown
-                                placement="bottomCenter"
-                                overlay={isLoggedNavbar}
-                            >
-                                <a
-                                    className="ant-dropdown-link"
-                                    onClick={e => e.preventDefault()}
-                                >
-                                    <Avatar
-                                        size={{
-                                            xs: 24,
-                                            sm: 32,
-                                            md: 40,
-                                            lg: 64,
-                                            xl: 80,
-                                            xxl: 100,
-                                        }}
-                                    >
-                                        {props.profile.firstName.charAt(0)}
-                                        {props.profile.surname.charAt(0)}
-                                    </Avatar>
-                                </a>
-                            </Dropdown>
-                        ) : (
-                            <></>
-                        )}
+                    <Menu.Item
+                        onClick={e => {
+                            props.SignOut();
+
+                            return <Redirect to='/' />;
+                        }}
+                    >
+                        Log Out
                     </Menu.Item>
                 </>
             ) : (
                 <>
                     <Menu.Item>
-                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to='/login'>Login</NavLink>
                     </Menu.Item>
                     <Menu.Item>
-                        <NavLink to="/register">Register</NavLink>
+                        <NavLink to='/register'>Register</NavLink>
                     </Menu.Item>
                 </>
             )}

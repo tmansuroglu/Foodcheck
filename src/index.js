@@ -1,28 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
-import * as serviceWorker from "./serviceWorker";
-
-import { applyMiddleware, createStore, compose } from "redux";
-
-import { Provider, useSelector } from "react-redux";
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { Provider, useSelector } from 'react-redux';
 import {
     getFirebase,
     ReactReduxFirebaseProvider,
     isLoaded,
-} from "react-redux-firebase";
-
-import firebase from "firebase/app";
-
-import firebaseConfig from "./firebaseConfig";
-
-import { createFirestoreInstance } from "redux-firestore";
-
-import thunk from "redux-thunk";
-
-import allReducers from "./redux/reducers/combinedReducer";
+} from 'react-redux-firebase';
+import firebase from 'firebase/app';
+import firebaseConfig from './firebaseConfig';
+import { createFirestoreInstance } from 'redux-firestore';
+import thunk from 'redux-thunk';
+import allReducers from './redux/reducers/CombinedReducers';
 
 const store = createStore(
     allReducers,
@@ -34,7 +26,7 @@ const store = createStore(
 );
 
 const profileSpecificProps = {
-    userProfile: "users",
+    userProfile: 'users',
     useFirestoreForProfile: true,
     enableRedirectHandling: false,
     resetBeforeLogin: false,
@@ -42,7 +34,7 @@ const profileSpecificProps = {
 
 const rrfProps = {
     firebase,
-    config: firebaseConfig,
+    // config: firebaseConfig,
     config: profileSpecificProps,
     dispatch: store.dispatch,
     createFirestoreInstance,
@@ -67,7 +59,7 @@ ReactDOM.render(
         </Provider>
     </React.StrictMode>,
 
-    document.getElementById("root")
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
