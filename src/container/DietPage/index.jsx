@@ -1,9 +1,9 @@
 import React from 'react';
 import EditMeal from '../../components/dietpage/EditDiet';
-import ManageDiet from '../../components/dietpage/DietOverview';
+import DietOverview from '../../components/dietpage/DietOverview';
 import DietPageBackground from '../../images/DietPageBackground.jpg';
 import { Row } from 'antd';
-import DietDetails from '../../components/dietpage/DietDetails';
+import DietGraphs from '../../components/dietpage/DietGraphs';
 
 const editPageStyle = {
     backgroundImage: `linear-gradient(0deg, rgba(2,0,36,0.3) 0%, rgba(9,9,121,0.3) 0%, rgba(240,241,239,0.3) 0%),url(${DietPageBackground})`,
@@ -17,9 +17,9 @@ const editPageStyle = {
 const DietPage = () => {
     return (
         <Row style={editPageStyle}>
-            <ManageDiet />
+            <DietOverview />
             <EditMeal />
-            <DietDetails />
+            <DietGraphs />
         </Row>
     );
 };
