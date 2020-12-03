@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Modal } from 'antd';
-
 import { ActiveMeal, SetDiet } from '../../../redux/actions/DietActions';
 import { connect } from 'react-redux';
+import './index.css';
 
 const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
     const { Text } = Typography;
-
     const [modalVisibility, setModalVisibility] = useState(false);
     const [activeMealName, setActiveMealName] = useState();
     const [activeMealContent, setActiveMealContent] = useState();
@@ -47,7 +46,7 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
         <>
             <Modal
                 title='Are you sure?'
-                style={{ top: 20 }}
+                className='modalDeleteMeal'
                 visible={modalVisibility}
                 onOk={deleteMeal}
                 onCancel={() => setModalVisibility(false)}
@@ -55,10 +54,7 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
                 <p>Deleted meals can't be recovered!</p>
             </Modal>
             <Text
-                style={{
-                    float: 'right',
-                    fontSize: '0.8rem',
-                }}
+                className='modalDeleteMealText'
                 type='danger'
                 onClick={e => handleDelete(activeMealName, activeMealContent)}
             >

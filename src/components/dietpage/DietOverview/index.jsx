@@ -8,6 +8,7 @@ import DeleteMeal from '../DeleteMeal';
 import MealCreator from '../CreateMeal';
 import ListItem from '../MealItem';
 import { ActiveMeal } from '../../../redux/actions/DietActions';
+import './index.css';
 
 const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
     const { Panel } = Collapse;
@@ -48,7 +49,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                                 const mealContent = Object.values(meal)[0];
                                 return (
                                     <Panel
-                                        style={{ width: '100%' }}
+                                        className='mealCreatorCollapsePanel'
                                         header={
                                             <div
                                                 onClick={e =>
@@ -62,7 +63,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
 
                                                 <DeleteMeal
                                                     meals={localDietData}
-                                                    style={{ float: 'right' }}
+                                                    className='deleteMeal'
                                                 />
                                             </div>
                                         }

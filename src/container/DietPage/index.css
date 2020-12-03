@@ -1,0 +1,15 @@
+.dietPageRow {
+    background-image: linear-gradient(
+            0deg,
+            rgba(2, 0, 36, 0.3) 0%,
+            rgba(9, 9, 121, 0.3) 0%,
+            rgba(240, 241, 239, 0.3) 0%
+        ),
+        url('../../images/DietPageBackground.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}

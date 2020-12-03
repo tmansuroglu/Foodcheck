@@ -13,6 +13,7 @@ import { querySearch, getDetails } from '../../../nutritionixAPI';
 import foodAdder from '../searchBarAddFood';
 import { AddFood, setFoodDetails } from '../../../redux/actions/DietActions';
 import { SetMeal } from '../../../redux/actions/DietActions';
+import './index.css';
 
 const SearchBar = ({
     setFoodDetails,
@@ -113,12 +114,12 @@ const SearchBar = ({
 
     return (
         <div align='center'>
-            <Title style={{ textAlign: 'center' }} level={3}>
+            <Title className='mealName' level={3}>
                 {activeMealName}
             </Title>
             <Space>
                 <AutoComplete
-                    style={{ width: 190 }}
+                    className='autoComplete'
                     options={queryResults}
                     placeholder='Add food here...'
                     onSearch={handleSearch}
@@ -132,7 +133,7 @@ const SearchBar = ({
                     }
                 />
                 <Select
-                    style={{ width: 140 }}
+                    className='servingSizeOption'
                     placeholder='serving size'
                     onChange={onMeasureChange}
                 >

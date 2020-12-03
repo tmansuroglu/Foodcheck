@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { SetMeal } from '../../../redux/actions/DietActions';
 import sorter from '../sortConditions';
 import SortOptions from '../SortFoodOptions';
+import './index.css';
 
 const Sort = ({ activeMealContent, activeMealName, setMeal }) => {
     const [sortType, setSortType] = useState();
@@ -17,10 +18,7 @@ const Sort = ({ activeMealContent, activeMealName, setMeal }) => {
 
     return (
         <Select
-            style={{
-                width: 120,
-                float: 'right',
-            }}
+            className='sortSelector'
             onChange={e => setSortType(e)}
             defaultValue='Sort By'
         >

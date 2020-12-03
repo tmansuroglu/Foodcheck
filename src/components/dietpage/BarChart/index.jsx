@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import './index.css';
 import { HorizontalBar } from 'react-chartjs-2';
 import db from '../../../firebaseConfig';
 import { connect } from 'react-redux';
 
 const BarChart = ({ uid }) => {
     const [chartData, setChartData] = useState();
-    // const [selectedMealArr, setSelecetedMealArr] = useState([]);
     const [labels, setLabels] = useState([]);
     const [dataSet, setDataSet] = useState([]);
 
@@ -63,7 +63,7 @@ const BarChart = ({ uid }) => {
 
     return (
         <HorizontalBar
-            style={{ height: '100px' }}
+            className='horizontalBarChart'
             hover={true}
             data={chartData}
             options={{

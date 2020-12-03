@@ -1,18 +1,17 @@
 import React from 'react';
 import { Row, Col, Divider, Space } from 'antd';
-
 import Header from '../../components/homepage/Header';
 import KnowWhatYouAreEating from '../../components/homepage/KnowWhatYouAreEating';
 import CompareFood from '../../components/homepage/CompareFood';
 import KeepTrack from '../../components/homepage/KeepTrack';
 import AllToolsYouNeed from '../../components/homepage/AllToolsYouNeed';
+import './index.css';
 
 const HomePage = () => {
     return (
         <>
             <Header />
-
-            <Row style={{ marginTop: '5vh', marginBottom: '5vh' }}>
+            <Row className='homePageRow'>
                 <Col span={20} offset={2}>
                     <Space direction='vertical' align='center'>
                         <KnowWhatYouAreEating />

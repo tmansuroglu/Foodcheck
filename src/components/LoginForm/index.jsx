@@ -1,8 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import { SignIn } from '../redux/actions/AuthActions';
+import { SignIn } from '../../redux/actions/AuthActions';
 import { Redirect } from 'react-router-dom';
+import './index.css';
 
 function LoginForm({ login, authStatus, authError }) {
     const layout = {
@@ -24,7 +25,7 @@ function LoginForm({ login, authStatus, authError }) {
         return <Redirect to='/' />;
     } else {
         return (
-            <Row style={{ marginTop: '10vh' }}>
+            <Row className='LoginFormRow'>
                 <Col span={10} offset={7}>
                     <Form
                         {...layout}

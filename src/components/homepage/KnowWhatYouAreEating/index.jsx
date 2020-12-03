@@ -2,37 +2,17 @@ import React from 'react';
 import { Row, Col, Image, Typography } from 'antd';
 import text from '../../../placeholderText';
 import mid2 from '../../../images/mid2.png';
+import './index.css';
+
 const KnowWhatYouAreEating = () => {
     const { Title } = Typography;
     return (
-        <Row align='middle' style={{ marginTop: '5vh', marginBottom: '5vh' }}>
-            <Col
-                xxl={12}
-                lg={12}
-                xl={12}
-                md={24}
-                sm={24}
-                xs={24}
-                style={{
-                    marginTop: '5vh',
-                    marginBottom: '5vh',
-                }}
-            >
+        <Row align='middle' className='knowWhatYouAreEatingRow'>
+            <Col className='knowWhatYouAreEatingCol' lg={12} xs={24}>
                 <Image src={mid2} width='90%' />
             </Col>
-            <Col
-                xxl={12}
-                lg={12}
-                xl={12}
-                md={24}
-                sm={24}
-                xs={24}
-                style={{
-                    marginTop: '5vh',
-                    marginBottom: '5vh',
-                }}
-            >
-                <Title level={1} style={{ textAlign: 'center' }}>
+            <Col lg={12} xs={24} className='knowWhatYouAreEatingCol'>
+                <Title className='knowWhatYouAreEatingText' level={1}>
                     KNOW WHAT YOU ARE EATING!
                 </Title>
                 <p>{text}</p>

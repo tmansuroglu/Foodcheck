@@ -1,5 +1,7 @@
 import React from 'react';
 import { List, Avatar } from 'antd';
+import './index.css';
+
 const ListItem = ({ item }) => {
     return (
         <List.Item>
@@ -7,22 +9,9 @@ const ListItem = ({ item }) => {
                 avatar={<Avatar src={item.photo.thumb} />}
                 title={
                     <>
-                        <span
-                            style={{
-                                float: 'left',
-                            }}
-                        >
-                            {item.nutrientsConsumed.serving_amount}{' '}
-                            {item.nutrientsConsumed.serving_size}{' '}
-                            {item.food_name}
-                        </span>
-                        <span
-                            style={{
-                                float: 'right',
-                            }}
-                        >
-                            {item.nutrientsConsumed.calories} kcal
-                        </span>
+                        {item.nutrientsConsumed.serving_amount}{' '}
+                        {item.nutrientsConsumed.serving_size} {item.food_name}{' '}
+                        {item.nutrientsConsumed.calories} kcal
                     </>
                 }
             />

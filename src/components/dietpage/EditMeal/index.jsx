@@ -7,6 +7,7 @@ import EditFood from '../EditFood';
 import DeleteFood from '../DeleteFood';
 import SearchBar from '../SearchBar';
 import Sort from '../SortFood';
+import './index.css';
 
 const EditMeal = ({ activeMeal }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -32,7 +33,7 @@ const EditMeal = ({ activeMeal }) => {
                 {activeMealName && activeMealContent ? (
                     <>
                         <Card
-                            style={{ width: '95%', marginTop: '3.3vh' }}
+                            className='editMealCard'
                             hoverable='true'
                             title={
                                 <>
@@ -47,14 +48,7 @@ const EditMeal = ({ activeMeal }) => {
                                         <Col
                                             key={index}
                                             xs={24}
-                                            sm={24}
-                                            md={24}
-                                            lg={24}
-                                            xl={24}
-                                            xxl={24}
-                                            style={{
-                                                padding: '1%',
-                                            }}
+                                            className='editMealCol'
                                         >
                                             <List itemLayout='horizontal'>
                                                 <List.Item

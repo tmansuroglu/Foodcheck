@@ -17,7 +17,6 @@ const DeleteFood = ({ setMeal, activeMealContent, activeMealName, food }) => {
         const newMealContent = activeMealContent.reduce(reducer, []);
         setMeal(activeMealName, newMealContent);
     };
-
     return <Button onClick={e => handleDeleteButton(food)}>delete</Button>;
 };
 

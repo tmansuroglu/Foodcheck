@@ -1,0 +1,29 @@
+.aboutPageCol {
+    background: linear-gradient(
+        0deg,
+        rgba(251, 250, 255, 1) 0%,
+        rgba(246, 246, 246, 0.4514180672268907) 0%,
+        rgba(247, 247, 247, 0.5298494397759104) 0%
+    );
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding: 5vh;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.aboutPageRow {
+    background: linear-gradient(
+            0deg,
+            rgba(2, 0, 36, 0.3) 0%,
+            rgba(9, 9, 121, 0.3) 0%,
+            rgba(240, 241, 239, 0.3) 0%
+        ),
+        url('../../images/DietPageBackground.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { SignOut } from '../redux/actions/AuthActions';
+import { SignOut } from '../../redux/actions/AuthActions';
 import { Redirect } from 'react-router-dom';
 
 const Navbar = props => {

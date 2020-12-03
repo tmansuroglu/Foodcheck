@@ -1,8 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { connect } from 'react-redux';
-import { signUp } from '../redux/actions/AuthActions';
+import { signUp } from '../../redux/actions/AuthActions';
 import { Redirect } from 'react-router-dom';
+import './index.css';
 
 const formItemLayout = {
     labelCol: {
@@ -38,7 +39,7 @@ const RegisterForm = props => {
         return <Redirect to='/' />;
     } else {
         return (
-            <Row style={{ marginTop: '5vh' }}>
+            <Row className='registerFormRow'>
                 <Col span={10} offset={7}>
                     <Form
                         {...formItemLayout}

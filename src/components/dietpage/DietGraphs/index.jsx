@@ -7,12 +7,12 @@ import PieChart from '../PieChart';
 const DietDetails = ({ activeMeal }) => {
     if (activeMeal)
         return (
-            <Col xs={24} sm={24} md={6} lg={8} xl={8} xxl={8}>
-                <div style={{ width: '100%', marginTop: '3.3vh' }}>
+            <Col xs={24} md={6} lg={8}>
+                <div>
                     <Card
+                        className='graphCard'
                         title={<PieChart />}
                         bordered={false}
-                        style={{ width: '100%' }}
                     >
                         <BarChart />
                     </Card>

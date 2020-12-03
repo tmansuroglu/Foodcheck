@@ -1,0 +1,10 @@
+.compareFoodRow,
+.compareFoodcol {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    text-align: center;
+}
+
+.compareFoodText {
+    padding-right: 4vh;
+}
