@@ -8,23 +8,25 @@ import AllToolsYouNeed from '../../components/homepage/AllToolsYouNeed';
 import './index.css';
 
 const HomePage = () => {
-    return (
-        <>
-            <Header />
-            <Row className='homePageRow'>
-                <Col span={20} offset={2}>
-                    <Space direction='vertical' align='center'>
-                        <KnowWhatYouAreEating />
-                        <Divider />
-                        <CompareFood />
-                        <Divider />
-                        <KeepTrack />
-                        <Divider />
-                        <AllToolsYouNeed />
-                    </Space>
-                </Col>
-            </Row>
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <Row className='homePageRow'>
+        <Col span={24}>
+          <div className='homePageCol'>
+            <Space direction='vertical' align='center'>
+              <KnowWhatYouAreEating />
+              <Divider />
+              <CompareFood />
+              <Divider />
+              <KeepTrack />
+              <Divider />
+              <AllToolsYouNeed />
+            </Space>
+          </div>
+        </Col>
+      </Row>
+    </>
+  );
 };
 export default HomePage;
