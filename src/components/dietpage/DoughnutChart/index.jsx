@@ -10,7 +10,7 @@ const DoughnutChart = ({ graphData }) => {
         plugins: { datalabels: { font: { size: 15 } } },
         title: { text: 'KCAL Per Nutrient', display: true, fontSize: 20 },
         maintainAspectRatio: true,
-        tooltips: { caretPadding: 10 },
+        tooltips: { enabled: false },
         legend: { position: 'bottom', labels: { fontSize: 15 } },
         responsive: true,
       }}
