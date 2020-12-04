@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Col, Typography } from 'antd';
 import HorizontalBarChart from '../HorizontalBarChart';
 import DoughnutChart from '../DoughnutChart';
-import DailyStats from '../DailyStats';
+import DailyStatsList from '../DailyStatsList';
 import db from '../../../firebaseConfig';
 import './index.css';
 
@@ -76,7 +76,7 @@ const DietDetails = ({ activeMeal, uid }) => {
           bordered={false}
         >
           <Title level={3}>All Nutrients</Title>
-          <DailyStats nutrientsConsumed={nutrientsConsumed} />
+          <DailyStatsList nutrientsConsumed={nutrientsConsumed} />
         </Card>
       ) : (
         <></>

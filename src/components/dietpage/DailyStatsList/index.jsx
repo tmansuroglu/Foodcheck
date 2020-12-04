@@ -2,7 +2,7 @@ import React from 'react';
 import { List } from 'antd';
 import './index.css';
 
-const DailyStats = ({ nutrientsConsumed }) => {
+const DailyStatsList = ({ nutrientsConsumed }) => {
   const data = [
     `Fat: ${nutrientsConsumed.total_fat} gr`,
     `Carbohydrate : ${nutrientsConsumed.total_carbohydrate} gr`,
@@ -23,4 +23,4 @@ const DailyStats = ({ nutrientsConsumed }) => {
   );
 };
 
-export default DailyStats;
+export default DailyStatsList;
