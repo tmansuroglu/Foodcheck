@@ -1,8 +1,11 @@
-.dietPageRow {
+.dietPage {
   background: url('../../images/dietPage.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.dietPageRow {
+  width: 100%;
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-bottom: 20px;
 }

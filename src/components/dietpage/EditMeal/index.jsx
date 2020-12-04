@@ -28,7 +28,7 @@ const EditMeal = ({ activeMeal }) => {
   };
 
   return (
-    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+    <>
       <Row justify='center'>
         {activeMealName && activeMealContent ? (
           <>
@@ -87,7 +87,7 @@ const EditMeal = ({ activeMeal }) => {
           ''
         )}
       </Row>
-    </Col>
+    </>
   );
 };
 

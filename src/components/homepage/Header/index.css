@@ -3,6 +3,15 @@
   height: 80vh;
   color: white;
   text-align: center;
+  background: linear-gradient(
+      0deg,
+      rgba(251, 250, 255, 0) 0%,
+      rgba(0, 0, 0, 0.23012955182072825) 0%
+    ),
+    url('../../../images/homePageHeader.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .homePageTitle {

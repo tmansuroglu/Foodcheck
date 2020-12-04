@@ -39,7 +39,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
   }, [activeMeal, meals, uid]);
   if (uid) {
     return (
-      <Col xs={24} sm={24} md={6} lg={4} xl={4} xxl={4}>
+      <>
         <MealCreator />
         {
           <>
@@ -76,7 +76,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
             </Collapse>
           </>
         }
-      </Col>
+      </>
     );
   } else {
     return <Redirect to='/login' />;

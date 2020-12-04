@@ -63,7 +63,7 @@ const DietDetails = ({ activeMeal, uid }) => {
   }, [nutrientsConsumed]);
 
   return (
-    <Col xs={24} md={6} lg={8}>
+    <>
       {activeMeal ? (
         <Card
           className='dailyStatsCard'
@@ -81,7 +81,7 @@ const DietDetails = ({ activeMeal, uid }) => {
       ) : (
         <></>
       )}
-    </Col>
+    </>
   );
 };
 
