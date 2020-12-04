@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Col } from 'antd';
 import HorizontalBarChart from '../HorizontalBarChart';
 import db from '../../../firebaseConfig';
+import './index.css';
 
 const DietDetails = ({ activeMeal, uid }) => {
   const [nutrientsConsumed, setNutrientsConsumed] = useState({});
@@ -35,7 +36,6 @@ const DietDetails = ({ activeMeal, uid }) => {
   }, [activeMeal, uid]);
 
   useEffect(() => {
-    // if order of nutrients change pie chart labels must be edited accordingly
     setGraphData([
       Math.round(nutrientsConsumed.total_fat * 100) / 100,
       Math.round(nutrientsConsumed.total_carbohydrate * 100) / 100,
@@ -47,7 +47,7 @@ const DietDetails = ({ activeMeal, uid }) => {
     <Col xs={24} md={6} lg={8}>
       {activeMeal ? (
         <Card
-          className='graphCard'
+          className='dailyStatsCard'
           title={<HorizontalBarChart graphData={graphData} />}
           bordered={false}
         />

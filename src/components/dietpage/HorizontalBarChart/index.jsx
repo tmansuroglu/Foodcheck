@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { connect } from 'react-redux';
+import './index.css';
 
 const HorizontalBarChart = ({ graphData }) => {
   return (
@@ -9,7 +11,29 @@ const HorizontalBarChart = ({ graphData }) => {
         width={100}
         height={200}
         options={{
-          title: 'Nutrients',
+          layout: {
+            padding: {
+              right: 40,
+            },
+          },
+          plugins: {
+            datalabels: {
+              anchor: 'end',
+              align: 'end',
+            },
+          },
+          scales: {
+            xAxes: [
+              {
+                display: false,
+              },
+            ],
+          },
+          title: {
+            display: true,
+            text: 'Nutrients in grams',
+            fontSize: 15,
+          },
           maintainAspectRatio: false,
           hover: false,
           legend: { display: false },
@@ -19,7 +43,6 @@ const HorizontalBarChart = ({ graphData }) => {
           labels: ['Fat', 'Carboydrate', 'Protein'],
           datasets: [
             {
-              label: 'gram(s)',
               data: graphData,
               backgroundColor: [
                 'rgba(255, 206, 86, 0.2)',
