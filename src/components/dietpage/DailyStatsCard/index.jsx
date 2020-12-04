@@ -68,14 +68,17 @@ const DietDetails = ({ activeMeal, uid }) => {
         <Card
           className='dailyStatsCard'
           title={
-            <>
-              <DoughnutChart graphData={doughnutChartData} />
-              <HorizontalBarChart graphData={horizontalBarChartData} />
-            </>
+            <Title level={3} className='dailyStatsCardTitle'>
+              Daily Nutrients
+            </Title>
           }
           bordered={false}
         >
-          <Title level={3}>All Nutrients</Title>
+          <DoughnutChart graphData={doughnutChartData} />
+          <HorizontalBarChart graphData={horizontalBarChartData} />
+          <Title level={3} className='dailyStatsCardTitle'>
+            All Nutrients
+          </Title>
           <DailyStatsList nutrientsConsumed={nutrientsConsumed} />
         </Card>
       ) : (
