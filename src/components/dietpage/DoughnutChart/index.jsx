@@ -8,9 +8,9 @@ const DoughnutChart = ({ graphData }) => {
     <Doughnut
       options={{
         plugins: { datalabels: { font: { size: 15 } } },
-        title: { text: 'KCAL Per Nutrient', display: true, fontSize: 15 },
+        title: { text: 'KCAL Per Nutrient', display: true, fontSize: 25 },
         maintainAspectRatio: true,
-        tooltips: { mode: 'index' },
+        tooltips: { caretPadding: 10 },
         legend: { position: 'bottom', labels: { fontSize: 15 } },
       }}
       data={{

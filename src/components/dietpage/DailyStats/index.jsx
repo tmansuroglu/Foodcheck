@@ -15,6 +15,7 @@ const DailyStats = ({ nutrientsConsumed }) => {
   ];
   return (
     <List
+      className='dailyStatsList'
       size='small'
       dataSource={data}
       renderItem={item => <List.Item>{item}</List.Item>}

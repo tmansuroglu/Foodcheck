@@ -34,7 +34,7 @@ const HorizontalBarChart = ({ graphData }) => {
           title: {
             display: true,
             text: 'Nutrients in grams',
-            fontSize: 15,
+            fontSize: 25,
           },
           maintainAspectRatio: false,
           legend: { display: false },
