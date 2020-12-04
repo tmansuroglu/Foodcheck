@@ -2,3 +2,7 @@
   width: 100%;
   margin-top: 3.3vh;
 }
+
+.dailyStatsCard {
+  box-shadow: 0px 0px 9px -3px gray;
+}
