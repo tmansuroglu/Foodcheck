@@ -2,7 +2,7 @@ import React from 'react';
 import { Row } from 'antd';
 import EditMeal from '../../components/dietpage/EditMeal';
 import DietOverview from '../../components/dietpage/DietOverview';
-import DietGraphs from '../../components/dietpage/DailyStats';
+import DailyStatsCard from '../../components/dietpage/DailyStatsCard';
 import './index.css';
 
 const DietPage = () => {
@@ -10,7 +10,7 @@ const DietPage = () => {
     <Row className='dietPageRow'>
       <DietOverview />
       <EditMeal />
-      <DietGraphs />
+      <DailyStatsCard />
     </Row>
   );
 };
