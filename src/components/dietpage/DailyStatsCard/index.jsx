@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Card, Col } from 'antd';
+import { Card, Col, Typography } from 'antd';
 import HorizontalBarChart from '../HorizontalBarChart';
+import PieChart from '../PieChart';
 import DailyStats from '../DailyStats';
 import db from '../../../firebaseConfig';
 import './index.css';
 
+const PROTEIN_MULTIPLIER = 4;
+const CARBOHYDRATE_MULTIPLIER = 4;
+const FAT_MULTIPLIER = 9;
+
 const DietDetails = ({ activeMeal, uid }) => {
+  const { Title } = Typography;
   const [nutrientsConsumed, setNutrientsConsumed] = useState({});
-  const [graphData, setGraphData] = useState([]);
+  const [horizontalBarChartData, setHorizontalBarChartData] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
 
   useEffect(() => {
     db.collection('users')
@@ -21,11 +28,13 @@ const DietDetails = ({ activeMeal, uid }) => {
           for (const food of meal) {
             for (const nutrient in food.nutrientsConsumed) {
               if (consumption.hasOwnProperty(nutrient)) {
-                consumption[nutrient] +=
-                  Math.round(food.nutrientsConsumed[nutrient] * 100) / 100;
+                consumption[nutrient] += Math.round(
+                  food.nutrientsConsumed[nutrient]
+                );
               } else {
-                consumption[nutrient] =
-                  Math.round(food.nutrientsConsumed[nutrient] * 100) / 100;
+                consumption[nutrient] = Math.round(
+                  food.nutrientsConsumed[nutrient]
+                );
               }
             }
           }
@@ -38,10 +47,18 @@ const DietDetails = ({ activeMeal, uid }) => {
   }, [activeMeal, uid]);
 
   useEffect(() => {
-    setGraphData([
+    setHorizontalBarChartData([
       nutrientsConsumed.total_fat,
       nutrientsConsumed.total_carbohydrate,
       nutrientsConsumed.protein,
+    ]);
+  }, [nutrientsConsumed]);
+
+  useEffect(() => {
+    setPieChartData([
+      nutrientsConsumed.total_fat * FAT_MULTIPLIER,
+      nutrientsConsumed.total_carbohydrate * CARBOHYDRATE_MULTIPLIER,
+      nutrientsConsumed.protein * PROTEIN_MULTIPLIER,
     ]);
   }, [nutrientsConsumed]);
 
@@ -50,9 +67,15 @@ const DietDetails = ({ activeMeal, uid }) => {
       {activeMeal ? (
         <Card
           className='dailyStatsCard'
-          title={<HorizontalBarChart graphData={graphData} />}
+          title={
+            <>
+              <PieChart graphData={pieChartData} />
+              <HorizontalBarChart graphData={horizontalBarChartData} />
+            </>
+          }
           bordered={false}
         >
+          <Title level={3}>All Nutrients</Title>
           <DailyStats nutrientsConsumed={nutrientsConsumed} />
         </Card>
       ) : (
