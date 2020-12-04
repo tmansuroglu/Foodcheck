@@ -1,16 +1,17 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './index.css';
 
-const PieChart = ({ graphData }) => {
+const DoughnutChart = ({ graphData }) => {
   return (
     <Doughnut
       options={{
+        plugins: { datalabels: { font: { size: 15 } } },
         title: { text: 'KCAL Per Nutrient', display: true, fontSize: 15 },
         maintainAspectRatio: true,
-        hover: false,
-        legend: { display: false },
-        tooltips: { enabled: false },
+        tooltips: { mode: 'index' },
+        legend: { position: 'bottom', labels: { fontSize: 15 } },
       }}
       data={{
         labels: ['Fat', 'Carboydrate', 'Protein'],
@@ -35,4 +36,4 @@ const PieChart = ({ graphData }) => {
   );
 };
 
-export default PieChart;
+export default DoughnutChart;

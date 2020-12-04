@@ -18,6 +18,7 @@ const HorizontalBarChart = ({ graphData }) => {
           },
           plugins: {
             datalabels: {
+              font: { size: 15 },
               anchor: 'end',
               align: 'end',
             },
@@ -28,6 +29,7 @@ const HorizontalBarChart = ({ graphData }) => {
                 display: false,
               },
             ],
+            yAxes: [{ ticks: { fontSize: 15 } }],
           },
           title: {
             display: true,
@@ -35,7 +37,6 @@ const HorizontalBarChart = ({ graphData }) => {
             fontSize: 15,
           },
           maintainAspectRatio: false,
-          hover: false,
           legend: { display: false },
           tooltips: { enabled: false },
         }}

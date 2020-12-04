@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, Col, Typography } from 'antd';
 import HorizontalBarChart from '../HorizontalBarChart';
-import PieChart from '../PieChart';
+import DoughnutChart from '../DoughnutChart';
 import DailyStats from '../DailyStats';
 import db from '../../../firebaseConfig';
 import './index.css';
@@ -15,7 +15,7 @@ const DietDetails = ({ activeMeal, uid }) => {
   const { Title } = Typography;
   const [nutrientsConsumed, setNutrientsConsumed] = useState({});
   const [horizontalBarChartData, setHorizontalBarChartData] = useState([]);
-  const [pieChartData, setPieChartData] = useState([]);
+  const [doughnutChartData, setDoughnutChartData] = useState([]);
 
   useEffect(() => {
     db.collection('users')
@@ -55,7 +55,7 @@ const DietDetails = ({ activeMeal, uid }) => {
   }, [nutrientsConsumed]);
 
   useEffect(() => {
-    setPieChartData([
+    setDoughnutChartData([
       nutrientsConsumed.total_fat * FAT_MULTIPLIER,
       nutrientsConsumed.total_carbohydrate * CARBOHYDRATE_MULTIPLIER,
       nutrientsConsumed.protein * PROTEIN_MULTIPLIER,
@@ -69,7 +69,7 @@ const DietDetails = ({ activeMeal, uid }) => {
           className='dailyStatsCard'
           title={
             <>
-              <PieChart graphData={pieChartData} />
+              <DoughnutChart graphData={doughnutChartData} />
               <HorizontalBarChart graphData={horizontalBarChartData} />
             </>
           }
