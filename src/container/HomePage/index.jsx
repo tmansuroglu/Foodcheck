@@ -1,32 +1,14 @@
 import React from 'react';
-import { Row, Col, Divider, Space } from 'antd';
 import Header from '../../components/homepage/Header';
-import KnowWhatYouAreEating from '../../components/homepage/KnowWhatYouAreEating';
-import CompareFood from '../../components/homepage/CompareFood';
-import KeepTrack from '../../components/homepage/KeepTrack';
-import AllToolsYouNeed from '../../components/homepage/AllToolsYouNeed';
+import HomePageCarousel from '../../components/homepage/HomePageCarousel';
 import './index.css';
 
 const HomePage = () => {
   return (
-    <>
+    <div className='homePage'>
       <Header />
-      <Row className='homePageRow'>
-        <Col span={24}>
-          <div className='homePageCol'>
-            <Space direction='vertical' align='center'>
-              <KnowWhatYouAreEating />
-              <Divider />
-              <CompareFood />
-              <Divider />
-              <KeepTrack />
-              <Divider />
-              <AllToolsYouNeed />
-            </Space>
-          </div>
-        </Col>
-      </Row>
-    </>
+      <HomePageCarousel />
+    </div>
   );
 };
 export default HomePage;
