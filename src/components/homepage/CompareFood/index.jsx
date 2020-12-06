@@ -13,7 +13,7 @@ const CompareFood = () => {
         <p className='compareFoodText'>{text}</p>
       </Col>
       <Col lg={12} xs={24} className='compareFoodCol'>
-        <Image src={editMeal} width='90%' />
+        <Image src={editMeal} width='90%' preview={false} />
       </Col>
     </Row>
   );

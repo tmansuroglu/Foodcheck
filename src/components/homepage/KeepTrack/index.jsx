@@ -9,7 +9,7 @@ const KeepTrack = () => {
   return (
     <Row align='middle' className='keepTrackRow'>
       <Col md={8} xs={24} className='keepTrackCol'>
-        <Image src={dietOverview} width='90%' />
+        <Image src={dietOverview} width='90%' preview={false} />
       </Col>
       <Col md={16} xs={24} className='keepTrackCol'>
         <Title className='keepTrackText' level={1}>

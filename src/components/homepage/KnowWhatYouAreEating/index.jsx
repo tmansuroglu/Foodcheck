@@ -9,7 +9,7 @@ const KnowWhatYouAreEating = () => {
   return (
     <Row align='middle' className='knowWhatYouAreEatingRow'>
       <Col className='knowWhatYouAreEatingCol' lg={12} xs={24}>
-        <Image src={foodDetails} width='90%' />
+        <Image src={foodDetails} width='90%' preview={false} />
       </Col>
       <Col lg={12} xs={24} className='knowWhatYouAreEatingCol'>
         <Title className='knowWhatYouAreEatingText' level={1}>
