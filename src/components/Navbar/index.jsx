@@ -31,9 +31,9 @@ const Navbar = props => {
           <Menu.Item>
             <NavLink to='/login'>Login</NavLink>
           </Menu.Item>
-          <Menu.Item>
+          {/* <Menu.Item>
             <NavLink to='/register'>Register</NavLink>
-          </Menu.Item>
+          </Menu.Item> */}
         </>
       )}
     </Menu>
