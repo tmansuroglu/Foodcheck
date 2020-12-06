@@ -14,16 +14,13 @@ const HomePageCarousel = () => {
       infinite
       speed={500}
       className='carousel'
-      slidesToShow={3}
-      slidesToScroll={3}
+      slidesToShow={1}
+      slidesToScroll={1}
       swipeToSlide
       style={{ textAlign: 'center' }}
       autoplay
       autoplaySpeed={6000}
-      fade
-      pauseOnHover
       adaptiveHeight
-      centerMode
     >
       <div>
         <Title className='knowWhatYouAreEatingText' level={1}>
