@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import './index.css';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import db from '../../firebaseConfig';
 import { register } from '../../redux/actions/AuthActions';
 
@@ -12,8 +13,9 @@ const UI_CONFIG = {
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
   // We will display Google and Facebook as auth providers.
   signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
     // Avoid redirects after sign-in.
@@ -22,6 +24,8 @@ const UI_CONFIG = {
 };
 
 const LoginPage = ({ uid, registerUser }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     if (uid) {
       db.collection('users')
@@ -33,17 +37,21 @@ const LoginPage = ({ uid, registerUser }) => {
             registerUser(uid);
           }
         })
+        .then(() => setIsLoggedIn(true))
         .catch(err => alert(err));
     }
   }, [uid]);
 
-  return (
-    <StyledFirebaseAuth
-      uiConfig={UI_CONFIG}
-      firebaseAuth={firebase.auth()}
-      className='login'
-    />
-  );
+  if (!isLoggedIn) {
+    return (
+      <StyledFirebaseAuth
+        uiConfig={UI_CONFIG}
+        firebaseAuth={firebase.auth()}
+        className='login'
+      />
+    );
+  }
+  return <Redirect to='/diet' />;
 };
 
 const mapStateToProps = state => {
