@@ -40,7 +40,7 @@ const LoginPage = ({ uid, registerUser }) => {
         .then(() => setIsLoggedIn(true))
         .catch(err => alert(err));
     }
-  }, [uid]);
+  }, [uid, registerUser]);
 
   if (!isLoggedIn) {
     return (

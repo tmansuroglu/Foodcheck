@@ -20,7 +20,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
   }
 
   useEffect(() => {
-    if (uid && activeMeal) {
+    if (uid) {
       const orderedDietData = [];
       db.collection('users')
         .doc(uid)
