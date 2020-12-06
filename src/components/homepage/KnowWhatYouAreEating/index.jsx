@@ -8,7 +8,11 @@ const KnowWhatYouAreEating = () => {
   const { Title } = Typography;
   return (
     <Row align='middle' className='knowWhatYouAreEatingRow'>
-      <Col className='knowWhatYouAreEatingCol' lg={12} xs={24}>
+      <Col
+        className='homePageContextCol'
+        xl={{ span: 12, order: 1 }}
+        xs={{ span: 24, order: 2 }}
+      >
         <Image
           src={foodDetails}
           width='90%'
@@ -17,7 +21,11 @@ const KnowWhatYouAreEating = () => {
           className='homePageImage'
         />
       </Col>
-      <Col lg={12} xs={24} className='knowWhatYouAreEatingCol'>
+      <Col
+        xl={{ span: 12, order: 2 }}
+        xs={{ span: 24, order: 1 }}
+        className='homePageContextCol'
+      >
         <Title className='knowWhatYouAreEatingText' level={1}>
           KNOW WHAT YOU ARE EATING!
         </Title>

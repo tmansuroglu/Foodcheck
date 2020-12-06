@@ -8,20 +8,11 @@ const AllToolsYouNeed = () => {
   const { Title } = Typography;
   return (
     <Row align='middle' className='allToolsYouNeedRow'>
-      {' '}
-      <Col xxl={12} md={24} className='allToolsYouNeedCol'>
+      <Col xl={12} xs={24} className='homePageContextCol'>
         <Title level={1}>WE GOT ALL THE TOOLS YOU NEED!</Title>
         <p className='allToolsYouNeedText'>{text}</p>
       </Col>
-      <Col
-        xxl={12}
-        lg={12}
-        xl={12}
-        md={24}
-        sm={24}
-        xs={24}
-        className='allToolsYouNeedCol'
-      >
+      <Col xl={12} xs={24} className='homePageContextCol'>
         <Image
           src={dailyStats}
           width='90%'

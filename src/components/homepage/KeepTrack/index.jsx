@@ -8,16 +8,24 @@ const KeepTrack = () => {
   const { Title } = Typography;
   return (
     <Row align='middle' className='keepTrackRow'>
-      <Col md={8} xs={24} className='keepTrackCol'>
+      <Col
+        xl={{ span: 12, order: 1 }}
+        xs={{ span: 24, order: 2 }}
+        className='homePageContextCol'
+      >
         <Image
           src={dietOverview}
-          width='90%'
+          width='70%'
           preview={false}
           className='homePageImage'
           alt='keep track'
         />
       </Col>
-      <Col md={16} xs={24} className='keepTrackCol'>
+      <Col
+        xl={{ span: 12, order: 2 }}
+        xs={{ span: 24, order: 1 }}
+        className='homePageContextCol'
+      >
         <Title className='keepTrackText' level={1}>
           KEEP TRACK OF YOUR DIET!
         </Title>
