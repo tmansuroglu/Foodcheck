@@ -9,10 +9,10 @@ const DietPage = () => {
   return (
     <div>
       <Row className='dietPage' gutter={8}>
-        <Col xs={24} xl={4}>
+        <Col xs={24} lg={8} xl={4}>
           <DietOverview />
         </Col>
-        <Col xs={24} xl={10}>
+        <Col xs={24} lg={16} xl={10}>
           <EditMeal />
         </Col>
         <Col xs={24} xl={10}>

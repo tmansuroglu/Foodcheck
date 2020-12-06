@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Typography } from 'antd';
-import text from '../../../placeholderText';
 import './index.css';
 
 const Header = () => {
@@ -11,7 +10,13 @@ const Header = () => {
         <Title className='homePageDescriptionTitle' level={1}>
           FOODCHECK
         </Title>
-        <p className='productSummaryText'>{text}</p>
+        <p className='productSummaryText'>
+          Foodcheck is a simple diet planning app. It allows you to pick food,
+          serving size and amount from its database and makes calorie
+          calculation for you. Foodcheck displays daily consumption graphs,
+          calories and nutrients per food and diet overview for you to manage
+          your diet easily and it is completely free to use!
+        </p>
       </Col>
     </Row>
   );

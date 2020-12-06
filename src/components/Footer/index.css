@@ -2,7 +2,7 @@
   width: 100%;
   text-align: center;
   background: #f2f2f2;
-  height: 80px;
+  height: 121;
 }
 
 .footerIcon {
@@ -10,12 +10,14 @@
 }
 
 .iconAnchor {
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .footerName {
-  font-size: 1.3rem;
-  padding-left: 0px;
-  padding-right: 0px;
-  margin-right: 20px;
+  font-size: min(1.3rem, 5.5vw);
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
 }

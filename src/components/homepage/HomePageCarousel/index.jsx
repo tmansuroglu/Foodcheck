@@ -29,12 +29,7 @@ const HomePageCarousel = () => {
         <Title className='knowWhatYouAreEatingText' level={1}>
           KNOW WHAT YOU ARE EATING
         </Title>
-        <Image
-          src={foodDetails}
-          preview={false}
-          alt='food details'
-          className='carouselImage'
-        />
+        <Image src={foodDetails} alt='food details' className='carouselImage' />
       </div>
       <div>
         <Title className='knowWhatYouAreEatingText' level={1}>

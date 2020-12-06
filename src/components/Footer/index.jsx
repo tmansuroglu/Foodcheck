@@ -23,54 +23,56 @@ const FooterComp = () => {
       >
         Created by Tarkan Mansuroğlu
       </Button>
-      <a
-        href='https://github.com/tmansuroglu'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='iconAnchor'
-      >
-        <FontAwesomeIcon
-          icon={faGithub}
-          className='footerIcon'
-          style={{ color: '#333' }}
-        />
-      </a>
-      <a
-        href='https://www.linkedin.com/in/tarkanmansuroglu/'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='iconAnchor'
-      >
-        <FontAwesomeIcon
-          icon={faLinkedinIn}
-          className='footerIcon'
-          style={{ color: '#0e76a8' }}
-        />
-      </a>
-      <a
-        href='https://twitter.com/T_Mansuroglu'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='iconAnchor'
-      >
-        <FontAwesomeIcon
-          icon={faTwitter}
-          className='footerIcon'
-          style={{ color: '#1da1f2' }}
-        />
-      </a>
-      <a
-        href='https://www.instagram.com/tarkanmansuroglu/'
-        target='_blank'
-        rel='noopener noreferrer'
-        className='iconAnchor'
-      >
-        <FontAwesomeIcon
-          icon={faInstagram}
-          className='footerIcon'
-          style={{ color: '#e1306c' }}
-        />
-      </a>
+      <div>
+        <a
+          href='https://github.com/tmansuroglu'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='iconAnchor'
+        >
+          <FontAwesomeIcon
+            icon={faGithub}
+            className='footerIcon'
+            style={{ color: '#333' }}
+          />
+        </a>
+        <a
+          href='https://www.linkedin.com/in/tarkanmansuroglu/'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='iconAnchor'
+        >
+          <FontAwesomeIcon
+            icon={faLinkedinIn}
+            className='footerIcon'
+            style={{ color: '#0e76a8' }}
+          />
+        </a>
+        <a
+          href='https://twitter.com/T_Mansuroglu'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='iconAnchor'
+        >
+          <FontAwesomeIcon
+            icon={faTwitter}
+            className='footerIcon'
+            style={{ color: '#1da1f2' }}
+          />
+        </a>
+        <a
+          href='https://www.instagram.com/tarkanmansuroglu/'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='iconAnchor'
+        >
+          <FontAwesomeIcon
+            icon={faInstagram}
+            className='footerIcon'
+            style={{ color: '#e1306c' }}
+          />
+        </a>
+      </div>
     </Footer>
   );
 };
