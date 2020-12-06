@@ -7,8 +7,8 @@ import './index.css';
 
 const DietPage = () => {
   return (
-    <div className='dietPage'>
-      <Row className='dietPageRow' gutter={8}>
+    <div>
+      <Row className='dietPage' gutter={8}>
         <Col xs={24} xl={4}>
           <DietOverview />
         </Col>

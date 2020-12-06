@@ -3,10 +3,11 @@ import { Menu } from 'antd';
 import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SignOut } from '../../redux/actions/AuthActions';
+import './index.css';
 
 const Navbar = props => {
   return (
-    <Menu mode='horizontal'>
+    <Menu mode='horizontal' className='navbar'>
       <Menu.Item>
         <NavLink to='/'>Home</NavLink>
       </Menu.Item>

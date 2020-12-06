@@ -87,7 +87,7 @@ const DietDetails = ({ activeMeal, uid }) => {
           </Title>
           <HorizontalBarChart graphData={horizontalBarChartData} />
           <Title level={3} className='dailyStatsCardTitle'>
-            All Nutrients
+            Total Nutrients
           </Title>
           <DailyStatsList nutrientsConsumed={nutrientsConsumed} />
         </Card>

@@ -1,6 +1,24 @@
-.footerDiv {
-  position: fixed;
+.footer {
+  position: absolute;
   width: 100%;
   bottom: 0;
-  height: 40px;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: #f2f2f2;
+}
+
+.footerIcon {
+  font-size: 2.1rem;
+}
+
+.iconAnchor {
+  margin-right: 20px;
+}
+
+.footerName {
+  font-size: 1.3rem;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 20px;
 }
