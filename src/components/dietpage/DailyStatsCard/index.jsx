@@ -17,9 +17,9 @@ const DietDetails = ({ activeMeal, uid }) => {
   const [horizontalBarChartData, setHorizontalBarChartData] = useState([]);
   const [doughnutChartData, setDoughnutChartData] = useState([]);
   const [totalKcal, setTotalKcal] = useState(0);
-
+  console.log('activeMeal is ', activeMeal);
   useEffect(() => {
-    if (uid) {
+    if (uid && activeMeal) {
       db.collection('users')
         .doc(uid)
         .get()

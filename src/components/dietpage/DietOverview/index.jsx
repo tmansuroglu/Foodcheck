@@ -20,7 +20,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
   }
 
   useEffect(() => {
-    if (uid) {
+    if (uid && activeMeal) {
       const orderedDietData = [];
       db.collection('users')
         .doc(uid)
@@ -82,6 +82,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
     return <Redirect to='/login' />;
   }
 };
+
 const mapStateToProps = state => {
   return {
     meals: state.firebase.profile.diet,
