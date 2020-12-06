@@ -5,3 +5,7 @@
   margin-left: 10%;
   margin-right: 10%;
 }
+
+.homePageImage {
+  box-shadow: 0px 0px 9px -3px gray;
+}

@@ -19,36 +19,38 @@ const DietDetails = ({ activeMeal, uid }) => {
   const [totalKcal, setTotalKcal] = useState(0);
 
   useEffect(() => {
-    db.collection('users')
-      .doc(uid)
-      .get()
-      .then(userData => {
-        const consumption = {};
-        let calories = 0;
-        const { diet } = userData.data();
-        for (const meal of Object.values(diet)) {
-          for (const food of meal) {
-            for (const nutrient in food.nutrientsConsumed) {
-              if (consumption.hasOwnProperty(nutrient)) {
-                consumption[nutrient] += Math.round(
-                  food.nutrientsConsumed[nutrient]
-                );
-              } else if (nutrient === 'calories') {
-                calories += food.nutrientsConsumed[nutrient];
-              } else {
-                consumption[nutrient] = Math.round(
-                  food.nutrientsConsumed[nutrient]
-                );
+    if (uid) {
+      db.collection('users')
+        .doc(uid)
+        .get()
+        .then(userData => {
+          const consumption = {};
+          let calories = 0;
+          const { diet } = userData.data();
+          for (const meal of Object.values(diet)) {
+            for (const food of meal) {
+              for (const nutrient in food.nutrientsConsumed) {
+                if (consumption.hasOwnProperty(nutrient)) {
+                  consumption[nutrient] += Math.round(
+                    food.nutrientsConsumed[nutrient]
+                  );
+                } else if (nutrient === 'calories') {
+                  calories += food.nutrientsConsumed[nutrient];
+                } else {
+                  consumption[nutrient] = Math.round(
+                    food.nutrientsConsumed[nutrient]
+                  );
+                }
               }
             }
           }
-        }
-        delete consumption.serving_amount;
-        delete consumption.serving_size;
-        delete consumption.consumption_in_grams;
-        setNutrientsConsumed({ ...consumption });
-        setTotalKcal(calories);
-      });
+          delete consumption.serving_amount;
+          delete consumption.serving_size;
+          delete consumption.consumption_in_grams;
+          setNutrientsConsumed({ ...consumption });
+          setTotalKcal(calories);
+        });
+    }
   }, [activeMeal, uid]);
 
   useEffect(() => {

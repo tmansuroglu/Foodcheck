@@ -22,7 +22,13 @@ const AllToolsYouNeed = () => {
         xs={24}
         className='allToolsYouNeedCol'
       >
-        <Image src={dailyStats} width='90%' preview={false} />
+        <Image
+          src={dailyStats}
+          width='90%'
+          preview={false}
+          className='homePageImage'
+          alt='daily diet stats'
+        />
       </Col>
     </Row>
   );

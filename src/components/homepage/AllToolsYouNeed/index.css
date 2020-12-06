@@ -1,10 +1,8 @@
 .allToolsYouNeedCol,
 .allToolsYouNeedRow {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    text-align: center;
+  text-align: center;
 }
 
 .allToolsYouNeedText {
-    padding-right: 4vh;
+  padding-right: 4vh;
 }
