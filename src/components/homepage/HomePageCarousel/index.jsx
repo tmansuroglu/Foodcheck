@@ -3,7 +3,6 @@ import { Image, Typography } from 'antd';
 import Slider from 'react-slick';
 import foodDetails from '../../../images/foodDetails.png';
 import dailyStats from '../../../images/dailyStats.png';
-import editMeal from '../../../images/editMeal.png';
 import dietOverview from '../../../images/dietOverview.png';
 import './index.css';
 
@@ -15,15 +14,16 @@ const HomePageCarousel = () => {
       infinite
       speed={500}
       className='carousel'
-      slidesToShow={1}
-      slidesToScroll={1}
+      slidesToShow={3}
+      slidesToScroll={3}
       swipeToSlide
       style={{ textAlign: 'center' }}
       autoplay
-      centerMode
       autoplaySpeed={6000}
       fade
       pauseOnHover
+      adaptiveHeight
+      centerMode
     >
       <div>
         <Title className='knowWhatYouAreEatingText' level={1}>
@@ -42,17 +42,6 @@ const HomePageCarousel = () => {
         </Title>
         <Image
           src={dailyStats}
-          preview={false}
-          alt='food details'
-          className='carouselImage'
-        />
-      </div>
-      <div>
-        <Title className='knowWhatYouAreEatingText' level={1}>
-          MANAGE YOUR MEALS
-        </Title>
-        <Image
-          src={editMeal}
           preview={false}
           alt='food details'
           className='carouselImage'
