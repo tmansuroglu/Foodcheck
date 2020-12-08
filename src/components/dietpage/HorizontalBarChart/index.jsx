@@ -25,12 +25,8 @@ const HorizontalBarChart = ({ graphData }) => {
             },
           },
           scales: {
-            xAxes: [
-              {
-                display: false,
-              },
-            ],
-            yAxes: [{ ticks: { fontSize: 15 } }],
+            xAxes: [{ ticks: { min: 0 } }],
+            yAxes: [{ ticks: { fontSize: 15, min: 0 } }],
           },
           title: {
             display: true,
