@@ -15,6 +15,7 @@ const Descriptions = () => {
         'Foodcheck lets you to pick food, serving size and amount from its huge database.After you pick Foodcheck lists nutrient values for you. Your selections are editable and removable anytime you want!',
       bigColTextOrder: 2,
       bigColImageOrder: 1,
+      backgroundColor: '',
     },
     {
       imgSrc: dailyStats,
@@ -24,6 +25,7 @@ const Descriptions = () => {
         'Foodcheck creates graphs to help you make better analysis on your daily consumption. It also keeps a list of daily accumulated nutrient consumption for you.',
       bigColTextOrder: 1,
       bigColImageOrder: 2,
+      backgroundColor: '#f2f2f2',
     },
     {
       imgSrc: dietOverview,
@@ -33,11 +35,12 @@ const Descriptions = () => {
         'Foodcheck displays a list of food consumed in all meals. This way you can compare your meals and optimize your consumption.',
       bigColTextOrder: 2,
       bigColImageOrder: 1,
+      backgroundColor: '',
     },
   ];
 
   const content = sectionArr.map(section => (
-    <Row>
+    <Row style={{ background: section.backgroundColor }}>
       <Col
         xs={{ span: 24, order: 2 }}
         lg={{ span: 12, order: section.bigColImageOrder }}
