@@ -14,3 +14,7 @@
 .kcal {
   color: #757575 !important;
 }
+
+.doughnutChart {
+  min-height: 500px;
+}

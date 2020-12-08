@@ -18,6 +18,7 @@ const HorizontalBarChart = ({ graphData }) => {
           },
           plugins: {
             datalabels: {
+              formatter: value => `${value}gr`,
               font: { size: 15 },
               anchor: 'end',
               align: 'end',
@@ -33,7 +34,7 @@ const HorizontalBarChart = ({ graphData }) => {
           },
           title: {
             display: true,
-            text: 'Fat, Carb and Protein in grams',
+            text: 'Nutrient Distribution (gr)',
             fontSize: 20,
           },
           maintainAspectRatio: false,

@@ -81,10 +81,14 @@ const DietDetails = ({ activeMeal, uid }) => {
           }
           bordered={false}
         >
-          <DoughnutChart graphData={doughnutChartData} totalKcal={totalKcal} />
-          <Title level={3} className='dailyStatsCardTitle kcal'>
-            Total calories: {totalKcal} kcal
-          </Title>
+          <div className='doughnutChart'>
+            <DoughnutChart
+              graphData={doughnutChartData}
+              totalKcal={totalKcal}
+              className='doughnutChart'
+            />
+          </div>
+
           <HorizontalBarChart graphData={horizontalBarChartData} />
           <Title level={3} className='dailyStatsCardTitle'>
             Total Nutrients
