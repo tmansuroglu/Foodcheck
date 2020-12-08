@@ -25,7 +25,12 @@
   .homePageDescription {
     font-size: 1rem;
   }
+
   .homePageHeader {
     font-size: 2rem;
+  }
+
+  .homePageCol {
+    padding: 10px;
   }
 }
