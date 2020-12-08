@@ -17,10 +17,7 @@ import allReducers from './redux/reducers/CombinedReducers';
 
 const store = createStore(
   allReducers,
-  compose(
-    applyMiddleware(thunk.withExtraArgument({ getFirebase })),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  compose(applyMiddleware(thunk.withExtraArgument({ getFirebase })))
 );
 
 const profileSpecificProps = {
