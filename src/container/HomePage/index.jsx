@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../../components/homepage/Header';
-import HomePageCarousel from '../../components/homepage/HomePageCarousel';
+import Descriptions from '../../components/homepage/Descriptions';
 import './index.css';
 
 const HomePage = () => {
   return (
     <div className='homePage'>
       <Header />
-      <HomePageCarousel />
+      <Descriptions />
     </div>
   );
 };

@@ -1,8 +1,13 @@
-.headerRow {
+.foodcheckDescription {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   width: 100%;
   height: 70vh;
   color: white;
-  text-align: center;
+  padding-left: 20%;
+  padding-right: 20%;
   background: linear-gradient(
       0deg,
       rgba(251, 250, 255, 0) 0%,
@@ -14,20 +19,28 @@
   background-repeat: no-repeat;
 }
 
-.homePageDescriptionTitle {
-  color: white !important;
+.foodcheckDescriptionTitle {
+  font-size: 3.5rem;
+  color: white;
 }
 
-.productSummaryText {
-  font-size: 1.2rem;
+.foodcheckDescriptionText {
+  font-size: 1.3rem;
 }
 
 @media only screen and (max-width: 450px) {
-  .homePageDescriptionTitle {
-    font-size: 1.6rem !important;
+}
+@media only screen and (max-width: 600px) {
+  .foodcheckDescriptionTitle {
+    font-size: 3rem;
   }
 
-  .productSummaryText {
-    font-size: 1rem;
+  .foodcheckDescriptionText {
+    font-size: 1.1rem;
+  }
+
+  .foodcheckDescription {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }

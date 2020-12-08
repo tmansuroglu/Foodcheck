@@ -1,0 +1,31 @@
+.homePageImage {
+  box-shadow: 0px 0px 9px -3px gray;
+}
+
+.homePageHeader {
+  font-size: 3rem;
+}
+
+.homePageDescription {
+  font-size: 2rem;
+}
+
+.homePageCol {
+  text-align: center;
+  padding: 40px;
+}
+
+.homePageTextSection {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .homePageDescription {
+    font-size: 1rem;
+  }
+  .homePageHeader {
+    font-size: 2rem;
+  }
+}
