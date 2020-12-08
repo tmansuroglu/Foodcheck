@@ -37,53 +37,49 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
         });
     }
   }, [activeMeal, meals, uid]);
-  if (uid) {
-    return (
-      <>
-        <MealCreator />
-        {
-          <>
-            <Collapse>
-              {localDietData.map(meal => {
-                const mealName = Object.keys(meal)[0];
-                const mealContent = Object.values(meal)[0];
-                return (
-                  <Panel
-                    className='mealCreatorCollapsePanel'
-                    header={
-                      <div
-                        onClick={e =>
-                          handleMealSelection(mealName, mealContent)
-                        }
-                        className='mealName'
-                      >
-                        <div>
-                          {mealName}
-
-                          <DeleteMeal
-                            meals={localDietData}
-                            className='deleteMeal'
-                          />
-                        </div>
-                      </div>
-                    }
-                  >
-                    <List
-                      itemLayout='horizontal'
-                      dataSource={mealContent}
-                      renderItem={item => <ListItem item={item} />}
-                    />
-                  </Panel>
-                );
-              })}
-            </Collapse>
-          </>
-        }
-      </>
-    );
-  } else {
+  if (!uid) {
     return <Redirect to='/login' />;
   }
+  return (
+    <>
+      <MealCreator />
+
+      <>
+        <Collapse>
+          {localDietData.map(meal => {
+            const mealName = Object.keys(meal)[0];
+            const mealContent = Object.values(meal)[0];
+            return (
+              <Panel
+                className='mealCreatorCollapsePanel'
+                header={
+                  <div
+                    onClick={() => handleMealSelection(mealName, mealContent)}
+                    className='mealName'
+                  >
+                    <div>
+                      {mealName}
+
+                      <DeleteMeal
+                        meals={localDietData}
+                        className='deleteMeal'
+                      />
+                    </div>
+                  </div>
+                }
+              >
+                <List
+                  itemLayout='horizontal'
+                  dataSource={mealContent}
+                  renderItem={item => <ListItem item={item} />}
+                />
+              </Panel>
+            );
+          })}
+        </Collapse>
+      </>
+    </>
+  );
 };
 
 const mapStateToProps = state => {

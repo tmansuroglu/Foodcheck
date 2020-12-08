@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Card, Row, List, Avatar, Button, Typography } from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import Description from '../FoodDescription';
 import EditFood from '../EditFood';
@@ -8,7 +7,6 @@ import DeleteFood from '../DeleteFood';
 import SearchBar from '../SearchBar';
 import Sort from '../SortFood';
 import './index.css';
-// import { setFoodDetails } from '../../../redux/actions/DietActions';
 
 const EditMeal = ({ activeMeal }) => {
   const { Title } = Typography;
@@ -71,10 +69,7 @@ const EditMeal = ({ activeMeal }) => {
                             />
                           ) : (
                             <>
-                              {food.nutrientsConsumed.serving_amount}{' '}
-                              {food.nutrientsConsumed.serving_size}{' '}
-                              {food.food_name} <CaretRightOutlined />{' '}
-                              {food.nutrientsConsumed.calories} kcal
+                              {`${food.nutrientsConsumed.serving_amount} ${food.nutrientsConsumed.serving_size} ${food.food_name}`}
                             </>
                           )
                         }
