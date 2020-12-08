@@ -1,8 +1,9 @@
 .modalDeleteMeal {
-    top: 20px;
+  top: 20px;
 }
 
 .modalDeleteMealText {
-    float: right;
-    font-size: 0.8rem;
+  float: right;
+  margin-right: 15px;
+  font-size: 0.8rem;
 }

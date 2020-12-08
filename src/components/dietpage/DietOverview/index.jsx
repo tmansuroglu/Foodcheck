@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, List } from 'antd';
+import { Collapse, List, Row } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import db from '../../../firebaseConfig';
@@ -55,13 +55,16 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                         onClick={e =>
                           handleMealSelection(mealName, mealContent)
                         }
+                        className='mealName'
                       >
-                        {mealName}
+                        <div>
+                          {mealName}
 
-                        <DeleteMeal
-                          meals={localDietData}
-                          className='deleteMeal'
-                        />
+                          <DeleteMeal
+                            meals={localDietData}
+                            className='deleteMeal'
+                          />
+                        </div>
                       </div>
                     }
                   >

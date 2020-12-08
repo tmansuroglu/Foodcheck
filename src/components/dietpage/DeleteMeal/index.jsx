@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Modal } from 'antd';
-import { ActiveMeal, SetDiet } from '../../../redux/actions/DietActions';
 import { connect } from 'react-redux';
+import { ActiveMeal, SetDiet } from '../../../redux/actions/DietActions';
 import './index.css';
 
 const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
