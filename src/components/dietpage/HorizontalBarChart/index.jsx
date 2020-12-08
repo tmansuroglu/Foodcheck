@@ -13,7 +13,7 @@ const HorizontalBarChart = ({ graphData }) => {
         options={{
           layout: {
             padding: {
-              right: 40,
+              right: 55,
             },
           },
           plugins: {

@@ -69,7 +69,7 @@ const EditMeal = ({ activeMeal }) => {
                             />
                           ) : (
                             <>
-                              {`${food.nutrientsConsumed.serving_amount} ${food.nutrientsConsumed.serving_size} ${food.food_name}`}
+                              {`${food.nutrientsConsumed.serving_amount} ${food.nutrientsConsumed.serving_size} ${food.food_name} is ${food.nutrientsConsumed.calories}kcal`}
                             </>
                           )
                         }

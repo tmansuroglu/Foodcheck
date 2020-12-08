@@ -26,6 +26,7 @@ const applyChanges = (
   mealWithoutTargetFood = mealWithoutTargetFood ? mealWithoutTargetFood : [];
   const modifiedMealContent = [...mealWithoutTargetFood, modifiedTarget];
 
+  console.log(modifiedMealContent);
   return modifiedMealContent;
 };
 
