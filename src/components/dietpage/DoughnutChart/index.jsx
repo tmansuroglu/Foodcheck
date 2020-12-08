@@ -35,7 +35,7 @@ const DoughnutChart = ({ graphData, totalKcal }) => {
 
         // Pick a new font size so it will not be larger than the height of label.
         let fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
-        const minFontSize = centerConfig.minFontSize;
+        let minFontSize = centerConfig.minFontSize;
         const lineHeight = centerConfig.lineHeight || 25;
         let wrapText = false;
 

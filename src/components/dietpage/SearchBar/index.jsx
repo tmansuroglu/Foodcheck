@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  Typography,
-  Space,
-  AutoComplete,
-  Select,
-  InputNumber,
-  Button,
-} from 'antd';
+import { Space, AutoComplete, Select, InputNumber, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { querySearch, getDetails } from '../../../nutritionixAPI';
 import foodAdder from '../searchBarAddFood';
-import { AddFood, setFoodDetails } from '../../../redux/actions/DietActions';
-import { SetMeal } from '../../../redux/actions/DietActions';
+import {
+  AddFood as reduxAddFood,
+  setFoodDetails as reduxSetFoodDetails,
+  SetMeal as reduxSetMeal,
+} from '../../../redux/actions/DietActions';
 import './index.css';
+
+const NUM_DESIRED_RESULTS = 5;
 
 const SearchBar = ({
   setFoodDetails,
-  activeMealName,
+  activeMeal,
   createdFood,
   addFood,
-  activeMealContent,
   setMeal,
 }) => {
-  const { Title } = Typography;
+  const [activeMealName, setActiveMealName] = useState('');
+  const [activeMealContent, setActiveMealContent] = useState([]);
+  useEffect(() => {
+    if (activeMeal) {
+      setActiveMealName(Object.keys(activeMeal)[0]);
+      setActiveMealContent(Object.values(activeMeal)[0]);
+    }
+  }, [activeMeal]);
   const { Option } = Select;
-
-  const NUM_DESIRED_RESULTS = 5;
-
   const [queryResults, setQueryResults] = useState([]);
   const [inputToggle, setInputToggle] = useState(true);
   const [searchBarServingOptions, setSearchBarServingOptions] = useState();
@@ -70,20 +71,17 @@ const SearchBar = ({
   function onMeasureChange(value) {
     setSearchBarServingSize(value);
     setInputToggle(false);
-    console.log('meas');
   }
 
   useEffect(() => {
     if (createdFood && createdFood.alt_measures) {
-      const searchBarServingSizes = createdFood.alt_measures.map(
-        (measureObj, index) => {
-          return (
-            <Option value={measureObj.measure} key={index}>
-              {measureObj.measure}
-            </Option>
-          );
-        }
-      );
+      const searchBarServingSizes = createdFood.alt_measures.map(measureObj => {
+        return (
+          <Option value={measureObj.measure} key={measureObj.measure}>
+            {measureObj.measure}
+          </Option>
+        );
+      });
 
       setSearchBarServingOptions(searchBarServingSizes);
     }
@@ -94,13 +92,11 @@ const SearchBar = ({
   //
 
   const handleAmount = value => {
-    console.log(value);
     setSearchBarFoodAmount(value);
   };
 
   const handleAddFood = () => {
     if (createdFood) {
-      console.log(createdFood);
       const newFood = foodAdder(
         addFood,
         createdFood,
@@ -111,12 +107,9 @@ const SearchBar = ({
       setMeal(activeMealName, [...activeMealContent, newFood]);
     }
   };
-
+  if (!activeMealContent) return null;
   return (
     <div align='center'>
-      <Title className='mealName' level={3}>
-        {activeMealName}
-      </Title>
       <Space>
         <AutoComplete
           className='autoComplete'
@@ -155,17 +148,16 @@ const SearchBar = ({
 const mapStateToProps = state => {
   return {
     createdFood: state.DietReducer.foodDetails,
-    activeMealContent: Object.values(state.DietReducer.activeMeal)[0],
-    activeMealName: Object.keys(state.DietReducer.activeMeal)[0],
+    activeMeal: state.DietReducer.activeMeal,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFoodDetails: details => dispatch(setFoodDetails(details)),
+    setFoodDetails: details => dispatch(reduxSetFoodDetails(details)),
     addFood: (mealName, mealContent) =>
-      dispatch(AddFood(mealName, mealContent)),
-    setMeal: (mealName, mealData) => dispatch(SetMeal(mealName, mealData)),
+      dispatch(reduxAddFood(mealName, mealContent)),
+    setMeal: (mealName, mealData) => dispatch(reduxSetMeal(mealName, mealData)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

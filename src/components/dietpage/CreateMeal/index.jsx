@@ -23,7 +23,8 @@ const MealCreator = ({ userData, createMeal, setActiveMeal }) => {
     <>
       <Dropdown overlay={menu(handleCreateMeal)}>
         <Button className='ant-dropdown-link' onClick={e => e.preventDefault()}>
-          <PlusOutlined /> Add Meal
+          <PlusOutlined />
+          Add Meal
         </Button>
       </Dropdown>
     </>

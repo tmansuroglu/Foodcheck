@@ -48,7 +48,7 @@ const DietDetails = ({ activeMeal, uid }) => {
           delete consumption.serving_size;
           delete consumption.consumption_in_grams;
           setNutrientsConsumed({ ...consumption });
-          setTotalKcal(calories);
+          setTotalKcal(Number((calories * 100) / 100).toFixed(2));
         });
     }
   }, [activeMeal, uid]);

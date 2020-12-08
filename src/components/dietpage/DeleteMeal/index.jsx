@@ -51,12 +51,12 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
         onOk={deleteMeal}
         onCancel={() => setModalVisibility(false)}
       >
-        <p>Deleted meals can't be recovered!</p>
+        <p>Deleted meals cant be recovered!</p>
       </Modal>
       <Text
         className='modalDeleteMealText'
         type='danger'
-        onClick={e => handleDelete(activeMealName, activeMealContent)}
+        onClick={() => handleDelete(activeMealName, activeMealContent)}
       >
         Delete
       </Text>

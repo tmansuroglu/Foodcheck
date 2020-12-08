@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import thunk from 'redux-thunk';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
-import { applyMiddleware, createStore, compose } from 'redux';
-import { Provider, useSelector } from 'react-redux';
+import { createFirestoreInstance } from 'redux-firestore';
+import firebase from 'firebase/app';
 import {
   getFirebase,
   ReactReduxFirebaseProvider,
   isLoaded,
 } from 'react-redux-firebase';
-import firebase from 'firebase/app';
-import { createFirestoreInstance } from 'redux-firestore';
-import thunk from 'redux-thunk';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { Provider, useSelector } from 'react-redux';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import allReducers from './redux/reducers/CombinedReducers';
 
 const store = createStore(

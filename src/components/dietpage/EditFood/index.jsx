@@ -20,9 +20,9 @@ const EditFood = ({
   const [newServingSizeObj, setNewServingSizeObj] = useState({});
 
   const servingOptions = foodObj => {
-    const newOptions = foodObj.alt_measures.map((type, index) => {
+    const newOptions = foodObj.alt_measures.map(type => {
       return (
-        <Option value={type.measure} data={type} key={index}>
+        <Option value={type.measure} data={type} key={type.measure}>
           {type.measure}
         </Option>
       );

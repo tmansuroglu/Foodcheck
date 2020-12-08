@@ -44,7 +44,7 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
         {
           <>
             <Collapse>
-              {localDietData.map((meal, index) => {
+              {localDietData.map(meal => {
                 const mealName = Object.keys(meal)[0];
                 const mealContent = Object.values(meal)[0];
                 return (
