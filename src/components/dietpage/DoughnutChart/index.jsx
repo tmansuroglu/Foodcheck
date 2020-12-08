@@ -3,14 +3,33 @@ import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './index.css';
 
-const DoughnutChart = ({ graphData }) => {
+const DoughnutChart = ({ graphData, totalKcal }) => {
   return (
     <Doughnut
       options={{
-        plugins: { datalabels: { font: { size: 15 } } },
-        title: { text: 'KCAL Per Nutrient', display: true, fontSize: 20 },
+        plugins: {
+          datalabels: {
+            font: { size: 15 },
+            formatter: value => {
+              const percentage = (value * 100) / totalKcal;
+              return `${Math.round(percentage * 100) / 100}%`;
+            },
+          },
+        },
+        title: { text: 'Calorie Distribution', display: true, fontSize: 20 },
         maintainAspectRatio: true,
-        tooltips: { enabled: false },
+        tooltips: {
+          enabled: true,
+
+          callbacks: {
+            label: (tooltipItem, data) => {
+              const nutrientName = data.labels[tooltipItem.index];
+              const nutrientAmount =
+                data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              return `${nutrientName}: ${nutrientAmount}kcal`;
+            },
+          },
+        },
         legend: { position: 'bottom', labels: { fontSize: 15 } },
         responsive: true,
       }}

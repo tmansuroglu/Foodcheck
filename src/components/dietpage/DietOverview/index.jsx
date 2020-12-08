@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, List, Row } from 'antd';
+import { Collapse, List } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import db from '../../../firebaseConfig';

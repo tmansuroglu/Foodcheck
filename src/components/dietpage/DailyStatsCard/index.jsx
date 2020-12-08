@@ -17,7 +17,7 @@ const DietDetails = ({ activeMeal, uid }) => {
   const [horizontalBarChartData, setHorizontalBarChartData] = useState([]);
   const [doughnutChartData, setDoughnutChartData] = useState([]);
   const [totalKcal, setTotalKcal] = useState(0);
-  console.log('activeMeal is ', activeMeal);
+
   useEffect(() => {
     if (uid && activeMeal) {
       db.collection('users')
@@ -81,7 +81,7 @@ const DietDetails = ({ activeMeal, uid }) => {
           }
           bordered={false}
         >
-          <DoughnutChart graphData={doughnutChartData} />
+          <DoughnutChart graphData={doughnutChartData} totalKcal={totalKcal} />
           <Title level={3} className='dailyStatsCardTitle kcal'>
             Total calories: {totalKcal} kcal
           </Title>
