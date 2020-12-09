@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import { Typography, Modal } from 'antd';
 import { connect } from 'react-redux';
 import {

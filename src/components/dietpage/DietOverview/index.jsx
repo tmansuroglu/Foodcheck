@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import { Collapse, List } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';

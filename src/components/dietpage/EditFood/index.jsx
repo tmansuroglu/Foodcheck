@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select, Button, InputNumber, Space } from 'antd';
+import { Select, Button, InputNumber, Space, message } from 'antd';
 import { connect } from 'react-redux';
 import { SetMeal } from '../../../redux/actions/DietActions';
 import applyChanges from '../editFoodApplyChanges';
@@ -13,8 +13,8 @@ const EditFood = ({
   editTarget,
 }) => {
   const { Option } = Select;
-
   const [newServingOptionsArr, setNewServingOptionsArr] = useState();
+  // prevents user to make quantity input before selecting serving size
   const [isEditInputDisabled, setIsEditInputDisabled] = useState(true);
   const [amount, setAmount] = useState();
   const [newServingSizeObj, setNewServingSizeObj] = useState({});
@@ -34,23 +34,23 @@ const EditFood = ({
     setNewServingOptionsArr(servingOptions(food));
   }, [editTarget, food]);
 
-  const handleServingSize = servingSize => {
+  const handleServingSize = selectedServingSize => {
     setIsEditInputDisabled(false);
+    // a food obj contains alt_measures property that holds all possible serving size options(obj)
     const targetServingSizeObj = editTarget.alt_measures.find(
-      type => type.measure === servingSize
+      servingObj => servingObj.measure === selectedServingSize
     );
     setNewServingSizeObj(targetServingSizeObj);
   };
-
-  //
-  // SERVING SIZE CREATION ENDS HERE
-  //
 
   const handleAmount = e => {
     setAmount(e);
   };
 
+  const inputError = () => message.error('You need to make an input!');
+
   const handleApplyButton = () => {
+    // amount is the last input
     if (amount) {
       const modifiedMealContent = applyChanges(
         amount,
@@ -62,9 +62,13 @@ const EditFood = ({
       setIsEditing(false);
       setIsEditInputDisabled(true);
     } else {
-      alert('You need to make an input!');
+      inputError();
     }
   };
+
+  const isFoodEditable = editTarget.id === food.id;
+  const editSectionDisplayStatus = isFoodEditable ? 'inline-block' : 'none';
+
   return (
     <>
       <Space>
@@ -72,7 +76,7 @@ const EditFood = ({
 
         <Select
           style={{
-            display: `${editTarget.id === food.id ? 'inline-block' : 'none'}`,
+            display: editSectionDisplayStatus,
             width: '10vw',
           }}
           placeholder='serving size'
@@ -86,13 +90,13 @@ const EditFood = ({
           disabled={isEditInputDisabled}
           onChange={handleAmount}
           style={{
-            display: `${editTarget.id === food.id ? 'inline-block' : 'none'}`,
+            display: editSectionDisplayStatus,
             width: '4vw',
           }}
         />
         <Button
           style={{
-            display: `${editTarget.id === food.id ? 'inline-block' : 'none'}`,
+            display: editSectionDisplayStatus,
             width: '5vw',
           }}
           disabled={isEditInputDisabled}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
 import './index.css';
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 // used in src/components/dietpage/CreateMeal/index.jsx
 const CreateMealOptions = ({ handleMealCreation }) => {

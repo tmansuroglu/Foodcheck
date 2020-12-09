@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, Typography } from 'antd';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import HorizontalBarChart from '../HorizontalBarChart';
 import DoughnutChart from '../DoughnutChart';
 import DailyStatsList from '../DailyStatsList';

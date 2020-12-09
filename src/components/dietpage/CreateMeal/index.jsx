@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Dropdown, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import CreateMealOptions from '../CreateMealOptions';
 import {
   createMeal as reduxCreateMeal,
