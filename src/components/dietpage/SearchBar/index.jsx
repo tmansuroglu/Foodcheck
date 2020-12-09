@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Space, AutoComplete, Select, InputNumber, Button } from 'antd';
+import { AutoComplete, Select, InputNumber, Button, Row, Col } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { querySearch, getDetails } from '../../../nutritionixAPI';
 import foodAdder from '../searchBarAddFood';
 import {
   AddFood as reduxAddFood,
-  setFoodDetails as reduxSetFoodDetails,
-  SetMeal as reduxSetMeal,
+  setFoodDetails as redusmetFoodDetails,
+  SetMeal as redusmetMeal,
 } from '../../../redux/actions/DietActions';
 import './index.css';
 
@@ -31,13 +31,9 @@ const SearchBar = ({
   const { Option } = Select;
   const [queryResults, setQueryResults] = useState([]);
   const [inputToggle, setInputToggle] = useState(true);
-  const [searchBarServingOptions, setSearchBarServingOptions] = useState();
+  const [searchBarServingOptions, setSearchBarServingOptions] = useState([]);
   const [searchBarServingSize, setSearchBarServingSize] = useState();
   const [searchBarFoodAmount, setSearchBarFoodAmount] = useState('1');
-
-  //
-  // AUTOCOMPLETE SEARCH HANDLING STARTS HERE
-  //
 
   const handleSearch = input => {
     querySearch(input)
@@ -46,7 +42,7 @@ const SearchBar = ({
         const results = [];
         const data = Object.values(result);
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i += 1) {
           if (i < NUM_DESIRED_RESULTS) {
             results.push({ value: data[i].food_name });
           }
@@ -61,13 +57,6 @@ const SearchBar = ({
     setFoodDetails(details);
   };
 
-  //
-  // AUTOCOMPLETE SEARCH HANDLING ENDS HERE
-  //
-
-  //
-  // SERVING SIZE HANDLING STARTS HERE
-  //
   function onMeasureChange(value) {
     setSearchBarServingSize(value);
     setInputToggle(false);
@@ -87,10 +76,6 @@ const SearchBar = ({
     }
   }, [createdFood]);
 
-  //
-  // SERVING SIZE HANDLING ENDS HERE
-  //
-
   const handleAmount = value => {
     setSearchBarFoodAmount(value);
   };
@@ -109,8 +94,8 @@ const SearchBar = ({
   };
   if (!activeMealContent) return null;
   return (
-    <div align='center'>
-      <Space>
+    <Row align='center' className='searchBar' gutter={16}>
+      <Col sm={6}>
         <AutoComplete
           className='autoComplete'
           options={queryResults}
@@ -121,27 +106,36 @@ const SearchBar = ({
             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
         />
+      </Col>
+      <Col sm={6}>
         <Select
-          className='servingSizeOption'
+          className='searchBarServingSizeOpt'
           placeholder='serving size'
           onChange={onMeasureChange}
         >
           {searchBarServingOptions ? searchBarServingOptions : ''}
         </Select>
+      </Col>
+      <Col sm={6}>
         <InputNumber
           min={0.001}
           max={999999}
           disabled={inputToggle}
           defaultValue={1}
           onChange={handleAmount}
+          className='searchBarInput'
         />
-        <Button disabled={inputToggle} onClick={handleAddFood}>
+      </Col>
+      <Col sm={6}>
+        <Button
+          disabled={inputToggle}
+          onClick={handleAddFood}
+          className='searchBarButton'
+        >
           <PlusOutlined />
         </Button>
-      </Space>
-      <br />
-      <br />
-    </div>
+      </Col>
+    </Row>
   );
 };
 
@@ -154,10 +148,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setFoodDetails: details => dispatch(reduxSetFoodDetails(details)),
+    setFoodDetails: details => dispatch(redusmetFoodDetails(details)),
     addFood: (mealName, mealContent) =>
       dispatch(reduxAddFood(mealName, mealContent)),
-    setMeal: (mealName, mealData) => dispatch(reduxSetMeal(mealName, mealData)),
+    setMeal: (mealName, mealData) => dispatch(redusmetMeal(mealName, mealData)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

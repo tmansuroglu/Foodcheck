@@ -1,11 +1,10 @@
+.searchBarButton,
+.searchBarInput,
+.searchBarServingSizeOpt,
 .autoComplete {
-    width: 190px;
+  margin-top: 5px;
 }
 
 .mealName {
-    text-align: center;
-}
-
-.servingSizeOption {
-    width: 140px;
+  text-align: center;
 }
