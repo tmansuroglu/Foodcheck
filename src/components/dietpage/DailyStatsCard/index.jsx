@@ -12,6 +12,7 @@ const PROTEIN_MULTIPLIER = 4;
 const CARBOHYDRATE_MULTIPLIER = 4;
 const FAT_MULTIPLIER = 9;
 
+// used inside src/container/DietPage/index.jsx
 const DietDetails = ({ activeMeal, userId }) => {
   const { Title } = Typography;
   const [nutrientsConsumed, setNutrientsConsumed] = useState({});

@@ -1,7 +1,9 @@
 import React from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { List } from 'antd';
 import './index.css';
 
+// used inside src/components/dietpage/DailyStatsCard
 const DailyStatsList = ({ nutrientsConsumed }) => {
   const data = [
     `Fat: ${nutrientsConsumed.total_fat} gr`,

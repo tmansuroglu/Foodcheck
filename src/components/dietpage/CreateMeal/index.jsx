@@ -11,6 +11,7 @@ import {
 import './index.css';
 
 // props are passed from redux check bottom of this file
+// this component is used inside src/components/dietpage/DietOverview component
 const CreateMeal = ({ userData, mealCreator, setActiveMeal }) => {
   const mealCreationError = () => message.error('Meal is already created');
   const handleCreateMeal = mealName => {
