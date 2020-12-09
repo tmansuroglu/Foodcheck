@@ -1,7 +1,8 @@
 import React from 'react';
 import { Menu } from 'antd';
 
-const menu = handleMealCreation => {
+// used in src/components/dietpage/CreateMeal/index.jsx
+const CreateMealOptions = ({ handleMealCreation }) => {
   return (
     <Menu>
       <Menu.Item onClick={() => handleMealCreation('Pre-Breakfast Snack')}>
@@ -25,4 +26,4 @@ const menu = handleMealCreation => {
   );
 };
 
-export default menu;
+export default CreateMealOptions;

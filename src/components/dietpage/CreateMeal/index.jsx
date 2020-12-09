@@ -1,27 +1,37 @@
 import React from 'react';
-import { Button, Dropdown } from 'antd';
+import { Button, Dropdown, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import menu from '../CreateMealOptions';
+import CreateMealOptions from '../CreateMealOptions';
 import {
-  CreateMeal,
-  ActiveMeal,
-  SetDiet,
+  createMeal as reduxCreateMeal,
+  activeMeal as reduxSetActiveMeal,
 } from '../../../redux/actions/DietActions';
 
-const MealCreator = ({ userData, createMeal, setActiveMeal }) => {
+// props are passed from redux check bottom of this file
+const CreateMeal = ({ userData, mealCreator, setActiveMeal }) => {
+  console.log(userData);
+  const mealCreationError = () => message.error('Meal is already created');
   const handleCreateMeal = mealName => {
-    if (userData.diet[mealName]) {
-      alert(`You already created ${mealName}`);
+    const doesMealExist = Object.prototype.hasOwnProperty.call(
+      userData.diet,
+      mealName
+    );
+
+    if (doesMealExist) {
+      mealCreationError();
     } else {
-      createMeal(mealName);
+      mealCreator(mealName);
+      // [] refers to meal content
       setActiveMeal(mealName, []);
     }
   };
 
   return (
     <>
-      <Dropdown overlay={menu(handleCreateMeal)}>
+      <Dropdown
+        overlay={<CreateMealOptions handleMealCreation={handleCreateMeal} />}
+      >
         <Button className='ant-dropdown-link' onClick={e => e.preventDefault()}>
           <PlusOutlined />
           Add Meal
@@ -33,17 +43,18 @@ const MealCreator = ({ userData, createMeal, setActiveMeal }) => {
 
 const mapStateToProps = state => {
   return {
+    // check src/index.js to see how firebase data is stored in redux
     userData: state.firebase.profile,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createMeal: mealName => dispatch(CreateMeal(mealName)),
+    // check src/redux/actions too see details dispatched actions
+    mealCreator: mealName => dispatch(reduxCreateMeal(mealName)),
     setActiveMeal: (mealName, foodContent) =>
-      dispatch(ActiveMeal(mealName, foodContent)),
-    setDiet: dietData => dispatch(SetDiet(dietData)),
+      dispatch(reduxSetActiveMeal(mealName, foodContent)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MealCreator);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMeal);

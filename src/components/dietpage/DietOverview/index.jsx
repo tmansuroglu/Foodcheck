@@ -7,7 +7,7 @@ import order from '../mealOrder';
 import DeleteMeal from '../DeleteMeal';
 import MealCreator from '../CreateMeal';
 import ListItem from '../MealItem';
-import { ActiveMeal } from '../../../redux/actions/DietActions';
+import { activeMeal } from '../../../redux/actions/DietActions';
 import './index.css';
 
 const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
@@ -93,7 +93,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveMeal: (mealName, mealContent) =>
-      dispatch(ActiveMeal(mealName, mealContent)),
+      dispatch(activeMeal(mealName, mealContent)),
   };
 };
 

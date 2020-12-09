@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Modal } from 'antd';
 import { connect } from 'react-redux';
-import { ActiveMeal, SetDiet } from '../../../redux/actions/DietActions';
+import { activeMeal, SetDiet } from '../../../redux/actions/DietActions';
 import './index.css';
 
 const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
@@ -77,7 +77,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveMeal: (mealName, foodContent) =>
-      dispatch(ActiveMeal(mealName, foodContent)),
+      dispatch(activeMeal(mealName, foodContent)),
     setDiet: dietData => dispatch(SetDiet(dietData)),
   };
 };
