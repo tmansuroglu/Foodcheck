@@ -95,7 +95,7 @@ const SearchBar = ({
   if (!activeMealContent) return null;
   return (
     <Row align='center' className='searchBar' gutter={16}>
-      <Col sm={6}>
+      <Col>
         <AutoComplete
           className='autoComplete'
           options={queryResults}
@@ -107,7 +107,7 @@ const SearchBar = ({
           }
         />
       </Col>
-      <Col sm={6}>
+      <Col>
         <Select
           className='searchBarServingSizeOpt'
           placeholder='serving size'
@@ -116,7 +116,7 @@ const SearchBar = ({
           {searchBarServingOptions ? searchBarServingOptions : ''}
         </Select>
       </Col>
-      <Col sm={6}>
+      <Col>
         <InputNumber
           min={0.001}
           max={999999}
@@ -126,7 +126,7 @@ const SearchBar = ({
           className='searchBarInput'
         />
       </Col>
-      <Col sm={6}>
+      <Col>
         <Button
           disabled={inputToggle}
           onClick={handleAddFood}

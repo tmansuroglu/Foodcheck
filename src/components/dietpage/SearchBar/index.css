@@ -1,7 +1,12 @@
-.searchBarButton,
-.searchBarInput,
 .searchBarServingSizeOpt,
 .autoComplete {
+  margin-top: 5px;
+  width: 140px;
+}
+
+.searchBarButton,
+.searchBarInput {
+  width: 50px;
   margin-top: 5px;
 }
 

@@ -1,5 +1,5 @@
 const applyChanges = (
-  newAmount,
+  selectedServingAmount,
   activeMealContent,
   newServingSizeObj,
   editTarget
@@ -11,25 +11,29 @@ const applyChanges = (
 
   const newNutrientsConsumed = {
     serving_size: newServingSizeObj.measure,
-    serving_amount: newAmount,
-    consumption_in_grams: weightPerServing * newAmount,
+    serving_amount: selectedServingAmount,
+    consumption_in_grams: weightPerServing * selectedServingAmount,
   };
 
-  Object.entries(editTarget.nutrientsPerGram).forEach(nutrientName => {
-    console.log(nutrientName);
-    if (nutrientName[0] !== 'serving_size')
-      newNutrientsConsumed[nutrientName[0]] =
-        nutrientName[1] * weightPerServing * newAmount;
+  Object.entries(editTarget.nutrientsPerGram).forEach(nutrientNameAndAmount => {
+    const nutrientName = nutrientNameAndAmount[0];
+    const nutrientAmountInGr = nutrientNameAndAmount[1];
+    if (nutrientName !== 'serving_size')
+      newNutrientsConsumed[nutrientName] =
+        nutrientAmountInGr * weightPerServing * selectedServingAmount;
   });
+
   const modifiedTarget = { ...editTarget };
   modifiedTarget.nutrientsConsumed = newNutrientsConsumed;
+
   let mealWithoutTargetFood = copyOfActiveMealContent.filter(
     meal => meal.id !== modifiedTarget.id
   );
+
   mealWithoutTargetFood = mealWithoutTargetFood ? mealWithoutTargetFood : [];
+
   const modifiedMealContent = [...mealWithoutTargetFood, modifiedTarget];
 
-  console.log(modifiedMealContent);
   return modifiedMealContent;
 };
 

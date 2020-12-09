@@ -5,21 +5,20 @@ import { connect } from 'react-redux';
 import { SignOut } from '../../redux/actions/AuthActions';
 import './index.css';
 
-const Navbar = props => {
+const Navbar = ({ userId, SignOut }) => {
   return (
     <Menu mode='horizontal' className='navbar'>
       <Menu.Item>
         <NavLink to='/'>Home</NavLink>
       </Menu.Item>
-      {props.userData.uid ? (
+      {userId ? (
         <>
           <Menu.Item>
             <NavLink to='/diet'>Diet</NavLink>
           </Menu.Item>
           <Menu.Item
             onClick={() => {
-              props.SignOut();
-
+              SignOut();
               return <Redirect to='/' />;
             }}
           >
@@ -31,9 +30,6 @@ const Navbar = props => {
           <Menu.Item>
             <NavLink to='/login'>Login</NavLink>
           </Menu.Item>
-          {/* <Menu.Item>
-            <NavLink to='/register'>Register</NavLink>
-          </Menu.Item> */}
         </>
       )}
     </Menu>
@@ -42,7 +38,7 @@ const Navbar = props => {
 
 const mapStateToProps = state => {
   return {
-    userData: state.firebase.auth,
+    userId: state.firebase.auth.uid,
     profile: state.firebase.profile,
   };
 };

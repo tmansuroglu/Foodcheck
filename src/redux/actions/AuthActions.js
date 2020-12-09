@@ -7,7 +7,6 @@ export const SignOut = () => {
       .auth()
       .signOut()
       .then(() => {
-        console.log('dispatch');
         dispatch({ type: 'SIGNOUT_SUCCESS' });
       })
       .catch(err => {
