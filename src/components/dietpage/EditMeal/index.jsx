@@ -11,7 +11,7 @@ import './index.css';
 const EditMeal = ({ activeMeal }) => {
   const { Title } = Typography;
   const [isEditing, setIsEditing] = useState(false);
-  const [editTarget, setEditTarget] = useState();
+  const [editTarget, setEditTarget] = useState({});
   const [activeMealName, setActiveMealName] = useState('');
   const [activeMealContent, setActiveMealContent] = useState([]);
 
@@ -47,7 +47,7 @@ const EditMeal = ({ activeMeal }) => {
           <Row>
             {activeMealContent.map(food => {
               return (
-                <Col key={food.food_name} xs={24} className='editMealCol'>
+                <Col key={food.id} xs={24} className='editMealCol'>
                   <List itemLayout='horizontal'>
                     <List.Item
                       actions={[
