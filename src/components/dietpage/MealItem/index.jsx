@@ -2,6 +2,7 @@ import React from 'react';
 import { List, Avatar } from 'antd';
 import './index.css';
 
+// used in DietOverview
 const ListItem = ({ item }) => {
   return (
     <List.Item>
