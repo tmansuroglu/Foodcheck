@@ -122,15 +122,15 @@ const DietDetails = ({ activeMeal, userId }) => {
   );
 };
 
-DietDetails.defaultProps = {
-  activeMeal: {},
-  userId: '',
-};
+// DietDetails.defaultProps = {
+//   activeMeal: {},
+//   userId: '',
+// };
 
-DietDetails.propTypes = {
-  activeMeal: propTypes.object, // eslint-disable-line
-  userId: propTypes.string,
-};
+// DietDetails.propTypes = {
+//   activeMeal: propTypes.object, // eslint-disable-line
+//   userId: propTypes.string,
+// };
 
 const mapStateToProps = state => {
   return {

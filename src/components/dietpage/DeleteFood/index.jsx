@@ -21,19 +21,19 @@ const DeleteFood = ({ setMeal, activeMealContent, activeMealName, food }) => {
   return <Button onClick={() => handleDeleteButton(food)}>delete</Button>;
 };
 
-DeleteFood.propTypes = {
-  activeMealContent: propTypes.array, // eslint-disable-line
-  activeMealName: propTypes.string,
-  setMeal: propTypes.func,
-  food: propTypes.object, // eslint-disable-line
-};
+// DeleteFood.propTypes = {
+//   activeMealContent: propTypes.array, // eslint-disable-line
+//   activeMealName: propTypes.string,
+//   setMeal: propTypes.func,
+//   food: propTypes.object, // eslint-disable-line
+// };
 
-DeleteFood.defaultProps = {
-  activeMealContent: [],
-  activeMealName: '',
-  setMeal: x => x,
-  food: {},
-};
+// DeleteFood.defaultProps = {
+//   activeMealContent: [],
+//   activeMealName: '',
+//   setMeal: x => x,
+//   food: {},
+// };
 
 const mapStateToProps = state => {
   const doesActiveMealExist = Boolean(state.DietReducer.activeMeal);

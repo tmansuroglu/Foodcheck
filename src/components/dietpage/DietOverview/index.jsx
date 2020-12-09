@@ -84,18 +84,18 @@ const ManageDiet = ({ userId, activeMeal, setActiveMeal, meals }) => {
   );
 };
 
-ManageDiet.propTypes = {
-  userId: propTypes.string,
-  activeMeal: propTypes.object, // eslint-disable-line
-  setActiveMeal: propTypes.func,
-  meals: propTypes.object, // eslint-disable-line
-};
-ManageDiet.defaultProps = {
-  userId: '',
-  activeMeal: {},
-  setActiveMeal: x => x,
-  meals: {},
-};
+// ManageDiet.propTypes = {
+//   userId: propTypes.string,
+//   activeMeal: propTypes.object, // eslint-disable-line
+//   setActiveMeal: propTypes.func,
+//   meals: propTypes.object, // eslint-disable-line
+// };
+// ManageDiet.defaultProps = {
+//   userId: '',
+//   activeMeal: {},
+//   setActiveMeal: x => x,
+//   meals: {},
+// };
 
 const mapStateToProps = state => {
   return {

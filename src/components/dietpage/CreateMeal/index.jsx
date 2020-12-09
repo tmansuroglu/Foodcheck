@@ -50,17 +50,17 @@ const mapStateToProps = state => {
   };
 };
 
-CreateMeal.defaultProps = {
-  setActiveMeal: () => [],
-  userData: {},
-  mealCreator: () => {},
-};
+// CreateMeal.defaultProps = {
+//   setActiveMeal: () => [],
+//   userData: {},
+//   mealCreator: () => {},
+// };
 
-CreateMeal.propTypes = {
-  mealCreator: propTypes.func,
-  setActiveMeal: propTypes.func,
-  userData: propTypes.object, // eslint-disable-line
-};
+// CreateMeal.propTypes = {
+//   mealCreator: propTypes.func,
+//   setActiveMeal: propTypes.func,
+//   userData: propTypes.object, // eslint-disable-line
+// };
 
 const mapDispatchToProps = dispatch => {
   return {

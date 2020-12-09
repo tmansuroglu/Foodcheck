@@ -72,18 +72,18 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
   );
 };
 
-DeleteMeal.propTypes = {
-  setDiet: propTypes.func,
-  meals: propTypes.array, // eslint-disable-line
-  activeMeal: propTypes.object, // eslint-disable-line
-  setActiveMeal: propTypes.func,
-};
-DeleteMeal.defaultProps = {
-  setDiet: x => x,
-  meals: [],
-  activeMeal: {},
-  setActiveMeal: x => x,
-};
+// DeleteMeal.propTypes = {
+//   setDiet: propTypes.func,
+//   meals: propTypes.array, // eslint-disable-line
+//   activeMeal: propTypes.object, // eslint-disable-line
+//   setActiveMeal: propTypes.func,
+// };
+// DeleteMeal.defaultProps = {
+//   setDiet: x => x,
+//   meals: [],
+//   activeMeal: {},
+//   setActiveMeal: x => x,
+// };
 
 const mapStateToProps = state => {
   const doesActiveMealExist = Boolean(state.DietReducer.activeMeal);

@@ -28,12 +28,12 @@ const CreateMealOptions = ({ handleMealCreation }) => {
   );
 };
 
-CreateMealOptions.defaultProps = {
-  handleMealCreation: x => x,
-};
+// CreateMealOptions.defaultProps = {
+//   handleMealCreation: x => x,
+// };
 
-CreateMealOptions.propTypes = {
-  handleMealCreation: propTypes.func,
-};
+// CreateMealOptions.propTypes = {
+//   handleMealCreation: propTypes.func,
+// };
 
 export default CreateMealOptions;
