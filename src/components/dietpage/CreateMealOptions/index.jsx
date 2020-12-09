@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import './index.css';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 // used in src/components/dietpage/CreateMeal/index.jsx
 const CreateMealOptions = ({ handleMealCreation }) => {
@@ -25,6 +26,14 @@ const CreateMealOptions = ({ handleMealCreation }) => {
       </Menu.Item>
     </Menu>
   );
+};
+
+CreateMealOptions.defaultProps = {
+  handleMealCreation: x => x,
+};
+
+CreateMealOptions.propTypes = {
+  handleMealCreation: propTypes.func,
 };
 
 export default CreateMealOptions;

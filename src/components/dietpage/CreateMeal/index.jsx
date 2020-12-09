@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Dropdown, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import CreateMealOptions from '../CreateMealOptions';
 import {
   createMeal as reduxCreateMeal,
@@ -46,6 +47,18 @@ const mapStateToProps = state => {
     // check src/index.js to see how firebase data is stored in redux
     userData: state.firebase.profile,
   };
+};
+
+CreateMeal.defaultProps = {
+  setActiveMeal: () => [],
+  userData: {},
+  mealCreator: () => {},
+};
+
+CreateMeal.propTypes = {
+  mealCreator: propTypes.func,
+  setActiveMeal: propTypes.func,
+  userData: propTypes.object, // eslint-disable-line
 };
 
 const mapDispatchToProps = dispatch => {

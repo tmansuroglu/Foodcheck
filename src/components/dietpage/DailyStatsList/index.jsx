@@ -23,4 +23,11 @@ const DailyStatsList = ({ nutrientsConsumed }) => {
   );
 };
 
+DailyStatsList.propTypes = {
+  nutrientsConsumed: propTypes.object, // eslint-disable-line
+};
+DailyStatsList.defaultProps = {
+  nutrientsConsumed: {},
+};
+
 export default DailyStatsList;

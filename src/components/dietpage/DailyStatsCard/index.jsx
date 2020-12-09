@@ -79,7 +79,7 @@ const DietDetails = ({ activeMeal, userId }) => {
     ]);
   }, [nutrientsConsumed]);
 
-  // multiplier is needed because dougnut chart works with calories and each nutrient has different calorie value
+  // multiplier is needed because each nutrient has different calorie value
   // for example 1 gram of fat is 9 calories
   useEffect(() => {
     setDoughnutChartData([
@@ -127,7 +127,7 @@ DietDetails.defaultProps = {
 };
 
 DietDetails.propTypes = {
-  activeMeal: propTypes.object,
+  activeMeal: propTypes.object, // eslint-disable-line
   userId: propTypes.string,
 };
 
