@@ -38,7 +38,7 @@ DeleteFood.defaultProps = {
 const mapStateToProps = state => {
   const doesActiveMealExist = Boolean(state.DietReducer.activeMeal);
   if (!doesActiveMealExist) {
-    return null;
+    return {};
   }
   return {
     // activeMeal example {breakfast: [{...food},{...food}]}

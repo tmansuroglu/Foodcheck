@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { Typography, Modal } from 'antd';
 import { connect } from 'react-redux';
-import { activeMeal, SetDiet } from '../../../redux/actions/DietActions';
+import {
+  activeMeal as reduxSetActiveMeal,
+  SetDiet,
+} from '../../../redux/actions/DietActions';
 import './index.css';
 
+// used inside DietOverview
 const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
   const { Text } = Typography;
   const [modalVisibility, setModalVisibility] = useState(false);
-  const [activeMealName, setActiveMealName] = useState();
-  const [activeMealContent, setActiveMealContent] = useState();
+  const [activeMealName, setActiveMealName] = useState('');
+  const [activeMealContent, setActiveMealContent] = useState([]);
 
   useEffect(() => {
+    // activeMeal example: {"breakfast":[{...food},{...food}]}
     if (activeMeal) {
       setActiveMealName(Object.keys(activeMeal)[0]);
       setActiveMealContent(Object.values(activeMeal)[0]);
@@ -23,23 +29,25 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
 
   const deleteMeal = () => {
     const reducer = (acc, curr) => {
-      if (Object.keys(curr)[0] !== activeMealName) {
+      const mealName = Object.keys(curr)[0];
+      if (mealName !== activeMealName) {
         acc.push(curr);
       }
       return acc;
     };
-    const fixedMeals = meals.reduce(reducer, []);
+    // example: [{brekfast:[...]},{dinner:[...]}]
+    const processedMeals = meals.reduce(reducer, []);
+    const newDiet = {};
+    processedMeals.forEach(meal => {
+      const mealName = Object.keys(meal)[0];
+      const mealContent = Object.values(meal)[0];
 
-    const newState = {};
-    fixedMeals.forEach(meal => {
-      const key = Object.keys(meal)[0];
-      const value = Object.values(meal)[0];
-
-      newState[key] = value;
+      newDiet[mealName] = mealContent;
     });
-    setDiet(newState);
+    // newDiet example: {breakfast:[...],dinner:[...]}
+    setDiet(newDiet);
     setModalVisibility(false);
-    setActiveMeal('');
+    setActiveMeal({});
   };
 
   return (
@@ -64,20 +72,33 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
   );
 };
 
+DeleteMeal.propTypes = {
+  setDiet: propTypes.func,
+  meals: propTypes.array, // eslint-disable-line
+  activeMeal: propTypes.object, // eslint-disable-line
+  setActiveMeal: propTypes.func,
+};
+DeleteMeal.defaultProps = {
+  setDiet: x => x,
+  meals: [],
+  activeMeal: {},
+  setActiveMeal: x => x,
+};
+
 const mapStateToProps = state => {
-  if (state.DietReducer.activeMeal)
-    return {
-      activeMeal: state.DietReducer.activeMeal,
-    };
-  else {
+  const doesActiveMealExist = Boolean(state.DietReducer.activeMeal);
+  if (!doesActiveMealExist) {
     return {};
   }
+  return {
+    activeMeal: state.DietReducer.activeMeal,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setActiveMeal: (mealName, foodContent) =>
-      dispatch(activeMeal(mealName, foodContent)),
+      dispatch(reduxSetActiveMeal(mealName, foodContent)),
     setDiet: dietData => dispatch(SetDiet(dietData)),
   };
 };
