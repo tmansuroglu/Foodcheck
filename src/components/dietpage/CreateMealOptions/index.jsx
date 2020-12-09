@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
+import './index.css';
 
 // used in src/components/dietpage/CreateMeal/index.jsx
 const CreateMealOptions = ({ handleMealCreation }) => {

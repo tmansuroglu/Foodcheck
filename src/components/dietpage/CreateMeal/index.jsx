@@ -7,10 +7,10 @@ import {
   createMeal as reduxCreateMeal,
   activeMeal as reduxSetActiveMeal,
 } from '../../../redux/actions/DietActions';
+import './index.css';
 
 // props are passed from redux check bottom of this file
 const CreateMeal = ({ userData, mealCreator, setActiveMeal }) => {
-  console.log(userData);
   const mealCreationError = () => message.error('Meal is already created');
   const handleCreateMeal = mealName => {
     const doesMealExist = Object.prototype.hasOwnProperty.call(
