@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import { Collapse, List } from 'antd';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -7,46 +8,48 @@ import order from '../mealOrder';
 import DeleteMeal from '../DeleteMeal';
 import MealCreator from '../CreateMeal';
 import ListItem from '../MealItem';
-import { activeMeal } from '../../../redux/actions/DietActions';
+import { activeMeal as reduxActiveMeal } from '../../../redux/actions/DietActions';
 import './index.css';
 
-const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
+const ManageDiet = ({ userId, activeMeal, setActiveMeal, meals }) => {
   const { Panel } = Collapse;
-
-  const [localDietData, setLocalDietData] = useState([]);
-
-  function handleMealSelection(name, content) {
+  const [dietData, setDietData] = useState([]);
+  const handleMealSelection = (name, content) => {
     setActiveMeal(name, content);
-  }
+  };
 
+  // when active meal changes pulls data from db, orders it, makes it available for other components
   useEffect(() => {
-    if (uid) {
+    if (userId) {
       const orderedDietData = [];
       db.collection('users')
-        .doc(uid)
-        .onSnapshot(function (doc) {
-          const dietData = doc.data().diet;
-
-          for (const meal in dietData) {
-            const index = order[meal];
-            orderedDietData[index] = {
-              [meal]: dietData[meal],
+        .doc(userId)
+        .onSnapshot(doc => {
+          const { diet } = doc.data();
+          const dietNameAndContentArr = Object.entries(diet);
+          for (let i = 0; i < dietNameAndContentArr.length; i += 1) {
+            const mealName = dietNameAndContentArr[i][0];
+            const mealContent = dietNameAndContentArr[i][1];
+            // order stores meal positions. example: {pre-breakfast:0,breakfast:1}
+            const mealPosition = order[mealName];
+            orderedDietData[mealPosition] = {
+              [mealName]: mealContent,
             };
           }
-          setLocalDietData(orderedDietData);
+          setDietData(orderedDietData);
         });
     }
-  }, [activeMeal, meals, uid]);
-  if (!uid) {
+  }, [activeMeal, meals, userId]);
+
+  if (!userId) {
     return <Redirect to='/login' />;
   }
   return (
     <>
       <MealCreator />
-
       <>
         <Collapse>
-          {localDietData.map(meal => {
+          {dietData.map(meal => {
             const mealName = Object.keys(meal)[0];
             const mealContent = Object.values(meal)[0];
             return (
@@ -55,15 +58,14 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
                 header={
                   <div
                     onClick={() => handleMealSelection(mealName, mealContent)}
+                    onKeyDown={() => handleMealSelection(mealName, mealContent)}
                     className='mealName'
+                    tabIndex={0}
+                    role='button'
                   >
                     <div>
                       {mealName}
-
-                      <DeleteMeal
-                        meals={localDietData}
-                        className='deleteMeal'
-                      />
+                      <DeleteMeal meals={dietData} className='deleteMeal' />
                     </div>
                   </div>
                 }
@@ -82,10 +84,23 @@ const ManageDiet = ({ uid, activeMeal, setActiveMeal, meals }) => {
   );
 };
 
+ManageDiet.propTypes = {
+  userId: propTypes.string,
+  activeMeal: propTypes.object, // eslint-disable-line
+  setActiveMeal: propTypes.func,
+  meals: propTypes.object, // eslint-disable-line
+};
+ManageDiet.defaultProps = {
+  userId: '',
+  activeMeal: {},
+  setActiveMeal: x => x,
+  meals: {},
+};
+
 const mapStateToProps = state => {
   return {
     meals: state.firebase.profile.diet,
-    uid: state.firebase.auth.uid,
+    userId: state.firebase.auth.uid,
     activeMeal: state.DietReducer.activeMeal,
   };
 };
@@ -93,7 +108,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setActiveMeal: (mealName, mealContent) =>
-      dispatch(activeMeal(mealName, mealContent)),
+      dispatch(reduxActiveMeal(mealName, mealContent)),
   };
 };
 
