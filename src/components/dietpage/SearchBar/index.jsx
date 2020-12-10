@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { AutoComplete, Select, InputNumber, Button, Row, Col } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
@@ -57,16 +57,19 @@ const SearchBar = ({
     setFoodDetails(details);
   };
 
+  const [selectValue, setSelectValue] = useState('');
+
   function onMeasureChange(value) {
     setSearchBarServingSize(value);
     setInputToggle(false);
+    setSelectValue(value);
   }
 
   useEffect(() => {
     if (createdFood && createdFood.alt_measures) {
       const searchBarServingSizes = createdFood.alt_measures.map(measureObj => {
         return (
-          <Option value={measureObj.measure} key={measureObj.measure}>
+          <Option value={measureObj.measure} key={measureObj.seq}>
             {measureObj.measure}
           </Option>
         );
@@ -76,9 +79,17 @@ const SearchBar = ({
     }
   }, [createdFood]);
 
+  const [inputValue, setInputvalue] = useState(1);
+
   const handleAmount = value => {
-    setSearchBarFoodAmount(value);
+    setInputvalue(value);
   };
+
+  useEffect(() => {
+    setSearchBarFoodAmount(inputValue);
+  }, [inputValue]);
+
+  const [autoSearchValue, setAutoSearchValue] = useState('');
 
   const handleAddFood = () => {
     if (createdFood) {
@@ -91,12 +102,17 @@ const SearchBar = ({
       );
       setMeal(activeMealName, [...activeMealContent, newFood]);
     }
+    setAutoSearchValue('');
+    setSelectValue('');
+    setInputvalue(1);
   };
+
   if (!activeMealContent) return null;
   return (
     <Row align='center' className='searchBar' gutter={16}>
       <Col>
         <AutoComplete
+          value={autoSearchValue}
           className='autoComplete'
           options={queryResults}
           placeholder='Add food here...'
@@ -105,6 +121,7 @@ const SearchBar = ({
           filterOption={(inputValue, option) =>
             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
+          onChange={e => setAutoSearchValue(e)}
         />
       </Col>
       <Col>
@@ -112,6 +129,7 @@ const SearchBar = ({
           className='searchBarServingSizeOpt'
           placeholder='serving size'
           onChange={onMeasureChange}
+          value={selectValue}
         >
           {searchBarServingOptions ? searchBarServingOptions : ''}
         </Select>
@@ -124,6 +142,7 @@ const SearchBar = ({
           defaultValue={1}
           onChange={handleAmount}
           className='searchBarInput'
+          value={inputValue}
         />
       </Col>
       <Col>

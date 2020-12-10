@@ -22,7 +22,7 @@ const EditFood = ({
   const servingOptions = foodObj => {
     const newOptions = foodObj.alt_measures.map(type => {
       return (
-        <Option value={type.measure} data={type} key={type.measure}>
+        <Option value={type.measure} data={type} key={type.seq}>
           {type.measure}
         </Option>
       );

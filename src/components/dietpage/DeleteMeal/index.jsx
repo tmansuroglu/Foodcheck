@@ -12,13 +12,11 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
   const { Text } = Typography;
   const [modalVisibility, setModalVisibility] = useState(false);
   const [activeMealName, setActiveMealName] = useState('');
-  const [activeMealContent, setActiveMealContent] = useState([]);
 
   useEffect(() => {
     // activeMeal example: {"breakfast":[{...food},{...food}]}
     if (activeMeal) {
       setActiveMealName(Object.keys(activeMeal)[0]);
-      setActiveMealContent(Object.values(activeMeal)[0]);
     }
   }, [activeMeal]);
 
@@ -63,26 +61,13 @@ const DeleteMeal = ({ setActiveMeal, activeMeal, setDiet, meals }) => {
       <Text
         className='modalDeleteMealText'
         type='danger'
-        onClick={() => handleDelete(activeMealName, activeMealContent)}
+        onClick={handleDelete}
       >
         Delete
       </Text>
     </>
   );
 };
-
-// DeleteMeal.propTypes = {
-//   setDiet: propTypes.func,
-//   meals: propTypes.array, // eslint-disable-line
-//   activeMeal: propTypes.object, // eslint-disable-line
-//   setActiveMeal: propTypes.func,
-// };
-// DeleteMeal.defaultProps = {
-//   setDiet: x => x,
-//   meals: [],
-//   activeMeal: {},
-//   setActiveMeal: x => x,
-// };
 
 const mapStateToProps = state => {
   const doesActiveMealExist = Boolean(state.DietReducer.activeMeal);

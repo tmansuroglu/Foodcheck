@@ -27,7 +27,10 @@ const DoughnutChart = ({ graphData, totalKcal }) => {
             font: { size: 15 },
             formatter: value => {
               const percentage = (value * 100) / totalKcal;
-              return `${Math.round(percentage * 100) / 100}%`;
+              const output = value
+                ? `${Math.round(percentage * 100) / 100}%`
+                : '';
+              return output;
             },
           },
         },
