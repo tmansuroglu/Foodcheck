@@ -4,13 +4,13 @@ Foodcheck is a simple, quick and easy to use diet planning app.
 ## Features
 * Daily diet overview including all food, amount and calories categorized under meals
 * Meal editing
-** add food
-** delete food
-** modify existing food selection
+  * add food
+  * delete food
+  * modify existing food selection
 * Nutrient listing per food,
 * Graphical analysis tools
-** Total calorie and gram distribution between fat, carbohydrate and protein
-** Total nutrient consumption stats
+  * Total calorie and gram distribution between fat, carbohydrate and protein
+  * Total nutrient consumption stats
 * Mobile friendly UI
 * Email, Google and Facebook registration and login
 
